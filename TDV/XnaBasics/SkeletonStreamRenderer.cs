@@ -66,6 +66,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Vector2 torsoOrigin;
         private Texture2D torsoTexture;
 
+        // temp code to establish max-min for distances
+        private float maxz = 0.0f;
+        private float minz = 999999.9f;
+
         /// <summary>
         /// Whether the rendering has been initialized.
         /// </summary>
@@ -191,6 +195,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
                         foreach (Joint j in skeleton.Joints)
                         {
+                            if (j.Position.Z > maxz) maxz = j.Position.Z;
+                            if (j.Position.Z < minz) minz = j.Position.Z;
+
+                            /*
                             Color jointColor = Color.Green;
                             if (j.TrackingState != JointTrackingState.Tracked)
                             {
@@ -226,6 +234,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         break;
                 }
             }
+
+            Console.WriteLine("min {0}, max{1}", this.minz, this.maxz);
 
             this.SharedSpriteBatch.End();
             skeletonDrawn = true;
