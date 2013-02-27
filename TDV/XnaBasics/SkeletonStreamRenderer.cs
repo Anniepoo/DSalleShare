@@ -54,11 +54,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// The origin (center) location of the bone texture.
         /// </summary>
         private Vector2 boneOrigin;
-        
+
         /// <summary>
         /// The bone texture.
         /// </summary>
         private Texture2D boneTexture;
+
+        private Vector2 pelvisOrigin;
+        private Texture2D pelvisTexture;
 
         private Vector2 torsoOrigin;
         private Texture2D torsoTexture;
@@ -167,10 +170,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.boneTexture, this.boneOrigin);
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.boneTexture, this.boneOrigin);
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.boneTexture, this.boneOrigin);
-
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture, this.torsoOrigin);
-
-                        this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.boneTexture, this.boneOrigin);
+                        this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.pelvisTexture, this.pelvisOrigin);
                         this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture, this.boneOrigin);
                         this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.boneTexture, this.boneOrigin);
                         /* left of screen and left arm of player, NOT stage left */
@@ -191,7 +192,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture, this.boneOrigin);
 
                         // Now draw the joints
-                        
+
                         foreach (Joint j in skeleton.Joints)
                         {
                             if (j.Position.Z > maxz) maxz = j.Position.Z;
@@ -214,9 +215,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                                 1.0f,
                                 SpriteEffects.None,
                                 0.0f);
-                             */
                         }
-                        
+
 
                         break;
                     case SkeletonTrackingState.PositionOnly:
@@ -251,13 +251,16 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             base.LoadContent();
 
             this.jointTexture = Game.Content.Load<Texture2D>("Joint");
-            this.jointOrigin = new Vector2(this.jointTexture.Width / 2, this.jointTexture.Height / 2);
+            this.jointOrigin = new Vector2(this.jointTexture.Width / 2, this.jointTexture.Height);
 
             this.boneTexture = Game.Content.Load<Texture2D>("Bone");
-            this.boneOrigin = new Vector2(0.5f, 0.0f);
+            this.boneOrigin = new Vector2(8, 1200);
 
             this.torsoTexture = Game.Content.Load<Texture2D>("Torso");
             this.torsoOrigin = new Vector2(0.5f, 0.5f);
+
+            this.pelvisTexture = Game.Content.Load<Texture2D>("Pelvis");
+            this.pelvisOrigin = new Vector2(0, 0);
         }
 
         /// <summary>
@@ -271,21 +274,18 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             Vector2 start = this.mapMethod(joints[startJoint].Position);
             Vector2 end = this.mapMethod(joints[endJoint].Position);
             Vector2 diff = end - start;
-            Vector2 scale = new Vector2(1.0f, diff.Length() / boneTexture.Height);
+            Vector2 scale = new Vector2(1, diff.Length() / 135);
 
             float angle = (float)Math.Atan2(diff.Y, diff.X) - MathHelper.PiOver2;
 
-            Vector2 center = new Vector2((int)((start.X + end.X) / 2), (int)((start.Y + end.Y) / 2));
+            Vector2 center = new Vector2((int)(start.X), (int)(start.Y));
 
             // Scale the dest, not the source!
             Rectangle sourceRect = new Rectangle(0, 0, boneTexture.Width, boneTexture.Height);
-            Rectangle destRect = new Rectangle(sourceRect.Left, sourceRect.Top, 
-                  (int)(sourceRect.Width * scale.X), 
-                  (int)(sourceRect.Height * scale.Y));
+            Rectangle destRect = new Rectangle(0, 0, 0, 0);
 
-            destRect.Offset((int)(center.X - destRect.Width / 2),
-                            (int)(center.Y - destRect.Height / 2));
-     
+            destRect.Offset((int)(start.X), (int)(start.Y));
+
             // just for development
             Color color = Color.LightGreen;
             if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
@@ -294,10 +294,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 color = Color.White;
             }
 
-            Vector2 destctr = new Vector2(destRect.Center.X, destRect.Center.Y);
+            Vector2 destctr = new Vector2(destRect.X, destRect.Y);
             this.SharedSpriteBatch.Draw(boneTexture, destctr, null, color, angle,
-                new Vector2(destRect.Width / 2, destRect.Height / 2),
-                scale, SpriteEffects.None, 1.0f);
+                new Vector2(boneTexture.Width/2 , 0),
+               scale, SpriteEffects.None, 1.0f);
         }
     }
 }
