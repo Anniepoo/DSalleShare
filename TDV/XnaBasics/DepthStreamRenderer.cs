@@ -18,7 +18,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// The child responsible for rendering the depth stream's skeleton.
         /// </summary>
-        private readonly SkeletonStreamRenderer skeletonStream;
+        private readonly CartoonRenderer skeletonStream;
 
         /// <summary>
         /// The back buffer where the depth frame is scaled as requested by the Size.
@@ -52,7 +52,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public DepthStreamRenderer(Game game)
             : base(game)
         {
-            this.skeletonStream = new SkeletonStreamRenderer(game, this.SkeletonToDepthMap);
+            this.skeletonStream = new CartoonRenderer(game, this.SkeletonToDepthMap);
             this.Size = new Vector2(160, 120);
         }
 

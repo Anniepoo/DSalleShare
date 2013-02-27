@@ -18,7 +18,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// This child responsible for rendering the color stream's skeleton.
         /// </summary>
-        private readonly SkeletonStreamRenderer skeletonStream;
+        private readonly CartoonRenderer skeletonStream;
         
         /// <summary>
         /// The last frame of color data.
@@ -52,7 +52,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public ColorStreamRenderer(Game game)
             : base(game)
         {
-            this.skeletonStream = new SkeletonStreamRenderer(game, this.SkeletonToColorMap);
+            this.skeletonStream = new CartoonRenderer(game, this.SkeletonToColorMap);
         }
 
         /// <summary>

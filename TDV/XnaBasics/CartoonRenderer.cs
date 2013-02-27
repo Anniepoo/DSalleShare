@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------------------------
-// <copyright file="SkeletonStreamRenderer.cs" company="Microsoft">
+// <copyright file="CartoonRenderer.cs" company="Microsoft">
 //     Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
 //------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     /// <summary>
     /// This class is responsible for rendering a skeleton stream.
     /// </summary>
-    public class SkeletonStreamRenderer : Object2D
+    public class CartoonRenderer : Object2D
     {
         /// <summary>
         /// This is the map method called when mapping from
@@ -66,6 +66,13 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Vector2 torsoOrigin;
         private Texture2D torsoTexture;
 
+<<<<<<< HEAD:TDV/XnaBasics/SkeletonStreamRenderer.cs
+=======
+        private const float PIN_FROM_END = 0.1f;
+        private const float FOCAL_PLANE_DIST = 1.5f;  // dist at which the scale is 1
+        private const float NEAR_PLANE = 1.0f;  // minimum dist we assume so we don't balloon near kinect
+
+>>>>>>> bb27761e6b85f81943e0a81661a06021ab281191:TDV/XnaBasics/CartoonRenderer.cs
         /// <summary>
         /// Whether the rendering has been initialized.
         /// </summary>
@@ -79,11 +86,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Texture2D lowerLegTexture;
 
         /// <summary>
-        /// Initializes a new instance of the SkeletonStreamRenderer class.
+        /// Initializes a new instance of the CartoonRenderer class.
         /// </summary>
         /// <param name="game">The related game object.</param>
         /// <param name="map">The method used to map the SkeletonPoint to the target space.</param>
-        public SkeletonStreamRenderer(Game game, SkeletonPointMap map)
+        public CartoonRenderer(Game game, SkeletonPointMap map)
             : base(game)
         {
             this.mapMethod = map;
@@ -169,7 +176,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 switch (skeleton.TrackingState)
                 {
                     case SkeletonTrackingState.Tracked:
+
                         // Draw Bones
+<<<<<<< HEAD:TDV/XnaBasics/SkeletonStreamRenderer.cs
                       //  this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.boneTexture, this.boneOrigin, Vector2.Zero);
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.boneTexture, this.boneOrigin, Vector2.Zero);
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.boneTexture, this.boneOrigin, Vector2.Zero);
@@ -193,11 +202,40 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.HipRight, JointType.KneeRight, this.boneTexture, this.boneOrigin, Vector2.Zero);
                         this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.boneTexture, this.boneOrigin, Vector2.Zero);
                         this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture, this.boneOrigin, Vector2.Zero);
+=======
+                        this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture);
+                        this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.pelvisTexture);
+                        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.boneTexture);
+                        /* left of screen and left arm of player, NOT stage left */
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, this.boneTexture);
+
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.boneTexture);
+
+                        this.DrawBone(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.boneTexture);
+
+                        this.DrawBone(skeleton.Joints, JointType.HipRight, JointType.KneeRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture);
+>>>>>>> bb27761e6b85f81943e0a81661a06021ab281191:TDV/XnaBasics/CartoonRenderer.cs
 
                         // Now draw the joints
 
                         foreach (Joint j in skeleton.Joints)
                         {
+<<<<<<< HEAD:TDV/XnaBasics/SkeletonStreamRenderer.cs
+=======
+                            
+>>>>>>> bb27761e6b85f81943e0a81661a06021ab281191:TDV/XnaBasics/CartoonRenderer.cs
                             Color jointColor = Color.Green;
                             if (j.TrackingState != JointTrackingState.Tracked)
                             {
@@ -274,6 +312,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <param name="joints">The joint data.</param>
         /// <param name="startJoint">The starting joint.</param>
         /// <param name="endJoint">The ending joint.</param>
+<<<<<<< HEAD:TDV/XnaBasics/SkeletonStreamRenderer.cs
         private void DrawBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture, Vector2 boneOrigin, Vector2 scale)
         {
             Vector2 start = this.mapMethod(joints[startJoint].Position)- new Vector2(0,0);
@@ -281,6 +320,17 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             Vector2 diff = end - start;
             if(scale == Vector2.Zero)
             scale = new Vector2(1, diff.Length() / 135);
+=======
+        /// <param name="boneTexture">The texture to use for the joint</param>
+        private void DrawBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture)
+        {
+            float depth = joints[startJoint].Position.Z;
+            Vector2 start = this.mapMethod(joints[startJoint].Position);
+            Vector2 end = this.mapMethod(joints[endJoint].Position);
+            Vector2 diff = end - start;
+            Vector2 scale = new Vector2((float)(FOCAL_PLANE_DIST / Math.Max(NEAR_PLANE, depth)), 
+                diff.Length() / boneTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
+>>>>>>> bb27761e6b85f81943e0a81661a06021ab281191:TDV/XnaBasics/CartoonRenderer.cs
 
             float angle = (float)Math.Atan2(diff.Y, diff.X) - MathHelper.PiOver2;
 
@@ -302,7 +352,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             Vector2 destctr = new Vector2(destRect.X, destRect.Y);
             this.SharedSpriteBatch.Draw(boneTexture, destctr, null, color, angle,
+<<<<<<< HEAD:TDV/XnaBasics/SkeletonStreamRenderer.cs
                 new Vector2(boneTexture.Width / 2, boneTexture.Height*.1f),
+=======
+                new Vector2(boneTexture.Width/2 , boneTexture.Height * PIN_FROM_END),
+>>>>>>> bb27761e6b85f81943e0a81661a06021ab281191:TDV/XnaBasics/CartoonRenderer.cs
                scale, SpriteEffects.None, 1.0f);
         }
     }
