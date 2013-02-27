@@ -185,6 +185,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture, this.boneOrigin);
 
                         // Now draw the joints
+                        /*
                         foreach (Joint j in skeleton.Joints)
                         {
                             Color jointColor = Color.Green;
@@ -204,6 +205,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                                 SpriteEffects.None,
                                 0.0f);
                         }
+                         * */
 
                         break;
                     case SkeletonTrackingState.PositionOnly:
@@ -260,31 +262,36 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             float angle = (float)Math.Atan2(diff.Y, diff.X) - MathHelper.PiOver2;
 
+            Vector2 center = new Vector2((int)((start.X + end.X) / 2), (int)((start.Y + end.Y) / 2));
+
+            // Scale the dest, not the source!
+            Rectangle sourceRect = new Rectangle(0, 0, boneTexture.Width, boneTexture.Height);
+            Rectangle destRect = new Rectangle(sourceRect.Left, sourceRect.Top, 
+                  (int)(sourceRect.Width * scale.X), 
+                  (int)(sourceRect.Height * scale.Y));
+
+            destRect.Offset((int)(center.X - destRect.Width / 2),
+                            (int)(center.Y - destRect.Height / 2));
+
             // this is trashed, 
-            
+            /*
             start.X += -boneTexture.Width * boneOrigin.X * diff.Y / diff.Length() +
                        boneTexture.Height * boneOrigin.Y * diff.X / diff.Length();
             start.Y -= boneTexture.Height * boneOrigin.Y * diff.X / diff.Length() +
                        boneTexture.Width * boneOrigin.X * diff.Y / diff.Length();
-             
-            /*
-            Vector2 textureOrigin = (start + end);
-            textureOrigin.X /= 2;
-            textureOrigin.Y /= 2;
-            textureOrigin.X -= boneTexture.Width / 2;
-            textureOrigin.Y -= boneTexture.Height / 2;
-            boneOrigin = new Vector2(0.5f, 0.5f);
-            */
-
+             */
+     
+            // just for development
             Color color = Color.LightGreen;
             if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
                 joints[endJoint].TrackingState != JointTrackingState.Tracked)
             {
-                color = Color.Gray;
+                color = Color.White;
             }
+            /*
             this.SharedSpriteBatch.Draw(
                                 this.jointTexture,
-                                start,
+                                center,
                                 null,
                                 Color.RoyalBlue,
                                 0.0f,
@@ -292,9 +299,52 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                                 1.0f,
                                 SpriteEffects.None,
                                 0.0f);
+            */
+           /*
+            this.SharedSpriteBatch.Draw(boneTexture, destRect,
+                   sourceRect, Color.White, angle,
+                   new Vector2(destRect.Center.X - destRect.Left, destRect.Center.Y - destRect.Top),
+                   SpriteEffects.None, 1.0f);
 
-            this.SharedSpriteBatch.Draw(boneTexture, start, null, color, angle, boneOrigin, scale, SpriteEffects.None, 1.0f);
-            this.SharedSpriteBatch.Draw(boneTexture, start, null, Color.Pink, 0.0f, boneOrigin, scale, SpriteEffects.None, 1.0f);
+            this.SharedSpriteBatch.Draw(boneTexture, destRect,
+                   sourceRect, Color.Green, 0.0f,
+                   new Vector2(destRect.Center.X - destRect.Left, destRect.Center.Y - destRect.Top),
+                   SpriteEffects.None, 1.0f);
+            */
+            Vector2 destctr = new Vector2(destRect.Center.X, destRect.Center.Y);
+            this.SharedSpriteBatch.Draw(boneTexture, destctr, null, color, angle,
+                new Vector2(destRect.Width / 2, destRect.Height / 2),
+                scale, SpriteEffects.None, 1.0f);
+
+            /*
+            this.SharedSpriteBatch.Draw(
+                      this.jointTexture,
+                      destctr,
+                      null,
+                      Color.Red,
+                      0.0f,
+                      this.jointOrigin,
+                      1.0f,
+                      SpriteEffects.None,
+                      0.0f);
+            */
+            /*
+            // ok, bizarrely it's rotating about UL of destRect!
+            Vector2 destul = new Vector2(destRect.Left, destRect.Top);
+            this.SharedSpriteBatch.Draw(
+                   this.jointTexture,
+                   destul,
+                   null,
+                   Color.Orange,
+                   0.0f,
+                   this.jointOrigin,
+                   1.0f,
+                   SpriteEffects.None,
+                   0.0f);
+
+            */
+
+             
         }
     }
 }
