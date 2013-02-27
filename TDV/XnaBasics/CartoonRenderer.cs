@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------------------------
-// <copyright file="SkeletonStreamRenderer.cs" company="Microsoft">
+// <copyright file="CartoonRenderer.cs" company="Microsoft">
 //     Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
 //------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     /// <summary>
     /// This class is responsible for rendering a skeleton stream.
     /// </summary>
-    public class SkeletonStreamRenderer : Object2D
+    public class CartoonRenderer : Object2D
     {
         /// <summary>
         /// This is the map method called when mapping from
@@ -66,11 +66,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Vector2 torsoOrigin;
         private Texture2D torsoTexture;
 
-        // temp code to establish max-min for distances
-        private float maxz = 0.0f;
-        private float minz = 999999.9f;
-
         private const float PIN_FROM_END = 0.1f;
+        private const float FOCAL_PLANE_DIST = 1.5f;  // dist at which the scale is 1
+        private const float NEAR_PLANE = 1.0f;  // minimum dist we assume so we don't balloon near kinect
 
         /// <summary>
         /// Whether the rendering has been initialized.
@@ -78,11 +76,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private bool initialized;
 
         /// <summary>
-        /// Initializes a new instance of the SkeletonStreamRenderer class.
+        /// Initializes a new instance of the CartoonRenderer class.
         /// </summary>
         /// <param name="game">The related game object.</param>
         /// <param name="map">The method used to map the SkeletonPoint to the target space.</param>
-        public SkeletonStreamRenderer(Game game, SkeletonPointMap map)
+        public CartoonRenderer(Game game, SkeletonPointMap map)
             : base(game)
         {
             this.mapMethod = map;
@@ -168,38 +166,36 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 switch (skeleton.TrackingState)
                 {
                     case SkeletonTrackingState.Tracked:
+
                         // Draw Bones
-                        this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture, this.torsoOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.pelvisTexture, this.pelvisOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.boneTexture, this.boneOrigin);
+                        this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture);
+                        this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.pelvisTexture);
+                        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.boneTexture);
                         /* left of screen and left arm of player, NOT stage left */
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, this.boneTexture, this.boneOrigin);
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, this.boneTexture);
 
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.boneTexture, this.boneOrigin);
+                        this.DrawBone(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.boneTexture);
 
-                        this.DrawBone(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.boneTexture, this.boneOrigin);
+                        this.DrawBone(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.boneTexture);
 
-                        this.DrawBone(skeleton.Joints, JointType.HipRight, JointType.KneeRight, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.boneTexture, this.boneOrigin);
-                        this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture, this.boneOrigin);
+                        this.DrawBone(skeleton.Joints, JointType.HipRight, JointType.KneeRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.boneTexture);
+                        this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture);
 
                         // Now draw the joints
 
                         foreach (Joint j in skeleton.Joints)
                         {
-                            if (j.Position.Z > maxz) maxz = j.Position.Z;
-                            if (j.Position.Z < minz) minz = j.Position.Z;
-
                             
                             Color jointColor = Color.Green;
                             if (j.TrackingState != JointTrackingState.Tracked)
@@ -237,8 +233,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 }
             }
 
-            Console.WriteLine("min {0}, max{1}", this.minz, this.maxz);
-
             this.SharedSpriteBatch.End();
             skeletonDrawn = true;
 
@@ -271,12 +265,15 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <param name="joints">The joint data.</param>
         /// <param name="startJoint">The starting joint.</param>
         /// <param name="endJoint">The ending joint.</param>
-        private void DrawBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture, Vector2 boneOrigin)
+        /// <param name="boneTexture">The texture to use for the joint</param>
+        private void DrawBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture)
         {
+            float depth = joints[startJoint].Position.Z;
             Vector2 start = this.mapMethod(joints[startJoint].Position);
             Vector2 end = this.mapMethod(joints[endJoint].Position);
             Vector2 diff = end - start;
-            Vector2 scale = new Vector2(1, diff.Length() / boneTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
+            Vector2 scale = new Vector2((float)(FOCAL_PLANE_DIST / Math.Max(NEAR_PLANE, depth)), 
+                diff.Length() / boneTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
 
             float angle = (float)Math.Atan2(diff.Y, diff.X) - MathHelper.PiOver2;
 

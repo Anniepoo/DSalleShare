@@ -18,8 +18,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     {
         /// <summary>
         /// This is used to adjust the window size.
+        /// 
+        /// 
         /// </summary>
-        private const int Width = 1000;
+        private const int Width = 960;
+        private const int Height = 720;
 
         /// <summary>
         /// This controls the transition time for the resize animation.
@@ -43,26 +46,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private readonly ColorStreamRenderer colorStream;
 
         /// <summary>
-        /// This manages the rendering of the depth stream.
-        /// </summary>
-        private readonly DepthStreamRenderer depthStream;
-
-        /// <summary>
-        /// This is the location of the color stream when minimized.
-        /// </summary>
-        private readonly Vector2 colorSmallPosition;
-
-        /// <summary>
-        /// This is the location of the depth stream when minimized;
-        /// </summary>
-        private readonly Vector2 depthSmallPosition;
-
-        /// <summary>
-        /// This is the minimized size for both streams.
-        /// </summary>
-        private readonly Vector2 minSize;
-
-        /// <summary>
         /// This is the viewport of the streams.
         /// </summary>
         private readonly Rectangle viewPortRectangle;
@@ -73,26 +56,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private SpriteBatch spriteBatch;
 
         /// <summary>
-        /// This tracks the state to indicate which stream has focus.
-        /// </summary>
-        private bool colorHasFocus = true;
-
-        /// <summary>
         /// This tracks the previous keyboard state.
         /// </summary>
         private KeyboardState previousKeyboard;
-
-        /// <summary>
-        /// This tracks the current transition time.
-        /// 0                   = Color Stream Full Focus
-        /// TransitionDuration  = Depth Stream Full Focus
-        /// </summary>
-        private double transition;
-
-        /// <summary>
-        /// This is the texture for the header.
-        /// </summary>
-        private Texture2D header;
 
         /// <summary>
         /// This is the font for the footer.
@@ -106,17 +72,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             this.IsFixedTimeStep = false;
             this.IsMouseVisible = true;
-            this.Window.Title = "Transgender Toons";
+            this.Window.Title = "Happy Birthday";
 
-            // This sets the width to the desired width
-            // It also forces a 4:3 ratio for height
-            // Adds 110 for header/footer
             this.graphics = new GraphicsDeviceManager(this);
             this.graphics.PreferredBackBufferWidth = Width;
-            this.graphics.PreferredBackBufferHeight = ((Width / 4) * 3) + 110;
+            this.graphics.PreferredBackBufferHeight = Height;
             this.graphics.PreparingDeviceSettings += this.GraphicsDevicePreparingDeviceSettings;
             this.graphics.SynchronizeWithVerticalRetrace = true;
-            this.viewPortRectangle = new Rectangle(10, 80, Width - 20, ((Width - 2) / 4) * 3);
+            this.viewPortRectangle = new Rectangle(0,0, Width, Height);
 
             Content.RootDirectory = "Content";
 
@@ -128,16 +91,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             // Default size is the full viewport
             this.colorStream = new ColorStreamRenderer(this);
-
-            // Calculate the minimized size and location
-            this.depthStream = new DepthStreamRenderer(this);
-            this.depthStream.Size = new Vector2(this.viewPortRectangle.Width / 4, this.viewPortRectangle.Height / 4);
-            this.depthStream.Position = new Vector2(Width - this.depthStream.Size.X - 15, 85);
-
-            // Store the values so we can animate them later
-            this.minSize = this.depthStream.Size;
-            this.depthSmallPosition = this.depthStream.Position;
-            this.colorSmallPosition = new Vector2(15, 85);
 
             this.Components.Add(this.chooser);
 
@@ -152,7 +105,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), this.spriteBatch);
 
-            this.header = Content.Load<Texture2D>("Header");
             this.font = Content.Load<SpriteFont>("Segoe16");
 
             base.LoadContent();
@@ -163,7 +115,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         protected override void Initialize()
         {
-            this.Components.Add(this.depthStream);
             this.Components.Add(this.colorStream);
 
             base.Initialize();
@@ -187,42 +138,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             this.previousKeyboard = newState;
 
-            // Animate the transition value
-            if (this.colorHasFocus)
-            {
-                this.transition -= gameTime.ElapsedGameTime.TotalSeconds;
-                if (this.transition < 0)
-                {
-                    this.transition = 0;
-                }
-            }
-            else
-            {
-                this.transition += gameTime.ElapsedGameTime.TotalSeconds;
-                if (this.transition > TransitionDuration)
-                {
-                    this.transition = TransitionDuration;
-                }
-            }
-
             // Animate the stream positions and sizes
-            this.colorStream.Position = Vector2.SmoothStep(
-                new Vector2(this.viewPortRectangle.X, this.viewPortRectangle.Y),
-                this.colorSmallPosition, 
-                (float)(this.transition / TransitionDuration));
-            this.colorStream.Size = Vector2.SmoothStep(
-                new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height),
-                this.minSize, 
-                (float)(this.transition / TransitionDuration));
-
-            this.depthStream.Position = Vector2.SmoothStep(
-                this.depthSmallPosition,
-                new Vector2(this.viewPortRectangle.X, this.viewPortRectangle.Y),
-                (float)(this.transition / TransitionDuration));
-            this.depthStream.Size = Vector2.SmoothStep(
-                this.minSize, 
-                new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height),
-                (float)(this.transition / TransitionDuration));
+            this.colorStream.Position = new Vector2(0,0);
+            this.colorStream.Size = new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height);
 
             base.Update(gameTime);
         }
@@ -237,22 +155,13 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             GraphicsDevice.Clear(Color.White);
 
             // Render header/footer
-            this.spriteBatch.Begin();
-            this.spriteBatch.Draw(this.header, Vector2.Zero, null, Color.White);
+            // at the moment no indicia stuff on screen
+        //    this.spriteBatch.Begin();
         //    this.spriteBatch.DrawString(this.font, "Press [Space] to switch between color and depth.", new Vector2(10, this.viewPortRectangle.Y + this.viewPortRectangle.Height + 3), Color.Black);
-            this.spriteBatch.End();
+         //   this.spriteBatch.End();
 
             // Render the streams with respect to focus
-            if (this.colorHasFocus)
-            {
-                this.colorStream.DrawOrder = 1;
-                this.depthStream.DrawOrder = 2;
-            }
-            else
-            {
-                this.colorStream.DrawOrder = 2;
-                this.depthStream.DrawOrder = 1;
-            }
+            this.colorStream.DrawOrder = 1;
 
             base.Draw(gameTime);
         }
@@ -260,7 +169,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// This method ensures that we can render to the back buffer without
         /// losing the data we already had in our previous back buffer.  This
-        /// is necessary for the SkeletonStreamRenderer.
+        /// is necessary for the CartoonRenderer.
         /// </summary>
         /// <param name="sender">The sending object.</param>
         /// <param name="e">The event args.</param>
