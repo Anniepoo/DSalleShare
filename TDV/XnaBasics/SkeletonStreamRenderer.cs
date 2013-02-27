@@ -163,7 +163,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.boneTexture, this.boneOrigin);
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.boneTexture, this.boneOrigin);
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.boneTexture, this.boneOrigin);
+
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture, this.torsoOrigin);
+
                         this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.boneTexture, this.boneOrigin);
                         this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture, this.boneOrigin);
                         this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.boneTexture, this.boneOrigin);
@@ -185,7 +187,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture, this.boneOrigin);
 
                         // Now draw the joints
-                        /*
+                        /**
                         foreach (Joint j in skeleton.Joints)
                         {
                             Color jointColor = Color.Green;
