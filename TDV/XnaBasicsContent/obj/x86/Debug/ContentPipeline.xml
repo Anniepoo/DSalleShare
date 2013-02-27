@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\Joint.xnb</Output>
-      <Time>2013-02-26T19:41:11.204962-08:00</Time>
+      <Time>2013-02-27T13:31:24.2217365-08:00</Time>
     </Item>
     <Item>
       <Source>Bone.png</Source>
@@ -53,7 +53,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\Bone.xnb</Output>
-      <Time>2013-02-26T19:41:11.1269576-08:00</Time>
+      <Time>2013-02-27T13:31:24.2217365-08:00</Time>
     </Item>
     <Item>
       <Source>Header.png</Source>
