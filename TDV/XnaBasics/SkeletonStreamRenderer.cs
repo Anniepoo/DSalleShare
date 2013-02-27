@@ -294,6 +294,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                                 0.0f);
 
             this.SharedSpriteBatch.Draw(boneTexture, start, null, color, angle, boneOrigin, scale, SpriteEffects.None, 1.0f);
+            this.SharedSpriteBatch.Draw(boneTexture, start, null, Color.Pink, 0.0f, boneOrigin, scale, SpriteEffects.None, 1.0f);
         }
     }
 }
