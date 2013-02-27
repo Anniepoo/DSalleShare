@@ -3,7 +3,7 @@
 //     Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
 //------------------------------------------------------------------------------
-
+// annie sez hi
 namespace Microsoft.Samples.Kinect.XnaBasics
 {
     using System;
