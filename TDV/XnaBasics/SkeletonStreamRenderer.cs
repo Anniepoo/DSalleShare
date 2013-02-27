@@ -198,7 +198,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                             if (j.Position.Z > maxz) maxz = j.Position.Z;
                             if (j.Position.Z < minz) minz = j.Position.Z;
 
-                            /*
+                            
                             Color jointColor = Color.Green;
                             if (j.TrackingState != JointTrackingState.Tracked)
                             {
@@ -251,7 +251,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             base.LoadContent();
 
             this.jointTexture = Game.Content.Load<Texture2D>("Joint");
-            this.jointOrigin = new Vector2(this.jointTexture.Width / 2, this.jointTexture.Height);
+            this.jointOrigin = new Vector2(this.jointTexture.Width / 2, this.jointTexture.Height / 2);
 
             this.boneTexture = Game.Content.Load<Texture2D>("Bone");
             this.boneOrigin = new Vector2(8, 1200);
