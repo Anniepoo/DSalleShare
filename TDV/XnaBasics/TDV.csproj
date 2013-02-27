@@ -112,7 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorStreamRenderer.cs" />
-    <Compile Include="SkeletonStreamRenderer.cs" />
+    <Compile Include="..\..\..\Backup Code\SkeletonStreamRenderer.cs">
+      <Link>SkeletonStreamRenderer.cs</Link>
+    </Compile>
     <Compile Include="DepthStreamRenderer.cs" />
     <Compile Include="KinectChooser.cs" />
     <Compile Include="Object2D.cs" />
