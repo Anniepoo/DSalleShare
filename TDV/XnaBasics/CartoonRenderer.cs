@@ -176,7 +176,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 switch (skeleton.TrackingState)
                 {
                     case SkeletonTrackingState.Tracked:
-
+                        // trivial change by annie
                         // Draw Bones
 <<<<<<< HEAD:TDV/XnaBasics/SkeletonStreamRenderer.cs
                       //  this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.boneTexture, this.boneOrigin, Vector2.Zero);
