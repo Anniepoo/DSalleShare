@@ -272,14 +272,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             destRect.Offset((int)(center.X - destRect.Width / 2),
                             (int)(center.Y - destRect.Height / 2));
-
-            // this is trashed, 
-            /*
-            start.X += -boneTexture.Width * boneOrigin.X * diff.Y / diff.Length() +
-                       boneTexture.Height * boneOrigin.Y * diff.X / diff.Length();
-            start.Y -= boneTexture.Height * boneOrigin.Y * diff.X / diff.Length() +
-                       boneTexture.Width * boneOrigin.X * diff.Y / diff.Length();
-             */
      
             // just for development
             Color color = Color.LightGreen;
@@ -288,63 +280,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 color = Color.White;
             }
-            /*
-            this.SharedSpriteBatch.Draw(
-                                this.jointTexture,
-                                center,
-                                null,
-                                Color.RoyalBlue,
-                                0.0f,
-                                this.jointOrigin,
-                                1.0f,
-                                SpriteEffects.None,
-                                0.0f);
-            */
-           /*
-            this.SharedSpriteBatch.Draw(boneTexture, destRect,
-                   sourceRect, Color.White, angle,
-                   new Vector2(destRect.Center.X - destRect.Left, destRect.Center.Y - destRect.Top),
-                   SpriteEffects.None, 1.0f);
 
-            this.SharedSpriteBatch.Draw(boneTexture, destRect,
-                   sourceRect, Color.Green, 0.0f,
-                   new Vector2(destRect.Center.X - destRect.Left, destRect.Center.Y - destRect.Top),
-                   SpriteEffects.None, 1.0f);
-            */
             Vector2 destctr = new Vector2(destRect.Center.X, destRect.Center.Y);
             this.SharedSpriteBatch.Draw(boneTexture, destctr, null, color, angle,
                 new Vector2(destRect.Width / 2, destRect.Height / 2),
                 scale, SpriteEffects.None, 1.0f);
-
-            /*
-            this.SharedSpriteBatch.Draw(
-                      this.jointTexture,
-                      destctr,
-                      null,
-                      Color.Red,
-                      0.0f,
-                      this.jointOrigin,
-                      1.0f,
-                      SpriteEffects.None,
-                      0.0f);
-            */
-            /*
-            // ok, bizarrely it's rotating about UL of destRect!
-            Vector2 destul = new Vector2(destRect.Left, destRect.Top);
-            this.SharedSpriteBatch.Draw(
-                   this.jointTexture,
-                   destul,
-                   null,
-                   Color.Orange,
-                   0.0f,
-                   this.jointOrigin,
-                   1.0f,
-                   SpriteEffects.None,
-                   0.0f);
-
-            */
-
-             
         }
     }
 }
