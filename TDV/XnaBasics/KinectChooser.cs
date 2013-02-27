@@ -72,6 +72,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.statusMap.Add(KinectStatus.InsufficientBandwidth, "Insufficient Bandwidth");
             this.statusMap.Add(KinectStatus.NotPowered, "Not Powered");
             this.statusMap.Add(KinectStatus.NotReady, "Not Ready");
+
+            
         }
 
         /// <summary>
@@ -192,7 +194,13 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 // If this sensor is connected, then enable it
                 if (this.LastStatus == KinectStatus.Connected)
                 {
-                    this.Sensor.SkeletonStream.Enable();
+                    TransformSmoothParameters sp = new TransformSmoothParameters();
+                    sp.Correction = 0.1f;
+                    sp.MaxDeviationRadius = 0.2f;
+                    sp.Prediction = 0.8f;
+
+                    this.Sensor.SkeletonStream.Enable(sp);
+              
                     this.Sensor.ColorStream.Enable(this.colorImageFormat);
                     this.Sensor.DepthStream.Enable(this.depthImageFormat);
 
