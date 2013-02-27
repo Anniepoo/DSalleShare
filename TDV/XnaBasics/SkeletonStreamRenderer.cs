@@ -70,6 +70,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private float maxz = 0.0f;
         private float minz = 999999.9f;
 
+        private const float PIN_FROM_END = 0.1f;
+
         /// <summary>
         /// Whether the rendering has been initialized.
         /// </summary>
@@ -274,7 +276,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             Vector2 start = this.mapMethod(joints[startJoint].Position);
             Vector2 end = this.mapMethod(joints[endJoint].Position);
             Vector2 diff = end - start;
-            Vector2 scale = new Vector2(1, diff.Length() / 135);
+            Vector2 scale = new Vector2(1, diff.Length() / boneTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
 
             float angle = (float)Math.Atan2(diff.Y, diff.X) - MathHelper.PiOver2;
 
@@ -296,7 +298,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             Vector2 destctr = new Vector2(destRect.X, destRect.Y);
             this.SharedSpriteBatch.Draw(boneTexture, destctr, null, color, angle,
-                new Vector2(boneTexture.Width/2 , 0),
+                new Vector2(boneTexture.Width/2 , boneTexture.Height * PIN_FROM_END),
                scale, SpriteEffects.None, 1.0f);
         }
     }
