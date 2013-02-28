@@ -156,9 +156,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             // Render header/footer
             // at the moment no indicia stuff on screen
-        //    this.spriteBatch.Begin();
-        //    this.spriteBatch.DrawString(this.font, "Press [Space] to switch between color and depth.", new Vector2(10, this.viewPortRectangle.Y + this.viewPortRectangle.Height + 3), Color.Black);
-         //   this.spriteBatch.End();
+            this.spriteBatch.Begin();
+            this.spriteBatch.DrawString(this.font, "Press [Space] to switch between color and depth.", new Vector2(10, this.viewPortRectangle.Y + this.viewPortRectangle.Height + 3), Color.Black);
+            this.spriteBatch.End();
 
             // Render the streams with respect to focus
             this.colorStream.DrawOrder = 1;

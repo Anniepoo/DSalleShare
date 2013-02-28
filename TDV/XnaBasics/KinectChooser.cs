@@ -194,6 +194,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 // If this sensor is connected, then enable it
                 if (this.LastStatus == KinectStatus.Connected)
                 {
+                    // Annie sez this is pretty smoothed out, but gives good tracking while not
+                    // being laggy
                     TransformSmoothParameters sp = new TransformSmoothParameters();
                     sp.Correction = 0.1f;
                     sp.MaxDeviationRadius = 0.2f;
