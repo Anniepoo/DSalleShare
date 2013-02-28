@@ -41,6 +41,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private static bool skeletonDrawn = true;
 
+        private Texture2D frontPlayfield;
+
         /// <summary>
         /// The origin (center) location of the joint texture.
         /// </summary>
@@ -236,6 +238,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         break;
                 }
             }
+            // this is STOOPID - why won't it draw right size?
+            Rectangle r = new Rectangle(0, 0, (int)this.Size.X, (int)this.Size.Y);
+            Rectangle s = new Rectangle(0, 0, this.frontPlayfield.Width, this.frontPlayfield.Height);
+            this.SharedSpriteBatch.Draw(this.frontPlayfield, r, s, Color.White);
 
             this.SharedSpriteBatch.End();
             skeletonDrawn = true;
@@ -249,6 +255,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         protected override void LoadContent()
         {
             base.LoadContent();
+
+
+            frontPlayfield = Game.Content.Load<Texture2D>("FrontPlayField");
 
             this.jointTexture = Game.Content.Load<Texture2D>("Joint");
             this.jointOrigin = new Vector2(this.jointTexture.Width / 2, this.jointTexture.Height / 2);
@@ -272,6 +281,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <param name="boneTexture">The texture to use for the joint</param>
         private void DrawBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture)
         {
+            if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
+                    joints[endJoint].TrackingState != JointTrackingState.Tracked)
+                return;
+
             float depth = joints[startJoint].Position.Z;
             Vector2 start = this.mapMethod(joints[startJoint].Position);
             Vector2 end = this.mapMethod(joints[endJoint].Position);
@@ -290,13 +303,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             destRect.Offset((int)(start.X), (int)(start.Y));
 
             // just for development
-            Color color = Color.LightGreen;
-            if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
-                joints[endJoint].TrackingState != JointTrackingState.Tracked)
-            {
-                color = Color.White;
-            }
-
+            Color color = Color.White;
+      
+       
             Vector2 destctr = new Vector2(destRect.X, destRect.Y);
             this.SharedSpriteBatch.Draw(boneTexture, destctr, null, color, angle,
                 new Vector2(boneTexture.Width/2 , boneTexture.Height * PIN_FROM_END),

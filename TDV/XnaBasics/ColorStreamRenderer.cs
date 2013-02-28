@@ -30,6 +30,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private Texture2D colorTexture;
 
+
         /// <summary>
         /// The back buffer where color frame is scaled as requested by the Size.
         /// </summary>
