@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------------
 // <copyright file="CartoonRenderer.cs" company="Microsoft">
 //     Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
@@ -33,6 +33,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// The last frames skeleton data.
         /// </summary>
         private static Skeleton[] skeletonData;
+
 
         /// <summary>
         /// This flag ensures only request a frame once per update call
@@ -92,7 +93,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public override void Initialize()
         {
             base.Initialize();
+            
             this.Size = new Vector2(Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height);
+
+
             this.initialized = true;
         }
 

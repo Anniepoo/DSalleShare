@@ -1,0 +1,17 @@
+Content\Segoe16.xnb
+Content\KinectColorVisualizer.xnb
+Content\KinectDepthVisualizer.xnb
+Content\ChooserBackground.xnb
+Content\Joint.xnb
+Content\Bone.xnb
+Content\Header.xnb
+Content\Torso.xnb
+Content\Pelvis.xnb
+Content\LowerLeg.xnb
+Content\LowerArm.xnb
+Content\PonyTail.xnb
+Content\Shoulder.xnb
+Content\UpperArm.xnb
+Content\UpperLeg.xnb
+Content\UpperTorso.xnb
+Content\Waist.xnb
