@@ -44,7 +44,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Texture2D frontPlayfield;
 
         /// <summary>
-        /// The origin (center) location of the joint texture.
+        /// The origin (center) location of the joint texture.  howdy 
         /// </summary>
         private Vector2 jointOrigin;
 
@@ -198,6 +198,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.boneTexture);
                         this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture);
 
+                        this.DrawSkirtBone(skeleton.Joints);
+
                         // Now draw the joints
 
                         foreach (Joint j in skeleton.Joints)
@@ -249,6 +251,42 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             base.Draw(gameTime);
         }
 
+        private void DrawSkirtBone(JointCollection jointCollection)
+        {
+            if (jointCollection[JointType.HipCenter].TrackingState != JointTrackingState.Tracked)return;
+            Vector2 start = this.mapMethod(jointCollection[JointType.HipCenter].Position);
+            Vector2 end;
+
+            if (jointCollection[JointType.KneeRight].TrackingState != JointTrackingState.Tracked &&
+                jointCollection[JointType.KneeLeft].TrackingState != JointTrackingState.Tracked
+                )
+            {
+                end = this.mapMethod(jointCollection[JointType.HipCenter].Position);
+                end.Y += 150; // make the skirt directly below in worst case
+            }
+            else if (jointCollection[JointType.KneeRight].TrackingState != JointTrackingState.Tracked)
+            {
+                end = this.mapMethod(jointCollection[JointType.KneeLeft].Position);
+                end.X = start.X;
+            }
+            else if (jointCollection[JointType.KneeLeft].TrackingState != JointTrackingState.Tracked)
+            {
+                end = this.mapMethod(jointCollection[JointType.KneeRight].Position);
+                end.X = start.X;
+            }
+            else
+            {
+                end = this.mapMethod(jointCollection[JointType.KneeLeft].Position);
+                end += this.mapMethod(jointCollection[JointType.KneeRight].Position);
+
+                end.X /= 2;
+                end.Y /= 2;
+            }
+
+            float depth = jointCollection[JointType.HipCenter].Position.Z;
+            DrawBoneLike(depth, start, end, boneTexture);
+        }
+
         /// <summary>
         /// This method loads the textures and sets the origin values.
         /// </summary>
@@ -287,8 +325,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             float depth = joints[startJoint].Position.Z;
             Vector2 start = this.mapMethod(joints[startJoint].Position);
+
             Vector2 end = this.mapMethod(joints[endJoint].Position);
-            Vector2 diff = end - start;
+            DrawBoneLike(depth, start, end, boneTexture);
+        }
+
+        private void DrawBoneLike(float depth, Vector2 start, Vector2 end, Texture2D boneTexture)
+        {
+                Vector2 diff = end - start;
             Vector2 scale = new Vector2((float)(FOCAL_PLANE_DIST / Math.Max(NEAR_PLANE, depth)), 
                 diff.Length() / boneTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
 
