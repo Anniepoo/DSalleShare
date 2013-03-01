@@ -294,7 +294,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             base.LoadContent();
 
-
             frontPlayfield = Game.Content.Load<Texture2D>("FrontPlayField");
 
             this.jointTexture = Game.Content.Load<Texture2D>("Joint");
