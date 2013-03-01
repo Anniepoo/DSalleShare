@@ -21,3 +21,4 @@ C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\U
 C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\UpperTorso.xnb
 C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\Waist.xnb
 C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\LowerLeg.xnb
+C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FrontPlayField.xnb

@@ -154,6 +154,15 @@
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\Waist.xnb</Output>
       <Time>2013-02-27T12:37:15.9559463-08:00</Time>
     </Item>
+    <Item>
+      <Source>FrontPlayField.png</Source>
+      <Name>FrontPlayField</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FrontPlayField.xnb</Output>
+      <Time>2013-02-27T20:21:51.9443617-08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
