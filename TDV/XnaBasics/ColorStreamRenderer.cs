@@ -18,7 +18,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// This child responsible for rendering the color stream's skeleton.
         /// </summary>
-        private readonly CartoonRenderer skeletonStream;
+        private readonly CartoonRenderer cartoonRenderer;
         
         /// <summary>
         /// The last frame of color data.
@@ -53,7 +53,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public ColorStreamRenderer(Game game)
             : base(game)
         {
-            this.skeletonStream = new CartoonRenderer(game, this.SkeletonToColorMap);
+            this.cartoonRenderer = new CartoonRenderer(game, this.SkeletonToColorMap);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             // Update the skeleton renderer
-            this.skeletonStream.Update(gameTime);
+            this.cartoonRenderer.Update(gameTime);
         }
 
         /// <summary>
@@ -147,18 +147,19 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 this.colorTexture.SetData<byte>(this.colorData);
 
                 // Draw the color image
+                /* DS commented because the backfield will cover the entire color image
                 this.SharedSpriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, this.kinectColorVisualizer);
                 this.SharedSpriteBatch.Draw(this.colorTexture, Vector2.Zero, Color.White);
                 this.SharedSpriteBatch.End();
-
+*/
                 // Draw the skeleton
-                this.skeletonStream.Draw(gameTime);
+                this.cartoonRenderer.Draw(gameTime);
 
                 // Reset the render target and prepare to draw scaled image
                 this.Game.GraphicsDevice.SetRenderTargets(null);
 
                 // No need to re-render the back buffer until we get new data
-                this.needToRedrawBackBuffer = false;
+                this.needToRedrawBackBuffer = false; 
             }
 
             // Draw the scaled texture

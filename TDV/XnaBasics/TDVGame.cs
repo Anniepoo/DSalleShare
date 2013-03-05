@@ -21,8 +21,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// 
         /// 
         /// </summary>
-        private const int Width = 960;
-        private const int Height = 720;
+        private const int Width = 1280;
+        private const int Height = 960;
 
         /// <summary>
         /// This controls the transition time for the resize animation.
