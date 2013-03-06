@@ -102,9 +102,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         SurfaceFormat.Color);
 
                     this.backBuffer = new RenderTarget2D(
-                        this.Game.GraphicsDevice, 
-                        frame.Width, 
-                        frame.Height, 
+                        this.Game.GraphicsDevice,
+                        // was frame.Width & frame.Height Annie Fix to stop drawing cartoons 640x480 3/6/13 11:12am
+                        this.Game.GraphicsDevice.Viewport.Width, 
+                        this.Game.GraphicsDevice.Viewport.Height,
                         false, 
                         SurfaceFormat.Color, 
                         DepthFormat.None,
@@ -115,7 +116,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 frame.CopyPixelDataTo(this.colorData);
                 this.needToRedrawBackBuffer = true;
             }
-
+            
             // Update the skeleton renderer
             this.cartoonRenderer.Update(gameTime);
         }
@@ -147,11 +148,12 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 this.colorTexture.SetData<byte>(this.colorData);
 
                 // Draw the color image
-                /* DS commented because the backfield will cover the entire color image
+                // DS commented because the backfield will cover the entire color image
+                // Annie reenables to DEBUG
                 this.SharedSpriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, this.kinectColorVisualizer);
                 this.SharedSpriteBatch.Draw(this.colorTexture, Vector2.Zero, Color.White);
                 this.SharedSpriteBatch.End();
-*/
+
                 // Draw the skeleton
                 this.cartoonRenderer.Draw(gameTime);
 

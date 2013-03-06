@@ -3,7 +3,7 @@
 //     Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
 //------------------------------------------------------------------------------
-// annie sez hi
+
 namespace Microsoft.Samples.Kinect.XnaBasics
 {
     using System;
@@ -181,10 +181,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             this.SharedSpriteBatch.Begin();
-            this.SharedSpriteBatch.Draw(backField, new Vector2(0, 0), Color.White);
-            this.SharedSpriteBatch.Draw(midField, new Rectangle(0, 0, 640, 480), Color.White);
-            this.SharedSpriteBatch.Draw(frontMidField, new Rectangle(0, 0, 640, 480), Color.White);
-            this.SharedSpriteBatch.Draw(frontField, new Rectangle(0, 0, 640, 480), Color.White);
+        // DEBUG ANNIE    this.SharedSpriteBatch.Draw(backField, new Vector2(0, 0), Color.White);
+            this.SharedSpriteBatch.Draw(midField, new Vector2(0, 0), Color.White);
+            this.SharedSpriteBatch.Draw(frontMidField, new Vector2(0, 0), Color.White);
+            this.SharedSpriteBatch.Draw(frontField, new Vector2(0, 0), Color.White);
             foreach (var skeleton in skeletonData)
             {      
 
@@ -194,8 +194,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 {
                       
                     case SkeletonTrackingState.Tracked:
-                        // trivial change by annie
-                        // Draw Bones
+                       
+                        // Draw Bones using painters algorithm
                  
 
                         this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.waistTexture);  // Waist
