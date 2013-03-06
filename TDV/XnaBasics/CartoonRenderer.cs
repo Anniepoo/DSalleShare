@@ -181,7 +181,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             this.SharedSpriteBatch.Begin();
-        // DEBUG ANNIE    this.SharedSpriteBatch.Draw(backField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(midField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(frontMidField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(frontField, new Vector2(0, 0), Color.White);
@@ -223,17 +222,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
 
 
-                        if (skeleton.Position.Z >= 1.5f)
-                        {
-                           
-                            if (skeleton.Position.Z >= 4.0f)
-                                this.SharedSpriteBatch.Draw(midField, new Rectangle(0, 0, 640, 480), Color.White);
- if(skeleton.Position.Z >= 2.8f)
-                            this.SharedSpriteBatch.Draw(frontMidField, new Rectangle(0, 0, 640, 480), Color.White);                    
-                        
-
-                        this.SharedSpriteBatch.Draw(frontField, new Rectangle(0, 0, 640, 480), Color.White);
-                        }
 /* DS COMMENETD OUT JOINT DRAWING
                         foreach (Joint j in skeleton.Joints)
                         {

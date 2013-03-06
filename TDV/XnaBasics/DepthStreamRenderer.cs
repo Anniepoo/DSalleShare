@@ -4,6 +4,9 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
+
+// Annie - believe this class isn't used
+// no ctor call 3/6/3013
 namespace Microsoft.Samples.Kinect.XnaBasics
 {
     using Microsoft.Kinect;

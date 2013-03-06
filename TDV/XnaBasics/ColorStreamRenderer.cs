@@ -35,6 +35,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// The back buffer where color frame is scaled as requested by the Size.
         /// </summary>
         private RenderTarget2D backBuffer;
+
+        private short[] depthData = null;
         
         /// <summary>
         /// This Xna effect is used to swap the Red and Blue bytes of the color stream data.
@@ -81,6 +83,21 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 return;
             }
 
+            // Grab the next depth buffer if it's available
+            using (var depthFrame = this.Chooser.Sensor.DepthStream.OpenNextFrame(0))
+            {
+                if (depthFrame != null)
+                {
+                    if (depthData == null || depthData.Length != depthFrame.PixelDataLength)
+                    {
+                        depthData = new short[depthFrame.PixelDataLength];
+
+                    }
+                    depthFrame.CopyPixelDataTo(depthData);
+                }
+            }
+            // AO - end of grabbing depth data
+
             using (var frame = this.Chooser.Sensor.ColorStream.OpenNextFrame(0))
             {
                 // Sometimes we get a null frame back if no data is ready
@@ -116,9 +133,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 frame.CopyPixelDataTo(this.colorData);
                 this.needToRedrawBackBuffer = true;
             }
-            
+
             // Update the skeleton renderer
             this.cartoonRenderer.Update(gameTime);
+
+           
         }
 
         /// <summary>
@@ -145,13 +164,63 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 this.Game.GraphicsDevice.SetRenderTarget(this.backBuffer);
                 this.Game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
 
+                // try the simplest thing that can possibly work. We'll set the alpha transparent
+                // Diana sez also have to set rgb values to zero
+
+                if (depthData != null)   // at startup we might get color frame first
+                {
+                    int cdw = this.Chooser.Sensor.ColorStream.FrameWidth;
+                    int cdh = this.Chooser.Sensor.ColorStream.FrameHeight;
+                    int ddw = this.Chooser.Sensor.DepthStream.FrameWidth;
+
+                    float xColorToDepth = ddw /  (float)cdw;
+                    float yColorToDepth = this.Chooser.Sensor.DepthStream.FrameHeight /
+                        (float)cdh;
+                    for (int cy = 0; cy < cdh; cy++)
+                    {
+                        for (int cx = 0; cx < cdw; cx++)
+                        {
+                            int dIndex = (int)(xColorToDepth * cx + yColorToDepth * cy * ddw);
+
+                            int cIndex = 4 * (cdw * cy + cx);
+
+                            
+
+                            // player number is whatever. They don't necessarily start at 1
+                            if ((depthData[dIndex] & 0x0007) == 0)
+                            {
+                                colorData[cIndex] = 0; // b
+                                colorData[cIndex + 1] = 0;
+                                colorData[cIndex + 2] = 0;
+                                colorData[cIndex + 3] = 0;
+                            }
+                                /*
+                            else
+                            {
+                                colorData[cIndex] = 0; // b
+                                colorData[cIndex + 1] = 0xFF;
+                                colorData[cIndex + 2] = 0;
+                                colorData[cIndex + 3] = 0xFF;
+                            }
+                                 */
+                        }
+                    }
+                }
+
                 this.colorTexture.SetData<byte>(this.colorData);
 
                 // Draw the color image
                 // DS commented because the backfield will cover the entire color image
-                // Annie reenables to DEBUG
+                // Annie reenables to make colors work
                 this.SharedSpriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, this.kinectColorVisualizer);
-                this.SharedSpriteBatch.Draw(this.colorTexture, Vector2.Zero, Color.White);
+
+                // Annie changed to expand the colorTexture, which is 640x480 and contains the color frame from the kinect,
+                // out the entire viewport 
+
+                // Annie sez we're going to change this to mask for the depth data
+                
+                
+                this.SharedSpriteBatch.Draw(this.colorTexture, this.Game.GraphicsDevice.Viewport.Bounds , Color.White);
                 this.SharedSpriteBatch.End();
 
                 // Draw the skeleton
@@ -199,7 +268,13 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 // This is used to map a skeleton point to the color image location
                 var colorPt = Chooser.Sensor.CoordinateMapper.MapSkeletonPointToColorPoint(point, Chooser.Sensor.ColorStream.Format);
-                return new Vector2(colorPt.X, colorPt.Y);
+
+                // AO - changed to scale positions by the amount we blow up the colorstream image when we render it
+                // so the skeletons don't end up at 640 x 480
+                Vector2 returnpt = new Vector2(colorPt.X, colorPt.Y);
+                returnpt.X *= Game.GraphicsDevice.Viewport.Width / Chooser.Sensor.ColorStream.FrameWidth;
+                returnpt.Y *= Game.GraphicsDevice.Viewport.Height / Chooser.Sensor.ColorStream.FrameHeight;
+                return returnpt;
             }
 
             return Vector2.Zero;
