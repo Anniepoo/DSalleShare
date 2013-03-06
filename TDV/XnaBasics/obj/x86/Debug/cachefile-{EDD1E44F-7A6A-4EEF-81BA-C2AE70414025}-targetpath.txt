@@ -29,3 +29,5 @@ Content\BackField.xnb
 Content\MidField.xnb
 Content\FrontField.xnb
 Content\FrontMidField.xnb
+Content\Head.xnb
+Content\RightHand.xnb
