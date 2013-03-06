@@ -73,6 +73,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// Whether the rendering has been initialized.
         /// </summary>
         private bool initialized;
+        private Texture2D rightHandTexture;
+        private Texture2D headTexture;
         private Texture2D shoulderRightTexture;
         private Texture2D shoulderLeftTexture;
         private Texture2D upperArmRightTexture;
@@ -192,7 +194,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                        
                         // Draw Bones using painters algorithm
                  
-                        this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.boneTexture); // Head
+                        this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.headTexture); // Head
                         this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.waistTexture);  // Waist
                         // DS commented out drawing the small pelvis joints
                 //        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture);
@@ -203,7 +205,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.shoulderRightTexture); // Shoulder Right
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.shoulderLeftTexture); // Shoulder Left
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture); // Torso
-                        this.DrawBone(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.boneTexture); // Right hand 
+                        this.DrawBone(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.rightHandTexture); // Right hand 
                         this.DrawBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.lowerArmRightTexture); // Lower Arm Right
                         this.DrawBone(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, this.boneTexture); // Left hand
                         this.DrawBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, this.lowerArmLeftTexture); // Lower Arm Left
@@ -321,6 +323,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         protected override void LoadContent()
         {            base.LoadContent();
+            this.rightHandTexture = Game.Content.Load<Texture2D>("RightHand");
+            this.headTexture = Game.Content.Load<Texture2D>("Head");
             this.frontField = Game.Content.Load<Texture2D>("FrontField");
             this.frontMidField = Game.Content.Load<Texture2D>("FrontMidField");
             this.midField = Game.Content.Load<Texture2D>("MidField");
