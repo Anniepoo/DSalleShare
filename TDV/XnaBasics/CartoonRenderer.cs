@@ -194,7 +194,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         // trivial change by annie
                         // Draw Bones
                  
-                        this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.headTexture); // Head
+
                         this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.waistTexture);  // Waist
                         // DS commented out drawing the small pelvis joints
                 //        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture);
@@ -204,6 +204,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, this.upperArmLeftTexture);   // Upper Arm Left 
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.shoulderRightTexture); // Shoulder Right
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.shoulderLeftTexture); // Shoulder Left
+                        this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.headTexture); // Head  
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture); // Torso
                         this.DrawBone(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.rightHandTexture); // Right hand 
                         this.DrawBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.lowerArmRightTexture); // Lower Arm Right

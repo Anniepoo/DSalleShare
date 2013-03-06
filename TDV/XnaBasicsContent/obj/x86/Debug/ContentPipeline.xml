@@ -287,7 +287,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\Head.xnb</Output>
-      <Time>2013-03-06T11:04:37.8140832-08:00</Time>
+      <Time>2013-03-06T11:39:36.7961381-08:00</Time>
     </Item>
     <Item>
       <Source>RightHand.PNG</Source>
@@ -296,7 +296,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\RightHand.xnb</Output>
-      <Time>2013-03-06T11:07:04.0654483-08:00</Time>
+      <Time>2013-03-06T11:40:48.2102228-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
