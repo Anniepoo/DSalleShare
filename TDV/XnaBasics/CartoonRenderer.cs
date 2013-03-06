@@ -176,10 +176,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             this.SharedSpriteBatch.Begin();
-            this.SharedSpriteBatch.Draw(backField, new Rectangle(0, 0, 640, 480), Color.White);
+            this.SharedSpriteBatch.Draw(backField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(midField, new Rectangle(0, 0, 640, 480), Color.White);
             this.SharedSpriteBatch.Draw(frontMidField, new Rectangle(0, 0, 640, 480), Color.White);
-
+            this.SharedSpriteBatch.Draw(frontField, new Rectangle(0, 0, 640, 480), Color.White);
             foreach (var skeleton in skeletonData)
             {      
 
@@ -215,14 +215,19 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.lowerLegLeftTexture); // Lower Leg Left
                         this.DrawSkirtBone(skeleton.Joints); // Skirt
 
-                        if (skeleton.Position.Z >= 3.5f)
+
+                        // there was an error in my logic for the draw order depending on the player z
+                        if (skeleton.Position.Z >= 1.5f)
                         {
-                            this.SharedSpriteBatch.Draw(midField, new Rectangle(0, 0, 640, 480), Color.White);
-                            if (skeleton.Position.Z >= 2.5f)
-                                this.SharedSpriteBatch.Draw(frontMidField, new Rectangle(0, 0, 640, 480), Color.White);
-                        }
+                           
+                            if (skeleton.Position.Z >= 4.0f)
+                                this.SharedSpriteBatch.Draw(midField, new Rectangle(0, 0, 640, 480), Color.White);
+ if(skeleton.Position.Z >= 2.8f)
+                            this.SharedSpriteBatch.Draw(frontMidField, new Rectangle(0, 0, 640, 480), Color.White);                    
+                        
 
                         this.SharedSpriteBatch.Draw(frontField, new Rectangle(0, 0, 640, 480), Color.White);
+                        }
 /* DS COMMENETD OUT JOINT DRAWING
                         foreach (Joint j in skeleton.Joints)
                         {

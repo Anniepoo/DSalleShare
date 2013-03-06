@@ -18,7 +18,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// This child responsible for rendering the color stream's skeleton.
         /// </summary>
-        private readonly CartoonRenderer cartoonRenderer;
+        private readonly CartoonRenderer cartoonRenderer;  // DS refactored from skeletonRenderer
         
         /// <summary>
         /// The last frame of color data.
