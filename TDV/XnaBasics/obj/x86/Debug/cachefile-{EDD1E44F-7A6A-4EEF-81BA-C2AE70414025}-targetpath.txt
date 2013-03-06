@@ -31,3 +31,4 @@ Content\FrontField.xnb
 Content\FrontMidField.xnb
 Content\Head.xnb
 Content\RightHand.xnb
+Content\FootRight.xnb

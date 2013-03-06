@@ -298,6 +298,15 @@
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\RightHand.xnb</Output>
       <Time>2013-03-06T11:40:48.2102228-08:00</Time>
     </Item>
+    <Item>
+      <Source>FootRight.png</Source>
+      <Name>FootRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FootRight.xnb</Output>
+      <Time>2013-03-06T11:50:37.7819444-08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

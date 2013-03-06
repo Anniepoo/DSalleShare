@@ -73,6 +73,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// Whether the rendering has been initialized.
         /// </summary>
         private bool initialized;
+        private Texture2D footLeftTexture;
+        private Texture2D footRightTexture;
+        private Texture2D leftHandTexture;
         private Texture2D rightHandTexture;
         private Texture2D headTexture;
         private Texture2D shoulderRightTexture;
@@ -210,16 +213,16 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.lowerArmRightTexture); // Lower Arm Right
                         this.DrawBone(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, this.boneTexture); // Left hand
                         this.DrawBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, this.lowerArmLeftTexture); // Lower Arm Left
-                        this.DrawBone(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, this.upperLegRightTexture); // Upper Leg Right                        this.DrawBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.lowerArmLeftTexture); // Lower Left Arm 
-                        this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.boneTexture);    // Foot Right       
+                        this.DrawBone(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, this.upperLegRightTexture); // Upper Leg Right       
                         this.DrawBone(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, this.lowerLegRightTexture); //Lower Leg Right
-                        this.DrawBone(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.boneTexture); // Foot Left
+                        this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.footRightTexture);    // Foot Right    
                         this.DrawBone(skeleton.Joints, JointType.HipRight, JointType.KneeRight, this.upperLegLeftTexture); // Upper Leg Left
                         this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.lowerLegLeftTexture); // Lower Leg Left
+                        this.DrawBone(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.boneTexture); // Foot Left
                         this.DrawSkirtBone(skeleton.Joints); // Skirt
 
 
-                        // there was an error in my logic for the draw order depending on the player z
+
                         if (skeleton.Position.Z >= 1.5f)
                         {
                            
@@ -324,7 +327,12 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         protected override void LoadContent()
         {            base.LoadContent();
+
+
+            this.footRightTexture = Game.Content.Load<Texture2D>("FootRight");
             this.rightHandTexture = Game.Content.Load<Texture2D>("RightHand");
+            this.footLeftTexture = Game.Content.Load<Texture2D>("FootLeft");
+            this.leftHandTexture = Game.Content.Load<Texture2D>("LeftHand");
             this.headTexture = Game.Content.Load<Texture2D>("Head");
             this.frontField = Game.Content.Load<Texture2D>("FrontField");
             this.frontMidField = Game.Content.Load<Texture2D>("FrontMidField");
