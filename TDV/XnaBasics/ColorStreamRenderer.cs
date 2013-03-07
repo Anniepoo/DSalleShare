@@ -255,10 +255,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 // Annie reenables to make colors work
                 this.SharedSpriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, this.kinectColorVisualizer);
 
-                // Annie changed to expand the greenScreenColorTexture, which is 640x480 and contains the color frame from the kinect,
-                // out the entire viewport 
-
-                // Annie sez we're going to change this to mask for the depth data
+                // Diana - this is the draw call that blows in the live greenscreen. Change the bounds to make it hit the perspective
+                // if you end up doing this.
                 
                 
                 this.SharedSpriteBatch.Draw(this.greenScreenColorTexture, this.Game.GraphicsDevice.Viewport.Bounds , Color.White);

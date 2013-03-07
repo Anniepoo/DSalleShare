@@ -7,6 +7,8 @@ Code I'm sharing with DSalle so updates are easier
 TDV To Do
 =========
 
+ * Get figures lined up (may need to be after we do per-player-id)
+ 
  * Disentangle backbuffer rendering of color in colorstream
  * Then implement Z order
  * Then restrict to hands and head
