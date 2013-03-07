@@ -251,7 +251,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\BackField.xnb</Output>
-      <Time>2013-03-06T10:24:54.7777813-08:00</Time>
+      <Time>2013-03-06T15:47:32.4959795-08:00</Time>
     </Item>
     <Item>
       <Source>MidField.png</Source>
@@ -260,7 +260,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\MidField.xnb</Output>
-      <Time>2013-03-06T01:01:42.9748136-08:00</Time>
+      <Time>2013-03-06T14:56:22.2823733-08:00</Time>
     </Item>
     <Item>
       <Source>FrontField.png</Source>
@@ -269,7 +269,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FrontField.xnb</Output>
-      <Time>2013-03-05T17:11:56.9866673-08:00</Time>
+      <Time>2013-03-06T15:14:31.7786889-08:00</Time>
     </Item>
     <Item>
       <Source>FrontMidField.png</Source>
@@ -278,7 +278,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FrontMidField.xnb</Output>
-      <Time>2013-03-05T17:29:03.3473717-08:00</Time>
+      <Time>2013-03-06T15:13:56.077647-08:00</Time>
     </Item>
     <Item>
       <Source>Head.png</Source>
@@ -296,7 +296,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\RightHand.xnb</Output>
-      <Time>2013-03-06T11:40:48.2102228-08:00</Time>
+      <Time>2013-03-06T11:56:17.5733793-08:00</Time>
     </Item>
     <Item>
       <Source>FootRight.png</Source>
@@ -306,6 +306,24 @@
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FootRight.xnb</Output>
       <Time>2013-03-06T11:50:37.7819444-08:00</Time>
+    </Item>
+    <Item>
+      <Source>FootLeft.png</Source>
+      <Name>FootLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FootLeft.xnb</Output>
+      <Time>2013-03-06T11:55:00.3029597-08:00</Time>
+    </Item>
+    <Item>
+      <Source>LeftHand.png</Source>
+      <Name>LeftHand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\LeftHand.xnb</Output>
+      <Time>2013-03-06T11:56:44.5819241-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

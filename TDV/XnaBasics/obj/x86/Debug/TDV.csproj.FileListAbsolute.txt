@@ -38,3 +38,5 @@ C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\obj\x86\Debug\XnaBasics
 C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\Head.xnb
 C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\RightHand.xnb
 C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FootRight.xnb
+C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FootLeft.xnb
+C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\LeftHand.xnb
