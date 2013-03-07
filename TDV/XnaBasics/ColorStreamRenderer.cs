@@ -9,6 +9,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     using Microsoft.Kinect;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using System;
 
     /// <summary>
     /// This class renders the current color stream frame.
@@ -16,28 +17,44 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     public class ColorStreamRenderer : Object2D
     {
         /// <summary>
-        /// This child responsible for rendering the color stream's skeleton.
+        /// This child responsible for rendering the drawn portions of the avatar.
         /// </summary>
         private readonly CartoonRenderer cartoonRenderer;  // DS refactored from skeletonRenderer
         
         /// <summary>
-        /// The last frame of color data.
+        /// The last frame of raw color data from the Kinect
         /// </summary>
         private byte[] colorData;
 
         /// <summary>
+        /// a copy of last frame of raw color with transparent in all player=0 coordinates.
+        /// This is same size as Kinect color frame
+        /// </summary>
+        private byte[] greenScreenMaskedColorData;
+
+        /// <summary>
         /// The color frame as a texture.
         /// </summary>
-        private Texture2D colorTexture;
-
+        private Texture2D greenScreenColorTexture;
 
         /// <summary>
         /// The back buffer where color frame is scaled as requested by the Size.
+        /// The cartoon materials are also rendered into this
         /// </summary>
         private RenderTarget2D backBuffer;
 
-        private short[] depthData = null;
-        
+        /// <summary>
+        /// The last frame of depth data
+        /// </summary>
+        DepthImagePixel[] depthPixels = null;
+
+        /// <summary>
+        /// A map from a point in the depth frame 2D space to a point
+        /// in the color frame 2D space for the last frame
+        /// 
+        /// </summary>
+        ColorImagePoint[] colorCoordinates = null;
+
         /// <summary>
         /// This Xna effect is used to swap the Red and Blue bytes of the color stream data.
         /// </summary>
@@ -88,12 +105,12 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 if (depthFrame != null)
                 {
-                    if (depthData == null || depthData.Length != depthFrame.PixelDataLength)
+                    if (depthPixels == null || depthPixels.Length != depthFrame.PixelDataLength)
                     {
-                        depthData = new short[depthFrame.PixelDataLength];
-
+                        depthPixels = new DepthImagePixel[depthFrame.PixelDataLength];
+                        this.colorCoordinates = new ColorImagePoint[this.Chooser.Sensor.DepthStream.FramePixelDataLength];
                     }
-                    depthFrame.CopyPixelDataTo(depthData);
+                    depthFrame.CopyDepthImagePixelDataTo(depthPixels);
                 }
             }
             // AO - end of grabbing depth data
@@ -110,8 +127,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 if (this.colorData == null || this.colorData.Length != frame.PixelDataLength)
                 {
                     this.colorData = new byte[frame.PixelDataLength];
+                    this.greenScreenMaskedColorData = new byte[frame.PixelDataLength];
 
-                    this.colorTexture = new Texture2D(
+                    this.greenScreenColorTexture = new Texture2D(
                         this.Game.GraphicsDevice, 
                         frame.Width, 
                         frame.Height, 
@@ -153,7 +171,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             // If we don't have a target, don't try to render
-            if (null == this.colorTexture)
+            if (null == this.greenScreenColorTexture)
             {
                 return;
             }
@@ -167,60 +185,73 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 // try the simplest thing that can possibly work. We'll set the alpha transparent
                 // Diana sez also have to set rgb values to zero
 
-                if (depthData != null)   // at startup we might get color frame first
+                if (depthPixels != null)   // at startup we might get color frame first
                 {
                     int cdw = this.Chooser.Sensor.ColorStream.FrameWidth;
                     int cdh = this.Chooser.Sensor.ColorStream.FrameHeight;
                     int ddw = this.Chooser.Sensor.DepthStream.FrameWidth;
 
-                    float xColorToDepth = ddw /  (float)cdw;
-                    float yColorToDepth = this.Chooser.Sensor.DepthStream.FrameHeight /
-                        (float)cdh;
-                    for (int cy = 0; cy < cdh; cy++)
+                    this.Chooser.Sensor.CoordinateMapper.MapDepthFrameToColorFrame(
+                        this.Chooser.Sensor.DepthStream.Format,
+                        this.depthPixels,
+                        this.Chooser.Sensor.ColorStream.Format,
+                        this.colorCoordinates);
+
+                    Array.Clear(this.greenScreenMaskedColorData, 0, this.greenScreenMaskedColorData.Length);
+
+                    // loop over each row and column of the depth
+                    int depthHeight = this.Chooser.Sensor.DepthStream.FrameHeight;
+                    int depthWidth = this.Chooser.Sensor.DepthStream.FrameWidth;
+
+                    int colorToDepthDivisor = this.Chooser.Sensor.ColorStream.FrameWidth / depthWidth;
+
+                    for (int y = 0; y < depthHeight; ++y)
                     {
-                        for (int cx = 0; cx < cdw; cx++)
+                        for (int x = 0; x < depthWidth; ++x)
                         {
-                            int dIndex = (int)(xColorToDepth * cx + yColorToDepth * cy * ddw);
+                            // calculate index into depth array
+                            int depthIndex = x + (y * depthWidth);
 
-                            int cIndex = 4 * (cdw * cy + cx);
+                            DepthImagePixel depthPixel = this.depthPixels[depthIndex];
 
-                            
+                            int player = depthPixel.PlayerIndex;
 
-                            // player number is whatever. They don't necessarily start at 1
-                            if ((depthData[dIndex] & 0x0007) == 0)
+                            // if we're tracking a player for the current pixel, do green screen
+                            if (player != 0)
                             {
-                                colorData[cIndex] = 0; // b
-                                colorData[cIndex + 1] = 0;
-                                colorData[cIndex + 2] = 0;
-                                colorData[cIndex + 3] = 0;
-                            }
-                                /*
-                            else
-                            {
-                                colorData[cIndex] = 0; // b
-                                colorData[cIndex + 1] = 0xFF;
-                                colorData[cIndex + 2] = 0;
-                                colorData[cIndex + 3] = 0xFF;
-                            }
-                                 */
-                        }
-                    }
-                }
+                                // retrieve the depth to color mapping for the current depth pixel
+                                ColorImagePoint colorImagePoint = this.colorCoordinates[depthIndex];
 
-                this.colorTexture.SetData<byte>(this.colorData);
+                                if(KinectSensor.IsKnownPoint(colorImagePoint))
+                                {
+                                    // 4 bytes/pixel
+                                    int cIndex = (colorImagePoint.Y * this.Chooser.Sensor.ColorStream.FrameWidth + colorImagePoint.X) * 4;
+
+                                    greenScreenMaskedColorData[cIndex] = colorData[cIndex]; // b
+                                    greenScreenMaskedColorData[cIndex + 1] = colorData[cIndex + 1];
+                                    greenScreenMaskedColorData[cIndex + 2] = colorData[cIndex + 2];
+                                    greenScreenMaskedColorData[cIndex + 3] = 0xFF;
+                                }
+
+                            }  // player > 0
+                        }  // x
+                    } // y
+                }  // depthPixels != null
+
+                this.greenScreenColorTexture.SetData<byte>(this.greenScreenMaskedColorData);
 
                 // Draw the color image
                 // DS commented because the backfield will cover the entire color image
                 // Annie reenables to make colors work
                 this.SharedSpriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, this.kinectColorVisualizer);
 
-                // Annie changed to expand the colorTexture, which is 640x480 and contains the color frame from the kinect,
+                // Annie changed to expand the greenScreenColorTexture, which is 640x480 and contains the color frame from the kinect,
                 // out the entire viewport 
 
                 // Annie sez we're going to change this to mask for the depth data
                 
                 
-                this.SharedSpriteBatch.Draw(this.colorTexture, this.Game.GraphicsDevice.Viewport.Bounds , Color.White);
+                this.SharedSpriteBatch.Draw(this.greenScreenColorTexture, this.Game.GraphicsDevice.Viewport.Bounds , Color.White);
                 this.SharedSpriteBatch.End();
 
                 // Draw the skeleton
