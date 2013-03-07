@@ -114,6 +114,7 @@
     <Compile Include="ColorStreamRenderer.cs" />
     <Compile Include="KinectChooser.cs" />
     <Compile Include="Object2D.cs" />
+    <Compile Include="PaintersAlgorithmRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="CartoonRenderer.cs" />
