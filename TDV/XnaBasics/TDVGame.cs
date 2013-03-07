@@ -43,7 +43,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// This manages the rendering of the color stream.
         /// </summary>
-        private readonly ColorStreamRenderer colorStream;
+        private readonly PlayerImageRenderer colorStream;
 
         /// <summary>
         /// This is the viewport of the streams.
@@ -90,7 +90,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.Services.AddService(typeof(KinectChooser), this.chooser);
 
             // Default size is the full viewport
-            this.colorStream = new ColorStreamRenderer(this);
+            this.colorStream = new PlayerImageRenderer(this);
 
             this.Components.Add(this.chooser);
 
