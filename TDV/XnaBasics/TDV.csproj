@@ -112,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorStreamRenderer.cs" />
-    <Compile Include="DepthStreamRenderer.cs" />
     <Compile Include="KinectChooser.cs" />
     <Compile Include="Object2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
