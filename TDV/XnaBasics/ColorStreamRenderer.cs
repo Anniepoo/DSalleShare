@@ -227,10 +227,20 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                                     // 4 bytes/pixel
                                     int cIndex = (colorImagePoint.Y * this.Chooser.Sensor.ColorStream.FrameWidth + colorImagePoint.X) * 4;
 
+                                    // for tighter cropping on left comment this first word out
+                                    
+                                    /*
                                     greenScreenMaskedColorData[cIndex] = colorData[cIndex]; // b
                                     greenScreenMaskedColorData[cIndex + 1] = colorData[cIndex + 1];
                                     greenScreenMaskedColorData[cIndex + 2] = colorData[cIndex + 2];
-                                    greenScreenMaskedColorData[cIndex + 3] = 0xFF;
+                                    greenScreenMaskedColorData[cIndex + 3] = 0x60;
+                                     * */
+                                     
+                                    // doing the pixel to theright as well often looks better
+                                    greenScreenMaskedColorData[cIndex + 4] = colorData[cIndex + 4]; // b
+                                    greenScreenMaskedColorData[cIndex + 5] = colorData[cIndex + 5];
+                                    greenScreenMaskedColorData[cIndex + 6] = colorData[cIndex + 6];
+                                    greenScreenMaskedColorData[cIndex + 7] = 0xFF;
                                 }
 
                             }  // player > 0
