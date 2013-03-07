@@ -393,5 +393,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 new Vector2(boneTexture.Width/2 , boneTexture.Height * PIN_FROM_END),
                scale, SpriteEffects.None, 1.0f);
         }
+
+        internal void addSubRenderers(PaintersAlgorithmRenderer paintersAlgorithmRenderer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

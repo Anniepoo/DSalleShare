@@ -14,13 +14,20 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// This child responsible for rendering the drawn portions of the avatar.
         /// </summary>
         private readonly CartoonRenderer cartoonRenderer;  // DS refactored from skeletonRenderer
-        
+
+        private readonly PlayerImageRenderer playerImageRenderer;
+
         /// <summary>
         /// The back buffer where color frame is scaled as requested by the Size.
         /// The cartoon materials are also rendered into this
         /// </summary>
         private RenderTarget2D backBuffer;
 
+        /// <summary>
+        /// List of subRenderers for this frame
+        /// contents recreated each frame
+        /// </summary>
+        private List<SubRenderer> subRenderers = new List<SubRenderer>();
 
         /// <summary>
         /// Initializes a new instance of the PaintersAlgorithmRenderer class.
@@ -29,6 +36,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public PaintersAlgorithmRenderer(Game game)
             : base(game)
         {
+            // this.playerImageRenderer = new PlayerImageRenderer(game);
             // this.cartoonRenderer = new CartoonRenderer(game, this.SkeletonToColorMap);
         }
 
@@ -57,7 +65,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 return;
             }
 
-            // Update the skeleton renderer
+            this.playerImageRenderer.Update(gameTime);
             this.cartoonRenderer.Update(gameTime);
         }
 
@@ -70,7 +78,20 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.Game.GraphicsDevice.SetRenderTarget(this.backBuffer);
             this.Game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
 
-            // Draw the scaled texture
+            this.subRenderers.Clear();
+
+            this.cartoonRenderer.addSubRenderers(this);
+            this.playerImageRenderer.addSubRenderers(this);
+
+            this.subRenderers.Sort(ZOrderIComparer.defaultComparer());
+
+            foreach (SubRenderer s in this.subRenderers)
+            {
+                s.Draw(gameTime);
+            }
+
+
+            // Draw the back buffer to the actual game
             this.SharedSpriteBatch.Begin();
             this.SharedSpriteBatch.Draw(
                 this.backBuffer,

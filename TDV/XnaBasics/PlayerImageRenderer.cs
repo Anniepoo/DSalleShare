@@ -14,7 +14,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     /// <summary>
     /// This class renders the current color stream frame.
     /// </summary>
-    public class ColorStreamRenderer : Object2D
+    public class PlayerImageRenderer : Object2D
     {
         /// <summary>
         /// This child responsible for rendering the drawn portions of the avatar.
@@ -69,7 +69,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// Initializes a new instance of the ColorStreamRenderer class.
         /// </summary>
         /// <param name="game">The related game object.</param>
-        public ColorStreamRenderer(Game game)
+        public PlayerImageRenderer(Game game)
             : base(game)
         {
             this.cartoonRenderer = new CartoonRenderer(game, this.SkeletonToColorMap);
@@ -317,6 +317,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             return Vector2.Zero;
+        }
+
+        internal void addSubRenderers(PaintersAlgorithmRenderer paintersAlgorithmRenderer)
+        {
+            throw new NotImplementedException();
         }
     }
 }
