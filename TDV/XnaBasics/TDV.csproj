@@ -111,13 +111,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BillboardSubrenderer.cs" />
+    <Compile Include="LiveElements.cs" />
     <Compile Include="PlayerImageRenderer.cs" />
     <Compile Include="KinectChooser.cs" />
     <Compile Include="Object2D.cs" />
     <Compile Include="PaintersAlgorithmRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="CartoonRenderer.cs" />
+    <Compile Include="CartoonElements.cs" />
+    <Compile Include="SkeletonElements.cs" />
     <Compile Include="SubRenderer.cs" />
     <Compile Include="TDVGame.cs" />
     <Compile Include="ZOrderIComparer.cs" />

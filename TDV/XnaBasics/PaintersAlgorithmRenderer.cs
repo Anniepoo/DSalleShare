@@ -13,7 +13,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// This child responsible for rendering the drawn portions of the avatar.
         /// </summary>
-        private readonly CartoonRenderer cartoonRenderer;  // DS refactored from skeletonRenderer
+        private readonly CartoonElements cartoonElements;  // DS refactored from skeletonRenderer
 
         private readonly PlayerImageRenderer playerImageRenderer;
 
@@ -36,8 +36,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public PaintersAlgorithmRenderer(Game game)
             : base(game)
         {
-            // this.playerImageRenderer = new PlayerImageRenderer(game);
-            // this.cartoonRenderer = new CartoonRenderer(game, this.SkeletonToColorMap);
+            this.playerImageRenderer = new PlayerImageRenderer(game);
+            this.cartoonElements = new CartoonElements(game, this.playerImageRenderer.SkeletonToColorMap, this.playerImageRenderer);
         }
 
         /// <summary>
@@ -47,6 +47,17 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             base.Initialize();
             this.Size = new Vector2(Game.GraphicsDevice.Viewport.Width, Game.GraphicsDevice.Viewport.Height);
+
+            this.backBuffer = new RenderTarget2D(
+                        this.Game.GraphicsDevice,
+                        // was frame.Width & frame.Height Annie Fix to stop drawing cartoons 640x480 3/6/13 11:12am
+                        this.Game.GraphicsDevice.Viewport.Width, 
+                        this.Game.GraphicsDevice.Viewport.Height,
+                        false, 
+                        SurfaceFormat.Color, 
+                        DepthFormat.None,
+                        this.Game.GraphicsDevice.PresentationParameters.MultiSampleCount, 
+                        RenderTargetUsage.PreserveContents);
         }
 
         /// <summary>
@@ -66,7 +77,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             this.playerImageRenderer.Update(gameTime);
-            this.cartoonRenderer.Update(gameTime);
+            this.cartoonElements.Update(gameTime);
         }
 
         /// <summary>
@@ -80,16 +91,23 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             this.subRenderers.Clear();
 
-            this.cartoonRenderer.addSubRenderers(this);
-            this.playerImageRenderer.addSubRenderers(this);
+            this.cartoonElements.addSubRenderers(this);
+            this.playerImageRenderer.addSubRenderers(this); // his only adds non skeleton stuff - null for the moment
 
             this.subRenderers.Sort(ZOrderIComparer.defaultComparer());
 
+            this.SharedSpriteBatch.Begin();
+
             foreach (SubRenderer s in this.subRenderers)
             {
-                s.Draw(gameTime);
+                s.Draw(SharedSpriteBatch);
             }
 
+            // next line is temporary until the skeleton based image stuff works
+            this.playerImageRenderer.Draw(gameTime);
+
+            this.SharedSpriteBatch.End();
+            this.Game.GraphicsDevice.SetRenderTarget(null);
 
             // Draw the back buffer to the actual game
             this.SharedSpriteBatch.Begin();
@@ -109,6 +127,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         protected override void LoadContent()
         {
             base.LoadContent();
+        }
+
+        internal void addSubRenderer(SubRenderer sr)
+        {
+            this.subRenderers.Add(sr);
         }
     }
 }

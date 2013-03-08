@@ -9,20 +9,17 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     {
         private float zz = 0.0f;
 
-        public float Z {
+        public virtual float Z {
             get 
             { 
                 return zz; 
             }
             set
             {
-                zz = Z;
+                zz = value;
             }
         }
 
-        internal void Draw(Xna.Framework.GameTime gameTime)
-        {
-            throw new NotImplementedException();
-        }
+        internal abstract void Draw(Xna.Framework.Graphics.SpriteBatch SharedSpriteBatch);
     }
 }

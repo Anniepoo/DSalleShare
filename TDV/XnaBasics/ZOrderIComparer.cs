@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Microsoft.Samples.Kinect.XnaBasics
 {
-    class ZOrderIComparer : IComparer<SubRenderer>
+    class ZOrderIComparer : Comparer<SubRenderer>
     {
         private static ZOrderIComparer def =new ZOrderIComparer();
 
@@ -14,15 +14,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             return def;
         }
 
-        #region IComparer<SubRenderer> Members
-
-        public int Compare(SubRenderer a, SubRenderer b)
+        public override int Compare(SubRenderer a, SubRenderer b)
         {
-            if (a.Z < b.Z) return -1;
-            if (a.Z > b.Z) return 1;
+            if (a.Z < b.Z) return 1;
+            if (a.Z > b.Z) return -1;
             return 0;
         }
-
-        #endregion
     }
 }

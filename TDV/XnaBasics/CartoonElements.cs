@@ -21,8 +21,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     /// <summary>
     /// This class is responsible for rendering a skeleton stream.
     /// </summary>
-    public class CartoonRenderer : Object2D
+    public class CartoonElements : Object2D
     {
+        // Diana - values you gave me are too high by factor of two,
+        // roughly. In my space I vary from 1.03 to 2.3
+        private const float MIDFIELD_Z = 1.5f;
+        private const float FRONT_MIDFIELD_Z = 1.25f;
+        private const float FRONT_FIELD_Z = 0.75f;
+        private const float BACK_FIELD_Z = 4.0f;    // leave this one at 4.0, that's the actual farthest distance
         /// <summary>
         /// This is the map method called when mapping from
         /// skeleton space to the target space.
@@ -34,36 +40,13 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private static Skeleton[] skeletonData;
 
+        private PlayerImageRenderer playerImageRenderer;
 
         /// <summary>
         /// This flag ensures only request a frame once per update call
         /// across the entire application.
         /// </summary>
         private static bool skeletonDrawn = true;
-
-
-        private Vector2 jointOrigin;
-
-        /// <summary>
-        /// The joint texture.
-        /// </summary>
-        private Texture2D jointTexture;
-        /// <summary>
-        /// The origin (center) location of the bone texture.
-        /// </summary>
-        // DS Commented because not being used private Vector2 boneOrigin;
-
-        /// <summary>
-        /// The bone texture.
-        /// </summary>
-        private Texture2D boneTexture;
-
-        private Vector2 pelvisOrigin;
-        private Texture2D pelvisTexture;
-
-        private Vector2 torsoOrigin;
-        private Texture2D torsoTexture;
-        private Texture2D waistTexture;
  
         private const float PIN_FROM_END = 0.1f;
         private const float FOCAL_PLANE_DIST = 1.5f;  // dist at which the scale is 1
@@ -73,21 +56,26 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// Whether the rendering has been initialized.
         /// </summary>
         private bool initialized;
-        private Texture2D footLeftTexture;
-        private Texture2D footRightTexture;
-        private Texture2D leftHandTexture;
-        private Texture2D rightHandTexture;
-        private Texture2D headTexture;
-        private Texture2D shoulderRightTexture;
-        private Texture2D shoulderLeftTexture;
-        private Texture2D upperArmRightTexture;
-        private Texture2D lowerArmRightTexture;
-        private Texture2D upperArmLeftTexture;
-        private Texture2D lowerArmLeftTexture;
-        private Texture2D upperLegRightTexture;
-        private Texture2D lowerLegRightTexture;
-        private Texture2D upperLegLeftTexture;
-        private Texture2D lowerLegLeftTexture;
+        // TODO terrible encapsulation!  FIX ME ANNIE!!!!!
+        internal Texture2D boneTexture;
+        internal Texture2D pelvisTexture;
+        internal Texture2D torsoTexture;
+        internal Texture2D waistTexture;
+        internal Texture2D footLeftTexture;
+        internal Texture2D footRightTexture;
+        internal Texture2D leftHandTexture;
+        internal Texture2D rightHandTexture;
+        internal Texture2D headTexture;
+        internal Texture2D shoulderRightTexture;
+        internal Texture2D shoulderLeftTexture;
+        internal Texture2D upperArmRightTexture;
+        internal Texture2D lowerArmRightTexture;
+        internal Texture2D upperArmLeftTexture;
+        internal Texture2D lowerArmLeftTexture;
+        internal Texture2D upperLegRightTexture;
+        internal Texture2D lowerLegRightTexture;
+        internal Texture2D upperLegLeftTexture;
+        internal Texture2D lowerLegLeftTexture;
         private Texture2D frontField;
         private Texture2D frontMidField;
         private Texture2D midField;
@@ -98,10 +86,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         /// <param name="game">The related game object.</param>
         /// <param name="map">The method used to map the SkeletonPoint to the target space.</param>
-        public CartoonRenderer(Game game, SkeletonPointMap map)
+        public CartoonElements(Game game, SkeletonPointMap map, PlayerImageRenderer pir)
             : base(game)
         {
             this.mapMethod = map;
+            this.playerImageRenderer = pir;
         }
 
         /// <summary>
@@ -150,7 +139,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                     {
                         skeletonData = new Skeleton[skeletonFrame.SkeletonArrayLength];
                     }
-
+                 
                     skeletonFrame.CopySkeletonDataTo(skeletonData);
                     skeletonDrawn = false;
                 }
@@ -163,6 +152,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <param name="gameTime">The elapsed game time.</param>
         public override void Draw(GameTime gameTime)
         {
+            /*  Moved to addSubRenderers
             // If the joint texture isn't loaded, load it now
             if (null == this.jointTexture)
             {
@@ -179,17 +169,18 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 this.Initialize();
             }
+            */
 
-            this.SharedSpriteBatch.Begin();
-            this.SharedSpriteBatch.Draw(backField, new Vector2(0, 0), Color.White);
+            // not making more spritebatches this.SharedSpriteBatch.Begin();
+            /* moved to BillboardSubrenderer
             this.SharedSpriteBatch.Draw(midField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(frontMidField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(frontField, new Vector2(0, 0), Color.White);
+             */
+            // ================  DONE addSubRenderers TO HERE ===============
+            /* moved to SkeletonSubrenderer
             foreach (var skeleton in skeletonData)
-            {      
-
-
-
+            { 
                 switch (skeleton.TrackingState)
                 {
                       
@@ -202,7 +193,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         // DS commented out drawing the small pelvis joints
                 //        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture);
                   //      this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.boneTexture);
-                        /* left of screen and left arm of player, NOT stage left */
+                        // left of screen and left arm of player, NOT stage left 
                         this.DrawBone(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, this.upperArmRightTexture);  // Upper Arm Right 
                         this.DrawBone(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, this.upperArmLeftTexture);   // Upper Arm Left 
                         this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.shoulderRightTexture); // Shoulder Right
@@ -220,7 +211,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.lowerLegLeftTexture); // Lower Leg Left
                         this.DrawBone(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.boneTexture); // Foot Left
                         this.DrawSkirtBone(skeleton.Joints); // Skirt
-
+*/
 
 
 /* DS COMMENETD OUT JOINT DRAWING
@@ -246,6 +237,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         }
 
 */
+            /* functionality removed
                         break;
                     case SkeletonTrackingState.PositionOnly:
                        //  If we are only tracking position, draw a blue dot
@@ -264,18 +256,19 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             
                 }
             }
+             */
             // this is STOOPID - why won't it draw right size?
             //Rectangle r = new Rectangle(0, 0, (int)this.Size.X, (int)this.Size.Y);
             //Rectangle s = new Rectangle(0, 0, this.frontPlayfield.Width, this.frontPlayfield.Height);
           //DS commented to remove front for snapshot  this.SharedSpriteBatch.Draw(this.frontPlayfield, r, s, Color.White);
 
-            this.SharedSpriteBatch.End();
+       // no longer doing this    this.SharedSpriteBatch.End();
             skeletonDrawn = true;
 
             base.Draw(gameTime);
         }
 
-        private void DrawSkirtBone(JointCollection jointCollection)
+        internal void DrawSkirtBone(JointCollection jointCollection)
         {
             if (jointCollection[JointType.HipCenter].TrackingState != JointTrackingState.Tracked)return;
             Vector2 start = this.mapMethod(jointCollection[JointType.HipCenter].Position);
@@ -327,11 +320,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.frontMidField = Game.Content.Load<Texture2D>("FrontMidField");
             this.midField = Game.Content.Load<Texture2D>("MidField");
             this.backField = Game.Content.Load<Texture2D>("BackField");
-            this.jointTexture = Game.Content.Load<Texture2D>("Joint");
-            this.jointOrigin = new Vector2(this.jointTexture.Width / 2, this.jointTexture.Height / 2);
             this.boneTexture = Game.Content.Load<Texture2D>("Bone");
             this.torsoTexture = Game.Content.Load<Texture2D>("Torso");
-            this.torsoOrigin = new Vector2(0.5f, 0.5f);
             this.shoulderRightTexture = Game.Content.Load<Texture2D>("ShoulderRight");
             this.upperArmRightTexture = Game.Content.Load<Texture2D>("UpperArmRight");
             this.lowerArmRightTexture = Game.Content.Load<Texture2D>("LowerArmRight");
@@ -344,9 +334,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.lowerLegLeftTexture = Game.Content.Load<Texture2D>("LowerLegLeft");
             this.waistTexture = Game.Content.Load<Texture2D>("Waist");
             this.pelvisTexture = Game.Content.Load<Texture2D>("Pelvis");
-            this.pelvisOrigin = new Vector2(0, 0);
-       
-
  }
 
         /// <summary>
@@ -356,7 +343,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <param name="startJoint">The starting joint.</param>
         /// <param name="endJoint">The ending joint.</param>
         /// <param name="boneTexture">The texture to use for the joint</param>
-        private void DrawBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture)
+        internal void DrawBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture)
         {
             if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
                     joints[endJoint].TrackingState != JointTrackingState.Tracked)
@@ -395,9 +382,39 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                scale, SpriteEffects.None, 1.0f);
         }
 
-        internal void addSubRenderers(PaintersAlgorithmRenderer paintersAlgorithmRenderer)
+        internal void addSubRenderers(PaintersAlgorithmRenderer par)
         {
-            throw new NotImplementedException();
+            if (false == this.initialized)
+            {
+                this.Initialize();
+            }
+            // If the joint texture isn't loaded, load all the content
+            if (null == this.lowerLegLeftTexture)
+            {
+                this.LoadContent();
+            }
+            if (null == skeletonData || null == this.mapMethod)
+            {
+                return;
+            }
+
+            par.addSubRenderer(new BillboardSubrenderer(midField, MIDFIELD_Z));
+            par.addSubRenderer(new BillboardSubrenderer(frontMidField, FRONT_MIDFIELD_Z));
+            par.addSubRenderer(new BillboardSubrenderer(frontField, FRONT_FIELD_Z));
+            par.addSubRenderer(new BillboardSubrenderer(backField, BACK_FIELD_Z));
+
+            int playerID = 1;
+            foreach (var skeleton in skeletonData)
+            {
+                if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
+                {
+                    par.addSubRenderer(new SkeletonElements(this, skeleton));
+                    par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.mapMethod, playerID));
+                }
+                playerID++;
+            }
+
+            skeletonDrawn = true;
         }
     }
 }
