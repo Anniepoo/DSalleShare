@@ -17,11 +17,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     public class PlayerImageRenderer : Object2D
     {
         /// <summary>
-        /// This child responsible for rendering the drawn portions of the avatar.
-        /// </summary>
-        private readonly CartoonRenderer cartoonRenderer;  // DS refactored from skeletonRenderer
-        
-        /// <summary>
         /// The last frame of raw color data from the Kinect
         /// </summary>
         private byte[] colorData;
@@ -72,7 +67,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public PlayerImageRenderer(Game game)
             : base(game)
         {
-            this.cartoonRenderer = new CartoonRenderer(game, this.SkeletonToColorMap);
+          //  this.cartoonRenderer = new CartoonRenderer(game, this.SkeletonToColorMap);
         }
 
         /// <summary>
@@ -151,11 +146,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 frame.CopyPixelDataTo(this.colorData);
                 this.needToRedrawBackBuffer = true;
             }
-
-            // Update the skeleton renderer
-            this.cartoonRenderer.Update(gameTime);
-
-           
         }
 
         /// <summary>
@@ -262,9 +252,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 this.SharedSpriteBatch.Draw(this.greenScreenColorTexture, this.Game.GraphicsDevice.Viewport.Bounds , Color.White);
                 this.SharedSpriteBatch.End();
 
-                // Draw the skeleton
-                this.cartoonRenderer.Draw(gameTime);
-
                 // Reset the render target and prepare to draw scaled image
                 this.Game.GraphicsDevice.SetRenderTargets(null);
 
@@ -301,7 +288,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         /// <param name="point">The SkeletonPoint to map.</param>
         /// <returns>A Vector2 of the location on the color frame.</returns>
-        private Vector2 SkeletonToColorMap(SkeletonPoint point)
+        internal Vector2 SkeletonToColorMap(SkeletonPoint point)
         {
             if ((null != Chooser.Sensor) && (null != Chooser.Sensor.ColorStream))
             {
@@ -321,7 +308,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
         internal void addSubRenderers(PaintersAlgorithmRenderer paintersAlgorithmRenderer)
         {
-            throw new NotImplementedException();
+            // TODO set up subrenderers
         }
     }
 }

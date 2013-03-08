@@ -43,7 +43,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// This manages the rendering of the color stream.
         /// </summary>
-        private readonly PlayerImageRenderer colorStream;
+        private readonly PlayerImageRenderer playerImage;
+
+        private readonly PaintersAlgorithmRenderer paintersAlgorithmRenderer;
 
         /// <summary>
         /// This is the viewport of the streams.
@@ -64,6 +66,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// This is the font for the footer.
         /// </summary>
         private SpriteFont font;
+
 
         /// <summary>
         /// Initializes a new instance of the TDVBasicGame class.
@@ -90,7 +93,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.Services.AddService(typeof(KinectChooser), this.chooser);
 
             // Default size is the full viewport
-            this.colorStream = new PlayerImageRenderer(this);
+            this.playerImage = new PlayerImageRenderer(this);
+
+            this.paintersAlgorithmRenderer = new PaintersAlgorithmRenderer(this);
 
             this.Components.Add(this.chooser);
 
@@ -115,8 +120,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         protected override void Initialize()
         {
-            this.Components.Add(this.colorStream);
-
+            this.Components.Add(this.playerImage);
+            this.Components.Add(this.paintersAlgorithmRenderer);
+            
             base.Initialize();
         } 
 
@@ -139,8 +145,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.previousKeyboard = newState;
 
             // Animate the stream positions and sizes
-            this.colorStream.Position = new Vector2(0,0);
-            this.colorStream.Size = new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height);
+            this.playerImage.Position = new Vector2(0,0);
+            this.playerImage.Size = new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height);
+            this.paintersAlgorithmRenderer.Position = new Vector2(0, 0);
+            this.paintersAlgorithmRenderer.Size = new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height);
 
             base.Update(gameTime);
         }
@@ -161,7 +169,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.spriteBatch.End();
 
             // Render the streams with respect to focus
-            this.colorStream.DrawOrder = 1;
+            this.playerImage.DrawOrder = 2;
+            this.paintersAlgorithmRenderer.DrawOrder = 1;
 
             base.Draw(gameTime);
         }

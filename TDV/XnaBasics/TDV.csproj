@@ -111,6 +111,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BillboardSubrenderer.cs" />
     <Compile Include="PlayerImageRenderer.cs" />
     <Compile Include="KinectChooser.cs" />
     <Compile Include="Object2D.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="CartoonRenderer.cs" />
+    <Compile Include="SkeletonSubrenderer.cs" />
     <Compile Include="SubRenderer.cs" />
     <Compile Include="TDVGame.cs" />
     <Compile Include="ZOrderIComparer.cs" />
