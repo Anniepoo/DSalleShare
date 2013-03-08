@@ -181,6 +181,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             this.SharedSpriteBatch.Begin();
+            this.SharedSpriteBatch.Draw(backField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(midField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(frontMidField, new Vector2(0, 0), Color.White);
             this.SharedSpriteBatch.Draw(frontField, new Vector2(0, 0), Color.White);
