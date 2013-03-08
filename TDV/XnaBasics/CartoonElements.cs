@@ -21,12 +21,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     /// <summary>
     /// This class is responsible for rendering a skeleton stream.
     /// </summary>
-    public class CartoonRenderer : Object2D
+    public class CartoonElements : Object2D
     {
-        private const float MIDFIELD_Z = 3.0f;
-        private const float FRONT_MIDFIELD_Z = 2.5f;
-        private const float FRONT_FIELD_Z = 1.5f;
-        private const float BACK_FIELD_Z = 4.0f;
+        // Diana - values you gave me are too high by factor of two,
+        // roughly. In my space I vary from 1.03 to 2.3
+        private const float MIDFIELD_Z = 1.5f;
+        private const float FRONT_MIDFIELD_Z = 1.25f;
+        private const float FRONT_FIELD_Z = 0.75f;
+        private const float BACK_FIELD_Z = 4.0f;    // leave this one at 4.0, that's the actual farthest distance
         /// <summary>
         /// This is the map method called when mapping from
         /// skeleton space to the target space.
@@ -38,6 +40,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private static Skeleton[] skeletonData;
 
+        private PlayerImageRenderer playerImageRenderer;
 
         /// <summary>
         /// This flag ensures only request a frame once per update call
@@ -83,10 +86,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         /// <param name="game">The related game object.</param>
         /// <param name="map">The method used to map the SkeletonPoint to the target space.</param>
-        public CartoonRenderer(Game game, SkeletonPointMap map)
+        public CartoonElements(Game game, SkeletonPointMap map, PlayerImageRenderer pir)
             : base(game)
         {
             this.mapMethod = map;
+            this.playerImageRenderer = pir;
         }
 
         /// <summary>
@@ -135,7 +139,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                     {
                         skeletonData = new Skeleton[skeletonFrame.SkeletonArrayLength];
                     }
-
+                 
                     skeletonFrame.CopySkeletonDataTo(skeletonData);
                     skeletonDrawn = false;
                 }
@@ -399,13 +403,18 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             par.addSubRenderer(new BillboardSubrenderer(frontField, FRONT_FIELD_Z));
             par.addSubRenderer(new BillboardSubrenderer(backField, BACK_FIELD_Z));
 
+            int playerID = 1;
             foreach (var skeleton in skeletonData)
             {
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
-                    par.addSubRenderer(new SkeletonSubrenderer(this, skeleton));
+                    par.addSubRenderer(new SkeletonElements(this, skeleton));
+                    par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.mapMethod, playerID));
                 }
+                playerID++;
             }
+
+            skeletonDrawn = true;
         }
     }
 }

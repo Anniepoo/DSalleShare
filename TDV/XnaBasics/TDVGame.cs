@@ -40,11 +40,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private readonly KinectChooser chooser;
 
-        /// <summary>
-        /// This manages the rendering of the color stream.
-        /// </summary>
-        private readonly PlayerImageRenderer playerImage;
-
         private readonly PaintersAlgorithmRenderer paintersAlgorithmRenderer;
 
         /// <summary>
@@ -92,9 +87,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.chooser = new KinectChooser(this, ColorImageFormat.RgbResolution640x480Fps30, DepthImageFormat.Resolution640x480Fps30);
             this.Services.AddService(typeof(KinectChooser), this.chooser);
 
-            // Default size is the full viewport
-            this.playerImage = new PlayerImageRenderer(this);
-
             this.paintersAlgorithmRenderer = new PaintersAlgorithmRenderer(this);
 
             this.Components.Add(this.chooser);
@@ -120,7 +112,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         protected override void Initialize()
         {
-            this.Components.Add(this.playerImage);
             this.Components.Add(this.paintersAlgorithmRenderer);
             
             base.Initialize();
@@ -145,8 +136,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.previousKeyboard = newState;
 
             // Animate the stream positions and sizes
-            this.playerImage.Position = new Vector2(0,0);
-            this.playerImage.Size = new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height);
             this.paintersAlgorithmRenderer.Position = new Vector2(0, 0);
             this.paintersAlgorithmRenderer.Size = new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height);
 
@@ -169,7 +158,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.spriteBatch.End();
 
             // Render the streams with respect to focus
-            this.playerImage.DrawOrder = 2;
             this.paintersAlgorithmRenderer.DrawOrder = 1;
 
             base.Draw(gameTime);

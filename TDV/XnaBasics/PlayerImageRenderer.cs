@@ -67,7 +67,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public PlayerImageRenderer(Game game)
             : base(game)
         {
-          //  this.cartoonRenderer = new CartoonRenderer(game, this.SkeletonToColorMap);
+          //  this.cartoonElements = new CartoonRenderer(game, this.SkeletonToColorMap);
         }
 
         /// <summary>
@@ -152,9 +152,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// This method renders the color and skeleton frame.
         /// </summary>
         /// <param name="gameTime">The elapsed game time.</param>
-        public override void Draw(GameTime gameTime)
+        internal void Draw(SpriteBatch ssb, int playerID, Rectangle[] rects)
         {
+
             // If we don't have the effect load, load it
+            // TODO this is dead now I think
             if (null == this.kinectColorVisualizer)
             {
                 this.LoadContent();
@@ -166,109 +168,88 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 return;
             }
 
-            if (this.needToRedrawBackBuffer)
+            // Set the backbuffer and clear
+            //      this.Game.GraphicsDevice.SetRenderTarget(this.backBuffer);
+            //      this.Game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
+
+            // try the simplest thing that can possibly work. We'll set the alpha transparent
+            // Diana sez also have to set rgb values to zero
+
+            if (depthPixels == null)
+                return;
+
+            int cdw = this.Chooser.Sensor.ColorStream.FrameWidth;
+            int cdh = this.Chooser.Sensor.ColorStream.FrameHeight;
+            int ddw = this.Chooser.Sensor.DepthStream.FrameWidth;
+
+            // TODO this only needs happen once per frame
+            this.Chooser.Sensor.CoordinateMapper.MapDepthFrameToColorFrame(
+                this.Chooser.Sensor.DepthStream.Format,
+                this.depthPixels,
+                this.Chooser.Sensor.ColorStream.Format,
+                this.colorCoordinates);
+
+            Array.Clear(this.greenScreenMaskedColorData, 0, this.greenScreenMaskedColorData.Length);
+
+            // loop over each row and column of the depth
+            int depthHeight = this.Chooser.Sensor.DepthStream.FrameHeight;
+            int depthWidth = this.Chooser.Sensor.DepthStream.FrameWidth;
+
+            int colorToDepthDivisor = this.Chooser.Sensor.ColorStream.FrameWidth / depthWidth;
+
+            for (int rectnum = 0; rectnum < rects.Length; rectnum++)
             {
-                // Set the backbuffer and clear
-                this.Game.GraphicsDevice.SetRenderTarget(this.backBuffer);
-                this.Game.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
+                rects[rectnum].Width = (int)(rects[rectnum].Width * depthWidth / this.Chooser.Sensor.ColorStream.FrameWidth);
+                rects[rectnum].Height = (int)(rects[rectnum].Height * depthHeight / this.Chooser.Sensor.ColorStream.FrameHeight);
+                rects[rectnum].X = (int)(rects[rectnum].X * depthWidth / this.Chooser.Sensor.ColorStream.FrameWidth);
+                rects[rectnum].Y = (int)(rects[rectnum].Y * depthHeight / this.Chooser.Sensor.ColorStream.FrameHeight);
 
-                // try the simplest thing that can possibly work. We'll set the alpha transparent
-                // Diana sez also have to set rgb values to zero
-
-                if (depthPixels != null)   // at startup we might get color frame first
+                for (int y = Math.Max(0, rects[rectnum].Y) ; y < Math.Min(rects[rectnum].Y + rects[rectnum].Height, depthHeight - 1) ; ++y)
                 {
-                    int cdw = this.Chooser.Sensor.ColorStream.FrameWidth;
-                    int cdh = this.Chooser.Sensor.ColorStream.FrameHeight;
-                    int ddw = this.Chooser.Sensor.DepthStream.FrameWidth;
-
-                    this.Chooser.Sensor.CoordinateMapper.MapDepthFrameToColorFrame(
-                        this.Chooser.Sensor.DepthStream.Format,
-                        this.depthPixels,
-                        this.Chooser.Sensor.ColorStream.Format,
-                        this.colorCoordinates);
-
-                    Array.Clear(this.greenScreenMaskedColorData, 0, this.greenScreenMaskedColorData.Length);
-
-                    // loop over each row and column of the depth
-                    int depthHeight = this.Chooser.Sensor.DepthStream.FrameHeight;
-                    int depthWidth = this.Chooser.Sensor.DepthStream.FrameWidth;
-
-                    int colorToDepthDivisor = this.Chooser.Sensor.ColorStream.FrameWidth / depthWidth;
-
-                    for (int y = 0; y < depthHeight; ++y)
+                    for (int x = Math.Max(0, rects[rectnum].X) ; x < Math.Min(rects[rectnum].X + rects[rectnum].Width, depthWidth - 1) ; ++x)
                     {
-                        for (int x = 0; x < depthWidth; ++x)
+                        // calculate index into depth array
+                        int depthIndex = x + (y * depthWidth);
+
+                        DepthImagePixel depthPixel = this.depthPixels[depthIndex];
+
+                        int player = depthPixel.PlayerIndex;
+
+                        // if we're tracking a player for the current pixel, do green screen
+                        if (player == playerID)
                         {
-                            // calculate index into depth array
-                            int depthIndex = x + (y * depthWidth);
+                            // retrieve the depth to color mapping for the current depth pixel
+                            ColorImagePoint colorImagePoint = this.colorCoordinates[depthIndex];
 
-                            DepthImagePixel depthPixel = this.depthPixels[depthIndex];
-
-                            int player = depthPixel.PlayerIndex;
-
-                            // if we're tracking a player for the current pixel, do green screen
-                            if (player != 0)
+                            if (KinectSensor.IsKnownPoint(colorImagePoint))
                             {
-                                // retrieve the depth to color mapping for the current depth pixel
-                                ColorImagePoint colorImagePoint = this.colorCoordinates[depthIndex];
+                                // 4 bytes/pixel
+                                int cIndex = (colorImagePoint.Y * this.Chooser.Sensor.ColorStream.FrameWidth + colorImagePoint.X) * 4;
 
-                                if(KinectSensor.IsKnownPoint(colorImagePoint))
-                                {
-                                    // 4 bytes/pixel
-                                    int cIndex = (colorImagePoint.Y * this.Chooser.Sensor.ColorStream.FrameWidth + colorImagePoint.X) * 4;
+                                // for tighter cropping on left comment this first word out
 
-                                    // for tighter cropping on left comment this first word out
-                                    
-                                    /*
-                                    greenScreenMaskedColorData[cIndex] = colorData[cIndex]; // b
-                                    greenScreenMaskedColorData[cIndex + 1] = colorData[cIndex + 1];
-                                    greenScreenMaskedColorData[cIndex + 2] = colorData[cIndex + 2];
-                                    greenScreenMaskedColorData[cIndex + 3] = 0x60;
-                                     * */
-                                     
-                                    // doing the pixel to theright as well often looks better
-                                    greenScreenMaskedColorData[cIndex + 4] = colorData[cIndex + 4]; // b
-                                    greenScreenMaskedColorData[cIndex + 5] = colorData[cIndex + 5];
-                                    greenScreenMaskedColorData[cIndex + 6] = colorData[cIndex + 6];
-                                    greenScreenMaskedColorData[cIndex + 7] = 0xFF;
-                                }
+                                /*
+                                greenScreenMaskedColorData[cIndex] = colorData[cIndex]; // b
+                                greenScreenMaskedColorData[cIndex + 1] = colorData[cIndex + 1];
+                                greenScreenMaskedColorData[cIndex + 2] = colorData[cIndex + 2];
+                                greenScreenMaskedColorData[cIndex + 3] = 0x60;
+                                    * */
 
-                            }  // player > 0
-                        }  // x
-                    } // y
-                }  // depthPixels != null
+                                // doing the pixel to theright as well often looks better
+                                greenScreenMaskedColorData[cIndex + 4] = colorData[cIndex + 6]; // flip b and r
+                                greenScreenMaskedColorData[cIndex + 5] = colorData[cIndex + 5];
+                                greenScreenMaskedColorData[cIndex + 6] = colorData[cIndex + 4];
+                                greenScreenMaskedColorData[cIndex + 7] = 0xFF;
+                            }
 
-                this.greenScreenColorTexture.SetData<byte>(this.greenScreenMaskedColorData);
+                        }  // player == playerID
+                    }  // x
+                } // y
 
-                // Draw the color image
-                // DS commented because the backfield will cover the entire color image
-                // Annie reenables to make colors work
-                this.SharedSpriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, this.kinectColorVisualizer);
+                greenScreenColorTexture.SetData<byte>(this.greenScreenMaskedColorData);
 
-                // Diana - this is the draw call that blows in the live greenscreen. Change the bounds to make it hit the perspective
-                // if you end up doing this.
-                
-                
-                this.SharedSpriteBatch.Draw(this.greenScreenColorTexture, this.Game.GraphicsDevice.Viewport.Bounds , Color.White);
-                this.SharedSpriteBatch.End();
-
-                // Reset the render target and prepare to draw scaled image
-                this.Game.GraphicsDevice.SetRenderTargets(null);
-
-                // No need to re-render the back buffer until we get new data
-                this.needToRedrawBackBuffer = false; 
+                ssb.Draw(greenScreenColorTexture, this.Game.GraphicsDevice.Viewport.Bounds, Color.White);
             }
-
-            // Draw the scaled texture
-            this.SharedSpriteBatch.Begin();
-            this.SharedSpriteBatch.Draw(
-                this.backBuffer,
-                new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
-                null,
-                Color.White);
-            this.SharedSpriteBatch.End();
-           
-            base.Draw(gameTime);
         }
 
         /// <summary>
@@ -306,9 +287,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             return Vector2.Zero;
         }
 
+
+
         internal void addSubRenderers(PaintersAlgorithmRenderer paintersAlgorithmRenderer)
         {
-            // TODO set up subrenderers
+            // No direct renderers here, the skeleton does it
         }
     }
 }

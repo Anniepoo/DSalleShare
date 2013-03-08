@@ -16,7 +16,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
             set
             {
-                zz = Z;
+                zz = value;
             }
         }
 

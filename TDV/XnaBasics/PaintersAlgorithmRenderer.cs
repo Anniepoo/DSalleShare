@@ -13,7 +13,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// This child responsible for rendering the drawn portions of the avatar.
         /// </summary>
-        private readonly CartoonRenderer cartoonRenderer;  // DS refactored from skeletonRenderer
+        private readonly CartoonElements cartoonElements;  // DS refactored from skeletonRenderer
 
         private readonly PlayerImageRenderer playerImageRenderer;
 
@@ -37,7 +37,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             : base(game)
         {
             this.playerImageRenderer = new PlayerImageRenderer(game);
-            this.cartoonRenderer = new CartoonRenderer(game, this.playerImageRenderer.SkeletonToColorMap);
+            this.cartoonElements = new CartoonElements(game, this.playerImageRenderer.SkeletonToColorMap, this.playerImageRenderer);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             this.playerImageRenderer.Update(gameTime);
-            this.cartoonRenderer.Update(gameTime);
+            this.cartoonElements.Update(gameTime);
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             this.subRenderers.Clear();
 
-            this.cartoonRenderer.addSubRenderers(this);
-            this.playerImageRenderer.addSubRenderers(this);
+            this.cartoonElements.addSubRenderers(this);
+            this.playerImageRenderer.addSubRenderers(this); // his only adds non skeleton stuff - null for the moment
 
             this.subRenderers.Sort(ZOrderIComparer.defaultComparer());
 
@@ -102,6 +102,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 s.Draw(SharedSpriteBatch);
             }
+
+            // next line is temporary until the skeleton based image stuff works
+            this.playerImageRenderer.Draw(gameTime);
 
             this.SharedSpriteBatch.End();
             this.Game.GraphicsDevice.SetRenderTarget(null);
