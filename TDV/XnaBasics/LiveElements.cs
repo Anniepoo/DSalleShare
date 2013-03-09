@@ -43,8 +43,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         internal override void Draw(SpriteBatch ssb)
         {
             Rectangle[] rects = new Rectangle[3];
-
+            
+    
             Vector2 head = this.mapMethod(skeleton.Joints[JointType.Head].Position);
+
             rects[0] = new Rectangle(
                      (int)(head.X - HEAD_WIDTH * 1.5f / Math.Max(1.0f, skeleton.Joints[JointType.Head].Position.Z) / 2.0f),
                      (int)(head.Y - HEAD_HEIGHT * 1.5f / Math.Max(1.0f, skeleton.Joints[JointType.Head].Position.Z) / 2.0f),

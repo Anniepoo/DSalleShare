@@ -348,12 +348,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
                     joints[endJoint].TrackingState != JointTrackingState.Tracked)
                 return;
-
+          
             float depth = joints[startJoint].Position.Z;
             Vector2 start = this.mapMethod(joints[startJoint].Position);
 
             Vector2 end = this.mapMethod(joints[endJoint].Position);
             DrawBoneLike(depth, start, end, boneTexture);
+            //if (startJoint == JointType.Head)
+            //    Console.WriteLine("Cartoon Elements drawBone head position after remapping"+ start.X);
         }
 
         private void DrawBoneLike(float depth, Vector2 start, Vector2 end, Texture2D boneTexture)
@@ -377,7 +379,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
       
        
             Vector2 destctr = new Vector2(destRect.X, destRect.Y);
-            this.SharedSpriteBatch.Draw(boneTexture, destctr, null, color, angle,
+            
+            this.SharedSpriteBatch.Draw(boneTexture, center, null, color, angle,
                 new Vector2(boneTexture.Width/2 , boneTexture.Height * PIN_FROM_END),
                scale, SpriteEffects.None, 1.0f);
         }
@@ -409,7 +412,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
                     par.addSubRenderer(new SkeletonElements(this, skeleton));
-                    par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.mapMethod, playerID));
+                    par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.playerImageRenderer.SkeletonToColorMapForLiveElements, playerID));
                 }
                 playerID++;
             }

@@ -41,7 +41,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// The last frame of depth data
         /// </summary>
-        DepthImagePixel[] depthPixels = null;
+        public DepthImagePixel[] depthPixels = null;
 
         /// <summary>
         /// A map from a point in the depth frame 2D space to a point
@@ -279,6 +279,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 // AO - changed to scale positions by the amount we blow up the colorstream image when we render it
                 // so the skeletons don't end up at 640 x 480
                 Vector2 returnpt = new Vector2(colorPt.X, colorPt.Y);
+                //doing this causes the rectangles in rec[] to be in the wrong place 
                 returnpt.X *= Game.GraphicsDevice.Viewport.Width / Chooser.Sensor.ColorStream.FrameWidth;
                 returnpt.Y *= Game.GraphicsDevice.Viewport.Height / Chooser.Sensor.ColorStream.FrameHeight;
                 return returnpt;
@@ -287,6 +288,22 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             return Vector2.Zero;
         }
 
+        internal Vector2 SkeletonToColorMapForLiveElements(SkeletonPoint point)
+        {
+            if ((null != Chooser.Sensor) && (null != Chooser.Sensor.ColorStream))
+            {
+                // This is used to map a skeleton point to the color image location
+                var colorPt = Chooser.Sensor.CoordinateMapper.MapSkeletonPointToColorPoint(point, Chooser.Sensor.ColorStream.Format);
+
+                // AO - changed to scale positions by the amount we blow up the colorstream image when we render it
+                // so the skeletons don't end up at 640 x 480
+                Vector2 returnpt = new Vector2(colorPt.X, colorPt.Y);
+              
+                return returnpt;
+            }
+
+            return Vector2.Zero;
+        }
 
 
         internal void addSubRenderers(PaintersAlgorithmRenderer paintersAlgorithmRenderer)
