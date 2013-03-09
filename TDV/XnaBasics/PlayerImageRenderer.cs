@@ -279,7 +279,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 // AO - changed to scale positions by the amount we blow up the colorstream image when we render it
                 // so the skeletons don't end up at 640 x 480
                 Vector2 returnpt = new Vector2(colorPt.X, colorPt.Y);
-                //doing this causes the rectangles in rec[] to be in the wrong place 
+
                 returnpt.X *= Game.GraphicsDevice.Viewport.Width / Chooser.Sensor.ColorStream.FrameWidth;
                 returnpt.Y *= Game.GraphicsDevice.Viewport.Height / Chooser.Sensor.ColorStream.FrameHeight;
                 return returnpt;

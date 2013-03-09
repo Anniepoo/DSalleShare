@@ -251,7 +251,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\BackField.xnb</Output>
-      <Time>2013-03-07T14:56:12.3763781-08:00</Time>
+      <Time>2013-03-08T16:24:04.9277481-08:00</Time>
     </Item>
     <Item>
       <Source>MidField.png</Source>
@@ -260,7 +260,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\MidField.xnb</Output>
-      <Time>2013-03-07T15:01:21.8280777-08:00</Time>
+      <Time>2013-03-08T16:24:54.9136071-08:00</Time>
     </Item>
     <Item>
       <Source>FrontField.png</Source>
@@ -269,7 +269,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FrontField.xnb</Output>
-      <Time>2013-03-07T14:57:24.4124983-08:00</Time>
+      <Time>2013-03-08T16:25:56.9831573-08:00</Time>
     </Item>
     <Item>
       <Source>FrontMidField.png</Source>
@@ -278,7 +278,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Diana\Documents\Games\DSalleShare\TDV\XnaBasics\bin\x86\Debug\Content\FrontMidField.xnb</Output>
-      <Time>2013-03-07T14:59:17.0349399-08:00</Time>
+      <Time>2013-03-08T16:25:20.8660915-08:00</Time>
     </Item>
     <Item>
       <Source>Head.png</Source>
