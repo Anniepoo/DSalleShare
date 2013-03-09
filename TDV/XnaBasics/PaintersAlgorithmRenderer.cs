@@ -104,7 +104,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             // next line is temporary until the skeleton based image stuff works
-            // ANNIE IS THIS A BUG????
            // this.playerImageRenderer.Draw(gameTime);
 
             this.SharedSpriteBatch.End();

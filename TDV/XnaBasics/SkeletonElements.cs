@@ -11,6 +11,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Microsoft.Kinect.Skeleton skeleton;
         private CartoonElements cartooner;
 
+
         public override float Z
         {
             get
@@ -24,9 +25,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
         public SkeletonElements(CartoonElements cartooner, Microsoft.Kinect.Skeleton skeleton)
         {
+
             this.skeleton = skeleton;
             this.cartooner = cartooner;
         }
+
 
         internal override void Draw(Xna.Framework.Graphics.SpriteBatch SharedSpriteBatch)
         {
