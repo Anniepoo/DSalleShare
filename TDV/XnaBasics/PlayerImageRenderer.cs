@@ -197,7 +197,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             int colorToDepthDivisor = this.Chooser.Sensor.ColorStream.FrameWidth / depthWidth;
 
-            for (int rectnum = 0; rectnum < rects.Length; rectnum++)
+            for (int rectnum = 0; rectnum < rects.Length; rectnum++) // is it ok to modify incoming rect? what about repeated draw?
             {
                 rects[rectnum].Width = (int)(rects[rectnum].Width * depthWidth / this.Chooser.Sensor.ColorStream.FrameWidth);
                 rects[rectnum].Height = (int)(rects[rectnum].Height * depthHeight / this.Chooser.Sensor.ColorStream.FrameHeight);
