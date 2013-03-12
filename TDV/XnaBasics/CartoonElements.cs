@@ -25,9 +25,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     {
         // Diana - values you gave me are too high by factor of two,
         // roughly. In my space I vary from 1.03 to 2.3
-        private const float MIDFIELD_Z = 1.5f;
-        private const float FRONT_MIDFIELD_Z = 1.25f;
-        private const float FRONT_FIELD_Z = 0.75f;
+        private const float MIDFIELD_Z = 2.3f;
+        private const float FRONT_MIDFIELD_Z =1.75f;
+        private const float FRONT_FIELD_Z = 01.5f;
         private const float BACK_FIELD_Z = 4.0f;    // leave this one at 4.0, that's the actual farthest distance
         /// <summary>
         /// This is the map method called when mapping from
@@ -367,23 +367,62 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             float angle = (float)Math.Atan2(diff.Y, diff.X) - MathHelper.PiOver2;
 
             Vector2 center = new Vector2((int)(start.X), (int)(start.Y));
-
+            /* DS commented because not being used
             // Scale the dest, not the source!
             Rectangle sourceRect = new Rectangle(0, 0, boneTexture.Width, boneTexture.Height);
             Rectangle destRect = new Rectangle(0, 0, 0, 0);
 
             destRect.Offset((int)(start.X), (int)(start.Y));
-
+            */
             // just for development
             Color color = Color.White;
       
        
-            Vector2 destctr = new Vector2(destRect.X, destRect.Y);
+            // Vector2 destctr = new Vector2(destRect.X, destRect.Y); 
             
             this.SharedSpriteBatch.Draw(boneTexture, center, null, color, angle,
                 new Vector2(boneTexture.Width/2 , boneTexture.Height * PIN_FROM_END),
                scale, SpriteEffects.None, 1.0f);
         }
+
+        internal void DrawShortBone(JointCollection joints, JointType startJoint, JointType endJoint, JointType parentJoint, Texture2D boneTexture)
+        {
+            if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
+                    joints[endJoint].TrackingState != JointTrackingState.Tracked)
+                return;
+
+            float depth = joints[startJoint].Position.Z;
+            Vector2 start = this.mapMethod(joints[startJoint].Position);
+            Vector2 shortStart = this.mapMethod(joints[parentJoint].Position);
+            Vector2 end = this.mapMethod(joints[endJoint].Position);
+            DrawShortBoneLike(depth, start, end, shortStart, boneTexture);
+            //if (startJoint == JointType.Head)
+            //    Console.WriteLine("Cartoon Elements drawBone head position after remapping"+ start.X);
+        }
+
+        private void DrawShortBoneLike(float depth, Vector2 start, Vector2 end, Vector2 shortStart, Texture2D boneTexture)
+        {
+            Vector2 longDiff = end - start;
+            Vector2 shortDiff = start - shortStart;
+            Vector2 scale = new Vector2((float)(FOCAL_PLANE_DIST / Math.Max(NEAR_PLANE, depth)),
+                longDiff.Length() / boneTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
+
+            float angle = (float)Math.Atan2(longDiff.Y, longDiff.X) - MathHelper.PiOver2;
+
+            Vector2 center = new Vector2((int)(shortStart.X+shortDiff.X/1.2), (int)(shortStart.Y+shortDiff.Y/1.2)) ;
+
+
+
+            // just for development
+            Color color = Color.White;
+
+
+
+            this.SharedSpriteBatch.Draw(boneTexture, center, null, color, angle,
+                new Vector2(boneTexture.Width / 2, boneTexture.Height * PIN_FROM_END),
+               scale, SpriteEffects.None, 1.0f);
+        }
+
 
         internal void addSubRenderers(PaintersAlgorithmRenderer par)
         {
@@ -411,8 +450,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
-                    par.addSubRenderer(new SkeletonElements(this, skeleton));
+                    // DS switched order so that video cutout is behind drawn elements
                     par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.playerImageRenderer.SkeletonToColorMapForLiveElements, playerID));
+                    par.addSubRenderer(new SkeletonElements(this, skeleton));
+                    
                 }
                 playerID++;
             }
