@@ -194,12 +194,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 // If this sensor is connected, then enable it
                 if (this.LastStatus == KinectStatus.Connected)
                 {
-                    // Annie sez this is pretty smoothed out, but gives good tracking while not
-                    // being laggy
+                    // DS adjusted these parameters and added two
                     TransformSmoothParameters sp = new TransformSmoothParameters();
-                    sp.Correction = 0.1f;
-                    sp.MaxDeviationRadius = 0.2f;
-                    sp.Prediction = 0.8f;
+
+                    sp.Correction = 0.9f;
+                    sp.MaxDeviationRadius = .05f;
+                    sp.Prediction = .5f;
+                    sp.Smoothing = .01f;
+                    sp.JitterRadius = .1f;
 
                     this.Sensor.SkeletonStream.Enable(sp);
               

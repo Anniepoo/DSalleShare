@@ -92,7 +92,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.subRenderers.Clear();
 
             this.cartoonElements.addSubRenderers(this);
-            this.playerImageRenderer.addSubRenderers(this); // his only adds non skeleton stuff - null for the moment
+          //  this.playerImageRenderer.addSubRenderers(this); // his only adds non skeleton stuff - null for the moment
 
             this.subRenderers.Sort(ZOrderIComparer.defaultComparer());
 
