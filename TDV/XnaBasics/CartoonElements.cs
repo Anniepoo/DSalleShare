@@ -356,6 +356,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             DrawBoneLike(depth, start, end, boneTexture);
             //if (startJoint == JointType.Head)
             //    Console.WriteLine("Cartoon Elements drawBone head position after remapping"+ start.X);
+            
         }
 
         private void DrawBoneLike(float depth, Vector2 start, Vector2 end, Texture2D boneTexture)

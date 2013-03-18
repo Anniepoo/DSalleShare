@@ -2,6 +2,8 @@
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/http_parameters)).
 
+:- ensure_loaded(panel).
+
 start :-
         http_server(http_dispatch, [port(6788)]).
 
@@ -31,5 +33,7 @@ set_data(Request) :-
 set_data(_) :-
         format('Content-type: text/plain~n~n'),
         format('NODATA~n', []).
+
+
 
 
