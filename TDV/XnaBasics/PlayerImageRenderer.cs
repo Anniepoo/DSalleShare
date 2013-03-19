@@ -16,6 +16,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     /// </summary>
     public class PlayerImageRenderer : Object2D
     {
+        const float FRACTION_TO_POINT = 0.75f;   // fractional distance down the rect we start reducing width
         /// <summary>
         /// The last frame of raw color data from the Kinect
         /// </summary>
@@ -204,9 +205,15 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 rects[rectnum].X = (int)(rects[rectnum].X * depthWidth / this.Chooser.Sensor.ColorStream.FrameWidth);
                 rects[rectnum].Y = (int)(rects[rectnum].Y * depthHeight / this.Chooser.Sensor.ColorStream.FrameHeight);
 
+                float pointyinset = 0.0f;
+
                 for (int y = Math.Max(0, rects[rectnum].Y) ; y < Math.Min(rects[rectnum].Y + rects[rectnum].Height, depthHeight - 1) ; ++y)
                 {
-                    for (int x = Math.Max(0, rects[rectnum].X) ; x < Math.Min(rects[rectnum].X + rects[rectnum].Width, depthWidth - 1) ; ++x)
+                    if ((y - rects[rectnum].Y) / (float)rects[rectnum].Height > FRACTION_TO_POINT)
+                        pointyinset += rects[rectnum].Width / 2.0f /
+                            ((float)rects[rectnum].Height * (1.0f - FRACTION_TO_POINT));
+
+                    for (int x = Math.Max(0, rects[rectnum].X + (int)pointyinset) ; x < Math.Min(rects[rectnum].X + rects[rectnum].Width - (int)pointyinset, depthWidth - 1) ; ++x)
                     {
                         // calculate index into depth array
                         int depthIndex = x + (y * depthWidth);

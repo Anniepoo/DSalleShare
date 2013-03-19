@@ -55,6 +55,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                      (int)(HEAD_WIDTH * 1.5f / Math.Max(1.0f, skeleton.Joints[JointType.Head].Position.Z)),
                      (int)(HEAD_HEIGHT * 1.5f / Math.Max(1.0f, skeleton.Joints[JointType.Head].Position.Z))
                      );
+            
             Vector2 neck = this.mapMethod(skeleton.Joints[JointType.ShoulderCenter].Position);
 
             rects[1] = new Rectangle(
@@ -63,6 +64,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                    (int)(NECK_WIDTH * 1.5f / Math.Max(1.0f, skeleton.Joints[JointType.ShoulderCenter].Position.Z)),
                    (int)(NECK_HEIGHT * 1.5f / Math.Max(1.0f, skeleton.Joints[JointType.ShoulderCenter].Position.Z))
                    );
+             
             // DS commented out the hand rects
 
 
