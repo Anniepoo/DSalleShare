@@ -99,6 +99,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         protected override void LoadContent()
         {
+          
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), this.spriteBatch);
 

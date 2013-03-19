@@ -105,41 +105,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LowerLeg.png">
-      <Name>LowerLeg</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="LowerArm.png">
-      <Name>LowerArm</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="PonyTail.png">
-      <Name>PonyTail</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Shoulder.png">
-      <Name>Shoulder</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UpperArm.png">
-      <Name>UpperArm</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UpperLeg.png">
-      <Name>UpperLeg</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UpperTorso.png">
-      <Name>UpperTorso</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Waist.png">
       <Name>Waist</Name>
       <Importer>TextureImporter</Importer>
@@ -257,6 +222,20 @@
     </Compile>
     <Compile Include="LeftHand.png">
       <Name>LeftHand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HairBottom.PNG">
+      <Name>HairBottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HairDo.png">
+      <Name>HairDo</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

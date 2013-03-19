@@ -80,6 +80,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Texture2D frontMidField;
         private Texture2D midField;
         private Texture2D backField;
+        public Texture2D hairDoTexture;
+        public Texture2D hairBottomTexture;
 
         /// <summary>
         /// Initializes a new instance of the CartoonRenderer class.
@@ -189,27 +191,27 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         // Draw Bones using painters algorithm
                  
 
-                        this.DrawBone(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.waistTexture);  // Waist
+                        this.DrawCharacterPart(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.waistTexture);  // Waist
                         // DS commented out drawing the small pelvis joints
-                //        this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.boneTexture);
-                  //      this.DrawBone(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.boneTexture);
+                //        this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.partTexture);
+                  //      this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.partTexture);
                         // left of screen and left arm of player, NOT stage left 
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, this.upperArmRightTexture);  // Upper Arm Right 
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, this.upperArmLeftTexture);   // Upper Arm Left 
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.shoulderRightTexture); // Shoulder Right
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.shoulderLeftTexture); // Shoulder Left
-                        this.DrawBone(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.headTexture); // Head  
-                        this.DrawBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture); // Torso
-                        this.DrawBone(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.rightHandTexture); // Right hand 
-                        this.DrawBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.lowerArmRightTexture); // Lower Arm Right
-                        this.DrawBone(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, this.boneTexture); // Left hand
-                        this.DrawBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, this.lowerArmLeftTexture); // Lower Arm Left
-                        this.DrawBone(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, this.upperLegRightTexture); // Upper Leg Right       
-                        this.DrawBone(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, this.lowerLegRightTexture); //Lower Leg Right
-                        this.DrawBone(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.footRightTexture);    // Foot Right    
-                        this.DrawBone(skeleton.Joints, JointType.HipRight, JointType.KneeRight, this.upperLegLeftTexture); // Upper Leg Left
-                        this.DrawBone(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.lowerLegLeftTexture); // Lower Leg Left
-                        this.DrawBone(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.boneTexture); // Foot Left
+                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, this.upperArmRightTexture);  // Upper Arm Right 
+                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, this.upperArmLeftTexture);   // Upper Arm Left 
+                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.shoulderRightTexture); // Shoulder Right
+                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.shoulderLeftTexture); // Shoulder Left
+                        this.DrawCharacterPart(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.headTexture); // Head  
+                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture); // Torso
+                        this.DrawCharacterPart(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.rightHandTexture); // Right hand 
+                        this.DrawCharacterPart(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.lowerArmRightTexture); // Lower Arm Right
+                        this.DrawCharacterPart(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, this.partTexture); // Left hand
+                        this.DrawCharacterPart(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, this.lowerArmLeftTexture); // Lower Arm Left
+                        this.DrawCharacterPart(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, this.upperLegRightTexture); // Upper Leg Right       
+                        this.DrawCharacterPart(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, this.lowerLegRightTexture); //Lower Leg Right
+                        this.DrawCharacterPart(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.footRightTexture);    // Foot Right    
+                        this.DrawCharacterPart(skeleton.Joints, JointType.HipRight, JointType.KneeRight, this.upperLegLeftTexture); // Upper Leg Left
+                        this.DrawCharacterPart(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.lowerLegLeftTexture); // Lower Leg Left
+                        this.DrawCharacterPart(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.partTexture); // Foot Left
                         this.DrawSkirtBone(skeleton.Joints); // Skirt
 */
 
@@ -334,6 +336,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.lowerLegLeftTexture = Game.Content.Load<Texture2D>("LowerLegLeft");
             this.waistTexture = Game.Content.Load<Texture2D>("Waist");
             this.pelvisTexture = Game.Content.Load<Texture2D>("Pelvis");
+            this.hairDoTexture = Game.Content.Load<Texture2D>("HairDo");
+            this.hairBottomTexture = Game.Content.Load<Texture2D>("HairBottom");
  }
 
         /// <summary>
@@ -342,9 +346,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <param name="joints">The joint data.</param>
         /// <param name="startJoint">The starting joint.</param>
         /// <param name="endJoint">The ending joint.</param>
-        /// <param name="boneTexture">The texture to use for the joint</param>
-        internal void DrawBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture)
+        /// <param name="partTexture">The texture to use for the joint</param>
+        internal void DrawCharacterPart(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D boneTexture)
         {
+
             if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
                     joints[endJoint].TrackingState != JointTrackingState.Tracked)
                 return;
@@ -369,7 +374,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             Vector2 center = new Vector2((int)(start.X), (int)(start.Y));
             /* DS commented because not being used
             // Scale the dest, not the source!
-            Rectangle sourceRect = new Rectangle(0, 0, boneTexture.Width, boneTexture.Height);
+            Rectangle sourceRect = new Rectangle(0, 0, partTexture.Width, partTexture.Height);
             Rectangle destRect = new Rectangle(0, 0, 0, 0);
 
             destRect.Offset((int)(start.X), (int)(start.Y));
@@ -385,8 +390,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                scale, SpriteEffects.None, 1.0f);
         }
 
-        internal void DrawShortBone(JointCollection joints, JointType startJoint, JointType endJoint, JointType parentJoint, Texture2D boneTexture)
+
+        // DS added the following two methods to make a parent part shorter by drawing the origin of the child part at a new orgiin point
+        internal void DrawShortBone(JointCollection joints, JointType startJoint, JointType endJoint, JointType parentJoint, Texture2D boneTexture, float originAlongParent)
         {
+            string nameJoint = startJoint.ToString();
             if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
                     joints[endJoint].TrackingState != JointTrackingState.Tracked)
                 return;
@@ -395,21 +403,22 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             Vector2 start = this.mapMethod(joints[startJoint].Position);
             Vector2 shortStart = this.mapMethod(joints[parentJoint].Position);
             Vector2 end = this.mapMethod(joints[endJoint].Position);
-            DrawShortBoneLike(depth, start, end, shortStart, boneTexture);
+            DrawShortBoneLike(depth, start, end, shortStart, boneTexture, originAlongParent, nameJoint);
             //if (startJoint == JointType.Head)
             //    Console.WriteLine("Cartoon Elements drawBone head position after remapping"+ start.X);
         }
 
-        private void DrawShortBoneLike(float depth, Vector2 start, Vector2 end, Vector2 shortStart, Texture2D boneTexture)
+        private void DrawShortBoneLike(float depth, Vector2 start, Vector2 end, Vector2 shortStart, Texture2D boneTexture, float origin, string nameJoint)
         {
+            float originPoint = origin;
             Vector2 longDiff = end - start;
             Vector2 shortDiff = start - shortStart;
             Vector2 scale = new Vector2((float)(FOCAL_PLANE_DIST / Math.Max(NEAR_PLANE, depth)),
                 longDiff.Length() / boneTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
 
             float angle = (float)Math.Atan2(longDiff.Y, longDiff.X) - MathHelper.PiOver2;
-
-            Vector2 center = new Vector2((int)(shortStart.X+shortDiff.X/1.2), (int)(shortStart.Y+shortDiff.Y/1.2)) ;
+                        Console.WriteLine(nameJoint + scale);
+            Vector2 center = new Vector2((int)(shortStart.X+shortDiff.X/1.2), (int)(shortStart.Y+shortDiff.Y*originPoint)) ;
 
 
 
@@ -422,6 +431,38 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 new Vector2(boneTexture.Width / 2, boneTexture.Height * PIN_FROM_END),
                scale, SpriteEffects.None, 1.0f);
         }
+
+        // DS added the following for leaf body parts whose size need to overshoot their end joints such as the head.
+        internal void DrawLongBone(JointCollection joints, JointType startJoint, JointType endJoint, Texture2D partTexture, float overshootAmount)
+        {
+
+            if (joints[startJoint].TrackingState != JointTrackingState.Tracked ||
+                    joints[endJoint].TrackingState != JointTrackingState.Tracked)
+                return;
+
+            float depth = joints[startJoint].Position.Z;
+            Vector2 start = this.mapMethod(joints[startJoint].Position);
+            Vector2 end = this.mapMethod(joints[endJoint].Position);
+            DrawLongBoneLike(depth, start, end, partTexture, overshootAmount);
+        }
+
+        private void DrawLongBoneLike(float depth, Vector2 start, Vector2 end, Texture2D partTexture, float overshootAmount)
+        {
+            Vector2 diff = (end - start) * overshootAmount ;
+            Vector2 scale = new Vector2((float)(FOCAL_PLANE_DIST / Math.Max(NEAR_PLANE, depth)),
+                diff.Length() / partTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
+
+            float angle = (float)Math.Atan2(diff.Y, diff.X) - MathHelper.PiOver2;
+
+            Vector2 center = new Vector2((int)(start.X), (int)(start.Y));
+          
+            Color color = Color.White;
+
+            this.SharedSpriteBatch.Draw(partTexture, center, null, color, angle,
+                new Vector2(partTexture.Width / 2, partTexture.Height * PIN_FROM_END),
+               scale, SpriteEffects.None, 1.0f);
+        }
+
 
 
         internal void addSubRenderers(PaintersAlgorithmRenderer par)
@@ -450,9 +491,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
-                    // DS switched order so that video cutout is behind drawn elements
-                    par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.playerImageRenderer.SkeletonToColorMapForLiveElements, playerID));
-                    par.addSubRenderer(new SkeletonElements(this, skeleton));
+                    // DS switched order, refactored FrontCharacterElements from SkeletonElements and added BackSkeletonElements so that video cutout is in front of head shape and behind other drawn elements
+                    par.addSubRenderer(new BackCharacterElements(this, skeleton));
+                    par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.playerImageRenderer.SkeletonToColorMap, playerID));
+                    par.addSubRenderer(new FrontCharacterElements(this, skeleton));
                     
                 }
                 playerID++;
@@ -460,5 +502,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             skeletonDrawn = true;
         }
+
+
     }
 }

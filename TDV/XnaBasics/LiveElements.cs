@@ -29,6 +29,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
         public LiveElements(PlayerImageRenderer playerImageRenderer, Microsoft.Kinect.Skeleton skeleton, SkeletonPointMap mapMethod, int playerID)
         {
+           
             this.playerImageRenderer = playerImageRenderer;
             this.skeleton = skeleton;
             this.mapMethod = mapMethod;
@@ -44,7 +45,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
         internal override void Draw(SpriteBatch ssb)
         {
-            Rectangle[] rects = new Rectangle[2];
+            Rectangle[] rects = new Rectangle[12];
         
             Vector2 head = this.mapMethod(skeleton.Joints[JointType.Head].Position);
             
