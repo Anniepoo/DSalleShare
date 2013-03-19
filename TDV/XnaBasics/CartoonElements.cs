@@ -57,6 +57,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private bool initialized;
         // TODO terrible encapsulation!  FIX ME ANNIE!!!!!
+        private TextureProvider tp;
+
+        public TextureProvider TP
+        {
+            get { return tp; }
+        }
+
+        /*
         internal Texture2D boneTexture;
         internal Texture2D pelvisTexture;
         internal Texture2D torsoTexture;
@@ -76,13 +84,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         internal Texture2D lowerLegRightTexture;
         internal Texture2D upperLegLeftTexture;
         internal Texture2D lowerLegLeftTexture;
+        public Texture2D hairDoTexture;
+        public Texture2D hairBottomTexture;
+        */
+
         private Texture2D frontField;
         private Texture2D frontMidField;
         private Texture2D midField;
         private Texture2D backField;
-        public Texture2D hairDoTexture;
-        public Texture2D hairBottomTexture;
-
         /// <summary>
         /// Initializes a new instance of the CartoonRenderer class.
         /// </summary>
@@ -93,6 +102,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             this.mapMethod = map;
             this.playerImageRenderer = pir;
+            this.tp = new F1TextureProvider(game);
         }
 
         /// <summary>
@@ -303,7 +313,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             float depth = jointCollection[JointType.HipCenter].Position.Z;
-            DrawBoneLike(depth, start, end, pelvisTexture);
+            DrawBoneLike(depth, start, end, tp.pelvisTexture);
         }
 
         /// <summary>
@@ -312,32 +322,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         protected override void LoadContent()
         {            base.LoadContent();
 
-
-            this.footRightTexture = Game.Content.Load<Texture2D>("FootRight");
-            this.rightHandTexture = Game.Content.Load<Texture2D>("RightHand");
-            this.footLeftTexture = Game.Content.Load<Texture2D>("FootLeft");
-            this.leftHandTexture = Game.Content.Load<Texture2D>("LeftHand");
-            this.headTexture = Game.Content.Load<Texture2D>("Head");
+            tp.causeLoadContent();
             this.frontField = Game.Content.Load<Texture2D>("FrontField");
             this.frontMidField = Game.Content.Load<Texture2D>("FrontMidField");
             this.midField = Game.Content.Load<Texture2D>("MidField");
             this.backField = Game.Content.Load<Texture2D>("BackField");
-            this.boneTexture = Game.Content.Load<Texture2D>("Bone");
-            this.torsoTexture = Game.Content.Load<Texture2D>("Torso");
-            this.shoulderRightTexture = Game.Content.Load<Texture2D>("ShoulderRight");
-            this.upperArmRightTexture = Game.Content.Load<Texture2D>("UpperArmRight");
-            this.lowerArmRightTexture = Game.Content.Load<Texture2D>("LowerArmRight");
-            this.shoulderLeftTexture = Game.Content.Load<Texture2D>("ShoulderLeft");
-            this.upperArmLeftTexture = Game.Content.Load<Texture2D>("UpperArmLeft");
-            this.lowerArmLeftTexture = Game.Content.Load<Texture2D>("LowerArmLeft");
-            this.upperLegRightTexture = Game.Content.Load<Texture2D>("UpperLegRight");
-            this.upperLegLeftTexture = Game.Content.Load<Texture2D>("UpperLegLeft");
-            this.lowerLegRightTexture = Game.Content.Load<Texture2D>("LowerLegRight"); 
-            this.lowerLegLeftTexture = Game.Content.Load<Texture2D>("LowerLegLeft");
-            this.waistTexture = Game.Content.Load<Texture2D>("Waist");
-            this.pelvisTexture = Game.Content.Load<Texture2D>("Pelvis");
-            this.hairDoTexture = Game.Content.Load<Texture2D>("HairDo");
-            this.hairBottomTexture = Game.Content.Load<Texture2D>("HairBottom");
  }
 
         /// <summary>
@@ -473,7 +462,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 this.Initialize();
             }
             // If the joint texture isn't loaded, load all the content
-            if (null == this.lowerLegLeftTexture)
+            if (null == this.TP.lowerLegLeftTexture)
             {
                 this.LoadContent();
             }

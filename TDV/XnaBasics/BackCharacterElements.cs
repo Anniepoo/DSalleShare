@@ -37,8 +37,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             // Draw Bones using painters algorithm
 
 
-            cartooner.DrawLongBone(skeleton.Joints, JointType.Spine, JointType.ShoulderCenter,  cartooner.hairBottomTexture, 1.3f);  // Neck and hairBottom
-            cartooner.DrawLongBone(skeleton.Joints,JointType.ShoulderCenter, JointType.Head,  cartooner.hairDoTexture,1.5f); // Head  (pigtails and ribbons)
+            cartooner.DrawLongBone(skeleton.Joints, JointType.Spine, JointType.ShoulderCenter,  cartooner.TP.hairBottomTexture, 1.3f);  // Neck and hairBottom
+            cartooner.DrawLongBone(skeleton.Joints,JointType.ShoulderCenter, JointType.Head,  cartooner.TP.hairDoTexture,1.5f); // Head  (pigtails and ribbons)
            
         }
     }

@@ -63,15 +63,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Joint.png">
-      <Name>Joint</Name>
+    <Compile Include="f1Joint.png">
+      <Name>f1Joint</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bone.png">
-      <Name>Bone</Name>
+    <Compile Include="f1Bone.png">
+      <Name>f1Bone</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -91,80 +91,80 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Torso.png">
-      <Name>Torso</Name>
+    <Compile Include="f1Torso.png">
+      <Name>f1Torso</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pelvis.png">
-      <Name>Pelvis</Name>
+    <Compile Include="f1Pelvis.png">
+      <Name>f1Pelvis</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Waist.png">
-      <Name>Waist</Name>
+    <Compile Include="f1Waist.png">
+      <Name>f1Waist</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LowerArmRight.png">
-      <Name>LowerArmRight</Name>
+    <Compile Include="f1LowerArmRight.png">
+      <Name>f1LowerArmRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="LowerLegRight.png">
-      <Name>LowerLegRight</Name>
+    <Compile Include="f1LowerLegRight.png">
+      <Name>f1LowerLegRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="ShoulderRight.png">
-      <Name>ShoulderRight</Name>
+    <Compile Include="f1ShoulderRight.png">
+      <Name>f1ShoulderRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="UpperArmRight.png">
-      <Name>UpperArmRight</Name>
+    <Compile Include="f1UpperArmRight.png">
+      <Name>f1UpperArmRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="UpperLegRight.png">
-      <Name>UpperLegRight</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="LowerLegLeft.png">
-      <Name>LowerLegLeft</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="ShoulderLeft.png">
-      <Name>ShoulderLeft</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="UpperLegLeft.png">
-      <Name>UpperLegLeft</Name>
+    <Compile Include="f1UpperLegRight.png">
+      <Name>f1UpperLegRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UpperArmLeft.png">
-      <Name>UpperArmLeft</Name>
+    <Compile Include="f1LowerLegLeft.png">
+      <Name>f1LowerLegLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="f1ShoulderLeft.png">
+      <Name>f1ShoulderLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="f1UpperLegLeft.png">
+      <Name>f1UpperLegLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LowerArmLeft.png">
-      <Name>LowerArmLeft</Name>
+    <Compile Include="f1UpperArmLeft.png">
+      <Name>f1UpperArmLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="f1LowerArmLeft.png">
+      <Name>f1LowerArmLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -196,46 +196,46 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Head.png">
-      <Name>Head</Name>
+    <Compile Include="f1Head.png">
+      <Name>f1Head</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="RightHand.PNG">
-      <Name>RightHand</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="FootRight.png">
-      <Name>FootRight</Name>
+    <Compile Include="f1RightHand.PNG">
+      <Name>f1RightHand</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FootLeft.png">
-      <Name>FootLeft</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="LeftHand.png">
-      <Name>LeftHand</Name>
+    <Compile Include="f1FootRight.png">
+      <Name>f1FootRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HairBottom.PNG">
-      <Name>HairBottom</Name>
+    <Compile Include="f1FootLeft.png">
+      <Name>f1FootLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="f1LeftHand.png">
+      <Name>f1LeftHand</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HairDo.png">
-      <Name>HairDo</Name>
+    <Compile Include="f1HairBottom.PNG">
+      <Name>f1HairBottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="f1HairDo.png">
+      <Name>f1HairDo</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
