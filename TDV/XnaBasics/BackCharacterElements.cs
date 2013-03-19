@@ -10,13 +10,13 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     {
         private Microsoft.Kinect.Skeleton skeleton;
         private CartoonElements cartooner;
-
+        private const float DEPTH_DELTA = 0.1f;
 
         public override float Z
         {
             get
             {
-                return skeleton.Joints[JointType.HipCenter].Position.Z + .1f;
+                return skeleton.Joints[JointType.HipCenter].Position.Z + DEPTH_DELTA;
             }
             set
             {

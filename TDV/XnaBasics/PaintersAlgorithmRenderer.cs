@@ -101,6 +101,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             foreach (SubRenderer s in this.subRenderers)
             {
                 s.Draw(SharedSpriteBatch);
+                
             }
 
             // next line is temporary until the skeleton based image stuff works

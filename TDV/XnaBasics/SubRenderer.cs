@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Microsoft.Samples.Kinect.XnaBasics
 {
@@ -20,6 +22,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
         }
 
-        internal abstract void Draw(Xna.Framework.Graphics.SpriteBatch SharedSpriteBatch);
+        internal abstract void Draw(SpriteBatch SharedSpriteBatch);
+            
     }
 }
