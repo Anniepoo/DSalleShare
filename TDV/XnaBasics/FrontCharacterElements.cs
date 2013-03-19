@@ -35,8 +35,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
       
             // Draw Bones using painters algorithm
 
-
-            // cartooner.DrawCharacterPart(skeleton.Joints, JointType.Spine, JointType.HipCenter, cartooner.waistTexture);  // Waist
+            // DS uncommented the waist to fill in abdominal gap
+           cartooner.DrawCharacterPart(skeleton.Joints, JointType.Spine, JointType.HipCenter, cartooner.waistTexture);  // Waist
             // DS commented out drawing the small pelvis joints
             //        this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.partTexture);
             //      this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.partTexture);
@@ -45,13 +45,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, cartooner.upperArmLeftTexture);   // Upper Arm Left 
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, cartooner.shoulderRightTexture); // Shoulder Right
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, cartooner.shoulderLeftTexture); // Shoulder Left
-         //   cartooner.DrawCharacterPart(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, cartooner.headTexture); // Head  (pigtails and ribbons)
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, cartooner.lowerLegRightTexture); // Lower Leg Right
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.HipRight, JointType.KneeRight, cartooner.upperLegRightTexture); // Upper Leg Right 
             //cartooner.DrawCharacterPart(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, cartooner.footRightTexture);    // Foot Right    
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, cartooner.lowerLegLeftTexture); //Lower Leg Left
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, cartooner.upperLegLeftTexture); // Upper Leg Left
-
             //cartooner.DrawCharacterPart(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, cartooner.partTexture); // Foot Left
             cartooner.DrawSkirtBone(skeleton.Joints); // Skirt
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, cartooner.torsoTexture); // Torso
@@ -59,7 +57,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, JointType.ShoulderRight, cartooner.lowerArmRightTexture, 0.83f); // Lower Arm Right
            // cartooner.DrawCharacterPart(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, cartooner.partTexture); // Left hand
             cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, JointType.ShoulderLeft, cartooner.lowerArmLeftTexture, 0.83f); // Lower Arm Left
-            cartooner.DrawLongBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Head, cartooner.headTexture,1.5f);
+            cartooner.DrawLongBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Head, cartooner.headTexture, 1.5f); // Head  (pigtails and ribbons)
         }
     }
 }
