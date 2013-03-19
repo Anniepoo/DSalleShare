@@ -36,7 +36,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             // Draw Bones using painters algorithm
 
             // DS uncommented the waist to fill in abdominal gap
-           cartooner.DrawCharacterPart(skeleton.Joints, JointType.Spine, JointType.HipCenter, cartooner.waistTexture);  // Waist
+           cartooner.DrawCharacterPart(skeleton.Joints, JointType.Spine, JointType.HipCenter, cartooner.TP.waistTexture);  // Waist
             // DS commented out drawing the small pelvis joints
             //        this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.partTexture);
             //      this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.partTexture);
