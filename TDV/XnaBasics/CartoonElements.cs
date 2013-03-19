@@ -102,7 +102,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             this.mapMethod = map;
             this.playerImageRenderer = pir;
-            this.tp = new F1TextureProvider(game);
+            this.tp = new TextureProvider(game, "f1");
         }
 
         /// <summary>

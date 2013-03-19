@@ -113,7 +113,6 @@
   <ItemGroup>
     <Compile Include="BackCharacterElements.cs" />
     <Compile Include="BillboardSubrenderer.cs" />
-    <Compile Include="F1TextureProvider.cs" />
     <Compile Include="LiveElements.cs" />
     <Compile Include="PlayerImageRenderer.cs" />
     <Compile Include="KinectChooser.cs" />

@@ -45,7 +45,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
         internal override void Draw(SpriteBatch ssb)
         {
-            Rectangle[] rects = new Rectangle[12];
+            Rectangle[] rects = new Rectangle[2];
         
             Vector2 head = this.mapMethod(skeleton.Joints[JointType.Head].Position);
             
