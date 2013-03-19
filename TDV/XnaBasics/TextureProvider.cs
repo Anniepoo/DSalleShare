@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Samples.Kinect.XnaBasics
 {
-    abstract public class TextureProvider : DrawableGameComponent
+    public class TextureProvider : DrawableGameComponent
     {
         private Game game;
         string prefix;
@@ -52,28 +52,29 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         protected override void LoadContent()
         {
             base.LoadContent();
+            string prefixstring = ".\\characters\\" + prefix + "\\";
 
-            this.footRightTexture = Game.Content.Load<Texture2D>(prefix+"FootRight");
-            this.rightHandTexture = Game.Content.Load<Texture2D>(prefix + "RightHand");
-            this.footLeftTexture = Game.Content.Load<Texture2D>(prefix + "FootLeft");
-            this.leftHandTexture = Game.Content.Load<Texture2D>(prefix + "LeftHand");
-            this.headTexture = Game.Content.Load<Texture2D>(prefix + "Head");
-            this.boneTexture = Game.Content.Load<Texture2D>(prefix + "Bone");
-            this.torsoTexture = Game.Content.Load<Texture2D>(prefix + "Torso");
-            this.shoulderRightTexture = Game.Content.Load<Texture2D>(prefix + "ShoulderRight");
-            this.upperArmRightTexture = Game.Content.Load<Texture2D>(prefix + "UpperArmRight");
-            this.lowerArmRightTexture = Game.Content.Load<Texture2D>(prefix + "LowerArmRight");
-            this.shoulderLeftTexture = Game.Content.Load<Texture2D>(prefix + "ShoulderLeft");
-            this.upperArmLeftTexture = Game.Content.Load<Texture2D>(prefix + "UpperArmLeft");
-            this.lowerArmLeftTexture = Game.Content.Load<Texture2D>(prefix + "LowerArmLeft");
-            this.upperLegRightTexture = Game.Content.Load<Texture2D>(prefix + "UpperLegRight");
-            this.upperLegLeftTexture = Game.Content.Load<Texture2D>(prefix + "UpperLegLeft");
-            this.lowerLegRightTexture = Game.Content.Load<Texture2D>(prefix + "LowerLegRight");
-            this.lowerLegLeftTexture = Game.Content.Load<Texture2D>(prefix + "LowerLegLeft");
-            this.waistTexture = Game.Content.Load<Texture2D>(prefix + "Waist");
-            this.pelvisTexture = Game.Content.Load<Texture2D>(prefix + "Pelvis");
-            this.hairDoTexture = Game.Content.Load<Texture2D>(prefix + "HairDo");
-            this.hairBottomTexture = Game.Content.Load<Texture2D>(prefix + "HairBottom");
+            this.footRightTexture = Game.Content.Load<Texture2D>(prefixstring+"FootRight");
+            this.rightHandTexture = Game.Content.Load<Texture2D>(prefixstring + "RightHand");
+            this.footLeftTexture = Game.Content.Load<Texture2D>(prefixstring + "FootLeft");
+            this.leftHandTexture = Game.Content.Load<Texture2D>(prefixstring + "LeftHand");
+            this.headTexture = Game.Content.Load<Texture2D>(prefixstring + "Head");
+            this.boneTexture = Game.Content.Load<Texture2D>(prefixstring + "Bone");
+            this.torsoTexture = Game.Content.Load<Texture2D>(prefixstring + "Torso");
+            this.shoulderRightTexture = Game.Content.Load<Texture2D>(prefixstring + "ShoulderRight");
+            this.upperArmRightTexture = Game.Content.Load<Texture2D>(prefixstring + "UpperArmRight");
+            this.lowerArmRightTexture = Game.Content.Load<Texture2D>(prefixstring + "LowerArmRight");
+            this.shoulderLeftTexture = Game.Content.Load<Texture2D>(prefixstring + "ShoulderLeft");
+            this.upperArmLeftTexture = Game.Content.Load<Texture2D>(prefixstring + "UpperArmLeft");
+            this.lowerArmLeftTexture = Game.Content.Load<Texture2D>(prefixstring + "LowerArmLeft");
+            this.upperLegRightTexture = Game.Content.Load<Texture2D>(prefixstring + "UpperLegRight");
+            this.upperLegLeftTexture = Game.Content.Load<Texture2D>(prefixstring + "UpperLegLeft");
+            this.lowerLegRightTexture = Game.Content.Load<Texture2D>(prefixstring + "LowerLegRight");
+            this.lowerLegLeftTexture = Game.Content.Load<Texture2D>(prefixstring + "LowerLegLeft");
+            this.waistTexture = Game.Content.Load<Texture2D>(prefixstring + "Waist");
+            this.pelvisTexture = Game.Content.Load<Texture2D>(prefixstring + "Pelvis");
+            this.hairDoTexture = Game.Content.Load<Texture2D>(prefixstring + "HairDo");
+            this.hairBottomTexture = Game.Content.Load<Texture2D>(prefixstring + "HairBottom");
         }
     }
 }
