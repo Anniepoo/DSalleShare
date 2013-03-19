@@ -263,7 +263,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  
   <ItemGroup>
     <Compile Include="characters\m1\Joint.png">
       <Name>Joint</Name>
@@ -357,7 +356,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  
   <ItemGroup>
     <Compile Include="characters\m2\Joint.png">
       <Name>Joint</Name>
@@ -451,7 +449,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  
   <ItemGroup>
     <Compile Include="BackField.png">
       <Name>BackField</Name>
@@ -523,6 +520,8 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
+  
+  
   <ItemGroup>
     <Compile Include="characters\f2\FootRight.png">
       <Name>FootRight</Name>
@@ -530,6 +529,151 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\f2\RightHand.PNG">
+      <Name>RightHand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\f2\FootLeft.png">
+      <Name>FootLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\f2\LeftHand.png">
+      <Name>LeftHand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\f2\Head.png">
+      <Name>Head</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\f2\HairDo.png">
+      <Name>HairDo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\f2\HairBottom.PNG">
+      <Name>HairBottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  
+  
+  <ItemGroup>
+    <Compile Include="characters\m1\FootRight.png">
+      <Name>FootRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m1\RightHand.PNG">
+      <Name>RightHand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m1\FootLeft.png">
+      <Name>FootLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m1\LeftHand.png">
+      <Name>LeftHand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m1\Head.png">
+      <Name>Head</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m1\HairDo.png">
+      <Name>HairDo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m1\HairBottom.PNG">
+      <Name>HairBottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  
+  
+  <ItemGroup>
+    <Compile Include="characters\m2\FootRight.png">
+      <Name>FootRight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m2\RightHand.PNG">
+      <Name>RightHand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m2\FootLeft.png">
+      <Name>FootLeft</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m2\LeftHand.png">
+      <Name>LeftHand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m2\Head.png">
+      <Name>Head</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m2\HairDo.png">
+      <Name>HairDo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters\m2\HairBottom.PNG">
+      <Name>HairBottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
