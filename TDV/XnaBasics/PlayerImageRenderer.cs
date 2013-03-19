@@ -68,7 +68,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public PlayerImageRenderer(Game game)
             : base(game)
         {
-          //  this.cartoonElements = new CartoonRenderer(game, this.SkeletonToColorMap);
+          //  this.cartoonElements = new CartoonRenderer(game, this.SkeletonToColorMapViewPortCorrection);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         /// <param name="point">The SkeletonPoint to map.</param>
         /// <returns>A Vector2 of the location on the color frame.</returns>
-        internal Vector2 SkeletonToColorMap(SkeletonPoint point)
+        internal Vector2 SkeletonToColorMapViewPortCorrection(SkeletonPoint point)
         {
             if ((null != Chooser.Sensor) && (null != Chooser.Sensor.ColorStream))
             {
@@ -295,7 +295,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             return Vector2.Zero;
         }
 
-        internal Vector2 SkeletonToColorMapForLiveElements(SkeletonPoint point)
+        internal Vector2 SkeletonToColorMap(SkeletonPoint point)
         {
             if ((null != Chooser.Sensor) && (null != Chooser.Sensor.ColorStream))
             {

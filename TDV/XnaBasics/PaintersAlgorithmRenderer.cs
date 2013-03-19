@@ -37,7 +37,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             : base(game)
         {
             this.playerImageRenderer = new PlayerImageRenderer(game);
-            this.cartoonElements = new CartoonElements(game, this.playerImageRenderer.SkeletonToColorMap, this.playerImageRenderer);
+            this.cartoonElements = new CartoonElements(game, this.playerImageRenderer.SkeletonToColorMapViewPortCorrection, this.playerImageRenderer);
         }
 
         /// <summary>
