@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Samples.Kinect.XnaBasics
 {
-    public class TextureProvider : DrawableGameComponent
+    public class TextureSet : DrawableGameComponent
     {
         private Game game;
         string prefix;
@@ -34,7 +34,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         internal Texture2D hairDoTexture;
         internal Texture2D hairBottomTexture;
 
-        public TextureProvider(Game game, string prefix) :
+        public TextureSet(Game game, string prefix) :
             base(game)
         {
             this.game = game;
@@ -52,6 +52,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         protected override void LoadContent()
         {
             base.LoadContent();
+            if (footRightTexture != null) return;
+
             string prefixstring = ".\\characters\\" + prefix + "\\";
 
             this.footRightTexture = Game.Content.Load<Texture2D>(prefixstring+"FootRight");

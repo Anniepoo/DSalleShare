@@ -124,7 +124,9 @@
     <Compile Include="FrontCharacterElements.cs" />
     <Compile Include="SubRenderer.cs" />
     <Compile Include="TDVGame.cs" />
-    <Compile Include="TextureProvider.cs" />
+    <Compile Include="TDVGUI.cs" />
+    <Compile Include="TDVPlayer.cs" />
+    <Compile Include="TextureSet.cs" />
     <Compile Include="ZOrderIComparer.cs" />
   </ItemGroup>
   <ItemGroup>

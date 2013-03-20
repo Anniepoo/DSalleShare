@@ -29,6 +29,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private List<SubRenderer> subRenderers = new List<SubRenderer>();
 
+        private TDVGUI gui;
+
+        public TDVGUI GUI 
+        {
+            get { return gui; }
+        }
+
+
         /// <summary>
         /// Initializes a new instance of the PaintersAlgorithmRenderer class.
         /// </summary>
@@ -38,6 +46,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             this.playerImageRenderer = new PlayerImageRenderer(game);
             this.cartoonElements = new CartoonElements(game, this.playerImageRenderer.SkeletonToColorMapViewPortCorrection, this.playerImageRenderer);
+            this.gui = new TDVGUI((TDVBasicGame)game);
         }
 
         /// <summary>
@@ -117,9 +126,12 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
                 null,
                 Color.White);
+
             this.SharedSpriteBatch.End();
-           
+            gui.Draw(gameTime);
+          
             base.Draw(gameTime);
+
         }
 
         /// <summary>
@@ -127,6 +139,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         protected override void LoadContent()
         {
+            gui.causeLoadContent();
             base.LoadContent();
         }
 

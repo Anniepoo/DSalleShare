@@ -11,6 +11,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Microsoft.Kinect.Skeleton skeleton;
         private CartoonElements cartooner;
         private const float DEPTH_DELTA = 0.1f;
+        private TextureSet textures;
 
         public override float Z
         {
@@ -24,10 +25,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
         }
 
-        public BackCharacterElements(CartoonElements cartooner, Microsoft.Kinect.Skeleton skeleton)
+        public BackCharacterElements(CartoonElements cartooner, Microsoft.Kinect.Skeleton skeleton, TextureSet ts)
         {
             this.skeleton = skeleton;
             this.cartooner = cartooner;
+            this.textures = ts;
         }
 
 
@@ -36,9 +38,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             // Draw Bones using painters algorithm
 
-
-            cartooner.DrawLongBone(skeleton.Joints, JointType.Spine, JointType.ShoulderCenter,  cartooner.TP.hairBottomTexture, 1.3f);  // Neck and hairBottom
-            cartooner.DrawLongBone(skeleton.Joints,JointType.ShoulderCenter, JointType.Head,  cartooner.TP.hairDoTexture,1.5f); // Head  (pigtails and ribbons)
+            cartooner.DrawLongBone(skeleton.Joints, JointType.Spine, JointType.ShoulderCenter,  textures.hairBottomTexture, 1.3f);  // Neck and hairBottom
+            cartooner.DrawLongBone(skeleton.Joints,JointType.ShoulderCenter, JointType.Head,  textures.hairDoTexture,1.5f); // Head  (pigtails and ribbons)
            
         }
     }
