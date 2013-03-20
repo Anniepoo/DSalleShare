@@ -169,7 +169,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  
   <ItemGroup>
     <Compile Include="characters\f2\Joint.png">
       <Name>Joint</Name>
@@ -520,8 +519,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  
-  
   <ItemGroup>
     <Compile Include="characters\f2\FootRight.png">
       <Name>FootRight</Name>
@@ -571,8 +568,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  
-  
   <ItemGroup>
     <Compile Include="characters\m1\FootRight.png">
       <Name>FootRight</Name>
@@ -622,8 +617,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  
-  
   <ItemGroup>
     <Compile Include="characters\m2\FootRight.png">
       <Name>FootRight</Name>
@@ -673,7 +666,13 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  
+  <ItemGroup>
+    <Compile Include="presents.png">
+      <Name>presents</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

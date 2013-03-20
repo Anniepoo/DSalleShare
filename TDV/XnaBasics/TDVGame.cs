@@ -10,12 +10,28 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using System;
 
     /// <summary>
     /// The main Xna game implementation.
     /// </summary>
     public class TDVBasicGame : Microsoft.Xna.Framework.Game
     {
+        private static TDVBasicGame defaultGame = null;
+
+        public static TDVBasicGame Default
+        {
+            get
+            {
+                return defaultGame; // TODO CODE DEBT bad singleton implementation
+            }
+        }
+
+        private const int MAX_PLAYERS = 6;
+
+        // the player to whom keyboard input is directed
+        private int current_player = 0;
+
         /// <summary>
         /// This is used to adjust the window size.
         /// 
@@ -41,6 +57,16 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private readonly KinectChooser chooser;
 
         private readonly PaintersAlgorithmRenderer paintersAlgorithmRenderer;
+
+        private TDVPlayer[] players = new TDVPlayer[MAX_PLAYERS];
+
+        internal TDVPlayer getPlayer(int i)
+        {
+            if (i < 0 || i >= MAX_PLAYERS)
+                throw new IndexOutOfRangeException("Illegal player number");
+
+            return players[i];
+        }
 
         /// <summary>
         /// This is the viewport of the streams.
@@ -68,6 +94,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         public TDVBasicGame()
         {
+            defaultGame = this;
+
             this.IsFixedTimeStep = false;
             this.IsMouseVisible = true;
             this.Window.Title = "Happy Birthday";
@@ -80,6 +108,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.viewPortRectangle = new Rectangle(0,0, Width, Height);
 
             Content.RootDirectory = "Content";
+
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i] = new TDVPlayer();
+            }
 
             // The Kinect sensor will use 640x480 for both streams
             // To make your app handle multiple Kinects and other scenarios,
@@ -129,18 +162,33 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             // If the spacebar has been pressed, toggle the focus
             KeyboardState newState = Keyboard.GetState();
-            if (this.previousKeyboard.IsKeyUp(Keys.Space) && newState.IsKeyDown(Keys.Space))
+            if (this.previousKeyboard.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
             {
-              //  this.colorHasFocus = !this.colorHasFocus;
+                current_player--;
+                if (current_player < 0) current_player = MAX_PLAYERS - 1;
             }
-
+            if (this.previousKeyboard.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            {
+                current_player++;
+                if (current_player >= MAX_PLAYERS) current_player = 0;
+            }
+            if (this.previousKeyboard.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
+            {
+                players[current_player].Appearance++;
+            }
+            if (this.previousKeyboard.IsKeyUp(Keys.Down) && newState.IsKeyDown(Keys.Down))
+            {
+                players[current_player].Appearance--;
+            }
             this.previousKeyboard = newState;
+
+            this.paintersAlgorithmRenderer.GUI.Player = current_player;
 
             // Animate the stream positions and sizes
             this.paintersAlgorithmRenderer.Position = new Vector2(0, 0);
             this.paintersAlgorithmRenderer.Size = new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height);
 
-            base.Update(gameTime);
+
         }
 
         /// <summary>
@@ -154,9 +202,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             // Render header/footer
             // at the moment no indicia stuff on screen
-            this.spriteBatch.Begin();
-            this.spriteBatch.DrawString(this.font, "Press [Space] to switch between color and depth.", new Vector2(10, this.viewPortRectangle.Y + this.viewPortRectangle.Height + 3), Color.Black);
-            this.spriteBatch.End();
+         //   this.spriteBatch.Begin();
+        //    this.spriteBatch.DrawString(this.font, "Press [Space] to switch between color and depth.", new Vector2(10, this.viewPortRectangle.Y + this.viewPortRectangle.Height + 3), Color.Black);
+        //    this.spriteBatch.End();
 
             // Render the streams with respect to focus
             this.paintersAlgorithmRenderer.DrawOrder = 1;

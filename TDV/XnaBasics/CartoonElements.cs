@@ -56,37 +56,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// Whether the rendering has been initialized.
         /// </summary>
         private bool initialized;
-        // TODO terrible encapsulation!  FIX ME ANNIE!!!!!
-        private TextureProvider tp;
-
-        public TextureProvider TP
-        {
-            get { return tp; }
-        }
-
-        /*
-        internal Texture2D boneTexture;
-        internal Texture2D pelvisTexture;
-        internal Texture2D torsoTexture;
-        internal Texture2D waistTexture;
-        internal Texture2D footLeftTexture;
-        internal Texture2D footRightTexture;
-        internal Texture2D leftHandTexture;
-        internal Texture2D rightHandTexture;
-        internal Texture2D headTexture;
-        internal Texture2D shoulderRightTexture;
-        internal Texture2D shoulderLeftTexture;
-        internal Texture2D upperArmRightTexture;
-        internal Texture2D lowerArmRightTexture;
-        internal Texture2D upperArmLeftTexture;
-        internal Texture2D lowerArmLeftTexture;
-        internal Texture2D upperLegRightTexture;
-        internal Texture2D lowerLegRightTexture;
-        internal Texture2D upperLegLeftTexture;
-        internal Texture2D lowerLegLeftTexture;
-        public Texture2D hairDoTexture;
-        public Texture2D hairBottomTexture;
-        */
 
         private Texture2D frontField;
         private Texture2D frontMidField;
@@ -102,7 +71,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             this.mapMethod = map;
             this.playerImageRenderer = pir;
-            this.tp = new TextureProvider(game, "f1");
         }
 
         /// <summary>
@@ -169,7 +137,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             base.Draw(gameTime);
         }
 
-        internal void DrawSkirtBone(JointCollection jointCollection)
+        internal void DrawSkirtBone(JointCollection jointCollection, TextureSet textures)
         {
             if (jointCollection[JointType.HipCenter].TrackingState != JointTrackingState.Tracked)return;
             Vector2 start = this.mapMethod(jointCollection[JointType.HipCenter].Position);
@@ -202,21 +170,20 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             float depth = jointCollection[JointType.HipCenter].Position.Z;
-            DrawBoneLike(depth, start, end, tp.pelvisTexture);
+            DrawBoneLike(depth, start, end, textures.pelvisTexture);
         }
 
         /// <summary>
         /// This method loads the textures and sets the origin values.
         /// </summary>
         protected override void LoadContent()
-        {            base.LoadContent();
-
-            tp.causeLoadContent();
+        {            
+            base.LoadContent();
             this.frontField = Game.Content.Load<Texture2D>("FrontField");
             this.frontMidField = Game.Content.Load<Texture2D>("FrontMidField");
             this.midField = Game.Content.Load<Texture2D>("MidField");
             this.backField = Game.Content.Load<Texture2D>("BackField");
- }
+        }
 
         /// <summary>
         /// This method draws a bone.
@@ -350,8 +317,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 this.Initialize();
             }
-            // If the joint texture isn't loaded, load all the content
-            if (null == this.TP.lowerLegLeftTexture)
+            // If the map texture isn't loaded, load all the content
+            if (null == this.frontMidField)
             {
                 this.LoadContent();
             }
@@ -370,10 +337,12 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
+                    TextureSet ts = ((TDVBasicGame)Game).getPlayer(playerID).Textures;
+
                     // DS switched order, refactored FrontCharacterElements from SkeletonElements and added BackSkeletonElements so that video cutout is in front of head shape and behind other drawn elements
-                    par.addSubRenderer(new BackCharacterElements(this, skeleton));
+                    par.addSubRenderer(new BackCharacterElements(this, skeleton, ts));
                     par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.playerImageRenderer.SkeletonToColorMap, playerID));
-                    par.addSubRenderer(new FrontCharacterElements(this, skeleton));
+                    par.addSubRenderer(new FrontCharacterElements(this, skeleton, ts));
                     
                 }
                 playerID++;

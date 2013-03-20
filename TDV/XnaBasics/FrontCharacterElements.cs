@@ -11,6 +11,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         private Microsoft.Kinect.Skeleton skeleton;
         private CartoonElements cartooner;
         private const float DEPTH_DELTA = -0.1f;
+        private TextureSet textures;
 
         public override float Z
         {
@@ -23,10 +24,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
         }
 
-        public FrontCharacterElements(CartoonElements cartooner, Microsoft.Kinect.Skeleton skeleton)
+        public FrontCharacterElements(CartoonElements cartooner, Microsoft.Kinect.Skeleton skeleton, TextureSet ts)
         {
             this.skeleton = skeleton;
             this.cartooner = cartooner;
+            this.textures = ts;
         }
 
 
@@ -36,28 +38,28 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             // Draw Bones using painters algorithm
 
             // DS uncommented the waist to fill in abdominal gap
-           cartooner.DrawCharacterPart(skeleton.Joints, JointType.Spine, JointType.HipCenter, cartooner.TP.waistTexture);  // Waist
+           cartooner.DrawCharacterPart(skeleton.Joints, JointType.Spine, JointType.HipCenter, textures.waistTexture);  // Waist
             // DS commented out drawing the small pelvis joints
             //        this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.partTexture);
             //      this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.partTexture);
             /* left of screen and left arm of player, NOT stage left */
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, cartooner.TP.upperArmRightTexture);  // Upper Arm Right 
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, cartooner.TP.upperArmLeftTexture);   // Upper Arm Left 
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, cartooner.TP.shoulderRightTexture); // Shoulder Right
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, cartooner.TP.shoulderLeftTexture); // Shoulder Left
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, cartooner.TP.lowerLegRightTexture); // Lower Leg Right
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.HipRight, JointType.KneeRight, cartooner.TP.upperLegRightTexture); // Upper Leg Right 
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, textures.upperArmRightTexture);  // Upper Arm Right 
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, textures.upperArmLeftTexture);   // Upper Arm Left 
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, textures.shoulderRightTexture); // Shoulder Right
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, textures.shoulderLeftTexture); // Shoulder Left
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, textures.lowerLegRightTexture); // Lower Leg Right
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.HipRight, JointType.KneeRight, textures.upperLegRightTexture); // Upper Leg Right 
             //cartooner.DrawCharacterPart(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, cartooner.footRightTexture);    // Foot Right    
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, cartooner.TP.lowerLegLeftTexture); //Lower Leg Left
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, cartooner.TP.upperLegLeftTexture); // Upper Leg Left
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, textures.lowerLegLeftTexture); //Lower Leg Left
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, textures.upperLegLeftTexture); // Upper Leg Left
             //cartooner.DrawCharacterPart(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, cartooner.partTexture); // Foot Left
-            cartooner.DrawSkirtBone(skeleton.Joints); // Skirt
-            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, cartooner.TP.torsoTexture); // Torso
+            cartooner.DrawSkirtBone(skeleton.Joints, textures); // Skirt
+            cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, textures.torsoTexture); // Torso
             // cartooner.DrawCharacterPart(skeleton.Joints, JointType.WristRight, JointType.HandRight, cartooner.rightHandTexture); // Right hand 
-            cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, JointType.ShoulderRight, cartooner.TP.lowerArmRightTexture, 0.83f); // Lower Arm Right
+            cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, JointType.ShoulderRight, textures.lowerArmRightTexture, 0.83f); // Lower Arm Right
            // cartooner.DrawCharacterPart(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, cartooner.partTexture); // Left hand
-            cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, JointType.ShoulderLeft, cartooner.TP.lowerArmLeftTexture, 0.83f); // Lower Arm Left
-            cartooner.DrawLongBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Head, cartooner.TP.headTexture,1.5f);
+            cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, JointType.ShoulderLeft, textures.lowerArmLeftTexture, 0.83f); // Lower Arm Left
+            cartooner.DrawLongBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Head, textures.headTexture,1.5f);
         }
     }
 }
