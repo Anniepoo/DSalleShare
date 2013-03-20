@@ -337,7 +337,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
-                    TextureSet ts = ((TDVBasicGame)Game).getPlayer(playerID).Textures;
+                    TextureSet ts = ((TDVBasicGame)Game).getPlayer(playerID - 1).Textures;
 
                     // DS switched order, refactored FrontCharacterElements from SkeletonElements and added BackSkeletonElements so that video cutout is in front of head shape and behind other drawn elements
                     par.addSubRenderer(new BackCharacterElements(this, skeleton, ts));
