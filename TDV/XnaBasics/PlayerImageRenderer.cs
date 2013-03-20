@@ -16,6 +16,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
     /// </summary>
     public class PlayerImageRenderer : Object2D
     {
+        const int MAX_PLAYERS = 6;
+
         const float FRACTION_TO_POINT = 0.75f;   // fractional distance down the rect we start reducing width
         /// <summary>
         /// The last frame of raw color data from the Kinect
@@ -31,7 +33,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <summary>
         /// The color frame as a texture.
         /// </summary>
-        private Texture2D greenScreenColorTexture;
+        private Texture2D[] greenScreenColorTexture = new Texture2D[MAX_PLAYERS];
+
+        private int orderInFrame = 0; // we need a separate texture for each player, so we use them in order
+        private Random rnd = new Random();
 
         /// <summary>
         /// The back buffer where color frame is scaled as requested by the Size.
@@ -55,11 +60,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// This Xna effect is used to swap the Red and Blue bytes of the color stream data.
         /// </summary>
         private Effect kinectColorVisualizer;
-
-        /// <summary>
-        /// Whether or not the back buffer needs updating.
-        /// </summary>
-        private bool needToRedrawBackBuffer = true;
 
         /// <summary>
         /// Initializes a new instance of the ColorStreamRenderer class.
@@ -87,6 +87,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            
 
             // If the sensor is not found, not running, or not connected, stop now
             if (null == this.Chooser.Sensor ||
@@ -99,6 +100,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             // Grab the next depth buffer if it's available
             using (var depthFrame = this.Chooser.Sensor.DepthStream.OpenNextFrame(0))
             {
+                orderInFrame = 0;
                 if (depthFrame != null)
                 {
                     if (depthPixels == null || depthPixels.Length != depthFrame.PixelDataLength)
@@ -107,6 +109,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                         this.colorCoordinates = new ColorImagePoint[this.Chooser.Sensor.DepthStream.FramePixelDataLength];
                     }
                     depthFrame.CopyDepthImagePixelDataTo(depthPixels);
+                    this.Chooser.Sensor.CoordinateMapper.MapDepthFrameToColorFrame(
+                        this.Chooser.Sensor.DepthStream.Format,
+                        this.depthPixels,
+                        this.Chooser.Sensor.ColorStream.Format,
+                        this.colorCoordinates);
                 }
             }
             // AO - end of grabbing depth data
@@ -125,12 +132,15 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                     this.colorData = new byte[frame.PixelDataLength];
                     this.greenScreenMaskedColorData = new byte[frame.PixelDataLength];
 
-                    this.greenScreenColorTexture = new Texture2D(
-                        this.Game.GraphicsDevice, 
-                        frame.Width, 
-                        frame.Height, 
-                        false, 
-                        SurfaceFormat.Color);
+                    for (int txnum = 0; txnum < MAX_PLAYERS; txnum++)
+                    {
+                        this.greenScreenColorTexture[txnum] = new Texture2D(
+                            this.Game.GraphicsDevice,
+                            frame.Width,
+                            frame.Height,
+                            false,
+                            SurfaceFormat.Color);
+                    }
 
                     this.backBuffer = new RenderTarget2D(
                         this.Game.GraphicsDevice,
@@ -145,7 +155,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 }
 
                 frame.CopyPixelDataTo(this.colorData);
-                this.needToRedrawBackBuffer = true;
             }
         }
 
@@ -155,7 +164,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <param name="gameTime">The elapsed game time.</param>
         internal void Draw(SpriteBatch ssb, int playerID, Rectangle[] rects)
         {
-
+            orderInFrame++;
             // If we don't have the effect load, load it
             // TODO this is dead now I think
             if (null == this.kinectColorVisualizer)
@@ -164,7 +173,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
 
             // If we don't have a target, don't try to render
-            if (null == this.greenScreenColorTexture)
+            if (null == this.greenScreenColorTexture[0])
             {
                 return;
             }
@@ -184,11 +193,13 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             int ddw = this.Chooser.Sensor.DepthStream.FrameWidth;
 
             // TODO this only needs happen once per frame
+            /* moved to update
             this.Chooser.Sensor.CoordinateMapper.MapDepthFrameToColorFrame(
                 this.Chooser.Sensor.DepthStream.Format,
                 this.depthPixels,
                 this.Chooser.Sensor.ColorStream.Format,
                 this.colorCoordinates);
+             */
 
             Array.Clear(this.greenScreenMaskedColorData, 0, this.greenScreenMaskedColorData.Length);
 
@@ -228,11 +239,17 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                             // retrieve the depth to color mapping for the current depth pixel
                             ColorImagePoint colorImagePoint = this.colorCoordinates[depthIndex];
 
+                            // After the first call per frame this always fails - AO 3/19
+                            // but forcing it true doesn't cure bug #1
                             if (KinectSensor.IsKnownPoint(colorImagePoint))
                             {
                                 // 4 bytes/pixel
                                 int cIndex = (colorImagePoint.Y * this.Chooser.Sensor.ColorStream.FrameWidth + colorImagePoint.X) * 4;
 
+                                if (cIndex == 0)
+                                {
+                                    Console.WriteLine("vewwwy suspicious");
+                                }
                                 // for tighter cropping on left comment this first word out
 
                                 /*
@@ -253,9 +270,25 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                     }  // x
                 } // y
 
-                greenScreenColorTexture.SetData<byte>(this.greenScreenMaskedColorData);
+                /*
+                byte bluechan = (byte)rnd.Next(0x100);
+                byte redchan = (byte)rnd.Next(0x100);
+                byte greenchan = (byte)rnd.Next(0x100);
 
-                ssb.Draw(greenScreenColorTexture, this.Game.GraphicsDevice.Viewport.Bounds, Color.White);
+                if (orderInFrame == 1)
+                {
+                    for (int xx = 0; xx < greenScreenMaskedColorData.Length; )
+                    {
+                        greenScreenMaskedColorData[xx++] = redchan;
+                        greenScreenMaskedColorData[xx++] = greenchan;
+                        greenScreenMaskedColorData[xx++] = bluechan;
+                        greenScreenMaskedColorData[xx++] = 0x80;
+                    }
+                }
+                */
+
+                greenScreenColorTexture[orderInFrame].SetData<byte>(this.greenScreenMaskedColorData);
+                ssb.Draw(greenScreenColorTexture[orderInFrame], this.Game.GraphicsDevice.Viewport.Bounds, Color.White);
             }
         }
 

@@ -164,117 +164,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// <param name="gameTime">The elapsed game time.</param>
         public override void Draw(GameTime gameTime)
         {
-            /*  Moved to addSubRenderers
-            // If the joint texture isn't loaded, load it now
-            if (null == this.jointTexture)
-            {
-                this.LoadContent();
-            }
-
-            // If we don't have data, lets leave
-            if (null == skeletonData || null == this.mapMethod)
-            {
-                return;
-            }
-
-            if (false == this.initialized)
-            {
-                this.Initialize();
-            }
-            */
-
-            // not making more spritebatches this.SharedSpriteBatch.Begin();
-            /* moved to BillboardSubrenderer
-            this.SharedSpriteBatch.Draw(midField, new Vector2(0, 0), Color.White);
-            this.SharedSpriteBatch.Draw(frontMidField, new Vector2(0, 0), Color.White);
-            this.SharedSpriteBatch.Draw(frontField, new Vector2(0, 0), Color.White);
-             */
-            // ================  DONE addSubRenderers TO HERE ===============
-            /* moved to SkeletonSubrenderer
-            foreach (var skeleton in skeletonData)
-            { 
-                switch (skeleton.TrackingState)
-                {
-                      
-                    case SkeletonTrackingState.Tracked:
-                       
-                        // Draw Bones using painters algorithm
-                 
-
-                        this.DrawCharacterPart(skeleton.Joints, JointType.Spine, JointType.HipCenter, this.waistTexture);  // Waist
-                        // DS commented out drawing the small pelvis joints
-                //        this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipLeft, this.partTexture);
-                  //      this.DrawCharacterPart(skeleton.Joints, JointType.HipCenter, JointType.HipRight, this.partTexture);
-                        // left of screen and left arm of player, NOT stage left 
-                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderLeft, JointType.ElbowLeft, this.upperArmRightTexture);  // Upper Arm Right 
-                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderRight, JointType.ElbowRight, this.upperArmLeftTexture);   // Upper Arm Left 
-                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderLeft, this.shoulderRightTexture); // Shoulder Right
-                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.ShoulderRight, this.shoulderLeftTexture); // Shoulder Left
-                        this.DrawCharacterPart(skeleton.Joints, JointType.Head, JointType.ShoulderCenter, this.headTexture); // Head  
-                        this.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, this.torsoTexture); // Torso
-                        this.DrawCharacterPart(skeleton.Joints, JointType.WristRight, JointType.HandRight, this.rightHandTexture); // Right hand 
-                        this.DrawCharacterPart(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, this.lowerArmRightTexture); // Lower Arm Right
-                        this.DrawCharacterPart(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, this.partTexture); // Left hand
-                        this.DrawCharacterPart(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, this.lowerArmLeftTexture); // Lower Arm Left
-                        this.DrawCharacterPart(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft, this.upperLegRightTexture); // Upper Leg Right       
-                        this.DrawCharacterPart(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft, this.lowerLegRightTexture); //Lower Leg Right
-                        this.DrawCharacterPart(skeleton.Joints, JointType.AnkleRight, JointType.FootRight, this.footRightTexture);    // Foot Right    
-                        this.DrawCharacterPart(skeleton.Joints, JointType.HipRight, JointType.KneeRight, this.upperLegLeftTexture); // Upper Leg Left
-                        this.DrawCharacterPart(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight, this.lowerLegLeftTexture); // Lower Leg Left
-                        this.DrawCharacterPart(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft, this.partTexture); // Foot Left
-                        this.DrawSkirtBone(skeleton.Joints); // Skirt
-*/
-
-
-/* DS COMMENETD OUT JOINT DRAWING
-                        foreach (Joint j in skeleton.Joints)
-                        {
-
-                            Color jointColor = Color.Green;
-                            if (j.TrackingState != JointTrackingState.Tracked)
-                            {
-                                jointColor = Color.Yellow;
-                            }
-
-                            this.SharedSpriteBatch.Draw(
-                                this.jointTexture,
-                                this.mapMethod(j.Position),
-                                null,
-                                jointColor,
-                                0.0f,
-                                this.jointOrigin,
-                                1.0f,
-                                SpriteEffects.None,
-                                0.0f);
-                        }
-
-*/
-            /* functionality removed
-                        break;
-                    case SkeletonTrackingState.PositionOnly:
-                       //  If we are only tracking position, draw a blue dot
-                        this.SharedSpriteBatch.Draw(
-                                this.jointTexture,
-                                this.mapMethod(skeleton.Position),
-                                null,
-                                Color.Blue,
-                                0.0f,
-                                this.jointOrigin,
-                                1.0f,
-                                SpriteEffects.None,
-                                0.0f);
-                        break;
-                
-            
-                }
-            }
-             */
-            // this is STOOPID - why won't it draw right size?
-            //Rectangle r = new Rectangle(0, 0, (int)this.Size.X, (int)this.Size.Y);
-            //Rectangle s = new Rectangle(0, 0, this.frontPlayfield.Width, this.frontPlayfield.Height);
-          //DS commented to remove front for snapshot  this.SharedSpriteBatch.Draw(this.frontPlayfield, r, s, Color.White);
-
-       // no longer doing this    this.SharedSpriteBatch.End();
             skeletonDrawn = true;
 
             base.Draw(gameTime);
@@ -407,7 +296,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 longDiff.Length() / boneTexture.Height * (1.0f / (1.0f - 2 * PIN_FROM_END)));
 
             float angle = (float)Math.Atan2(longDiff.Y, longDiff.X) - MathHelper.PiOver2;
-                        Console.WriteLine(nameJoint + scale);
+             // AO removed debug           Console.WriteLine(nameJoint + scale);
             Vector2 center = new Vector2((int)(shortStart.X+shortDiff.X/1.2), (int)(shortStart.Y+shortDiff.Y*originPoint)) ;
 
 
