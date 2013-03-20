@@ -28,3 +28,12 @@ TDV To Do
 * Make them use RT physics?
 * Add confetti effect
 
+well, here are a bunch of trans games.
+
+http://www.newgrounds.com/portal/view/591565
+http://mkopas.net/files/Lim/
+http://www.mattiebrice.com/?p=78
+https://dl.dropbox.com/u/106579376/Kim%20Story.html
+http://aliendovecote.com/uploads/twine/The%20Sky%20in%20the%20Room.html#1c
+http://www.kongregate.com/games/VoEC/personal-trip-to-the-moon
+
