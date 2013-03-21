@@ -339,7 +339,10 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 {
                     TextureSet ts = ((TDVBasicGame)Game).getPlayer(playerID - 1).Textures;
 
-                    // DS switched order, refactored FrontCharacterElements from SkeletonElements and added BackSkeletonElements so that video cutout is in front of head shape and behind other drawn elements
+                    // DS switched order, refactored FrontCharacterElements from SkeletonElements and added BackSkeletonElements 
+                    // so that video cutout is in front of head shape and behind other drawn elements
+                    // These are sorted afterwards - Annie  8cD
+
                     par.addSubRenderer(new BackCharacterElements(this, skeleton, ts));
                     par.addSubRenderer(new LiveElements(this.playerImageRenderer, skeleton, this.playerImageRenderer.SkeletonToColorMap, playerID));
                     par.addSubRenderer(new FrontCharacterElements(this, skeleton, ts));
