@@ -310,7 +310,21 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                scale, SpriteEffects.None, 1.0f);
         }
 
+        internal bool isSkeletonShowing(int i)
+        {
+            if (i < 0) return false;
+            if(skeletonData == null)return false;
+            if(skeletonData.Length <= i)return false;
+            return (skeletonData[i].TrackingState == SkeletonTrackingState.Tracked);
+        }
 
+        internal bool isAnySkeletonShowing()
+        {
+            if (skeletonData == null) return false;
+            for (int i = 0; i < skeletonData.Length; i++ )
+                if(skeletonData[i].TrackingState == SkeletonTrackingState.Tracked)return true;
+            return false;
+        }
 
         internal void addSubRenderers(PaintersAlgorithmRenderer par)
         {

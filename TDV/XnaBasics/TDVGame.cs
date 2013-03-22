@@ -162,15 +162,24 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             // If the spacebar has been pressed, toggle the focus
             KeyboardState newState = Keyboard.GetState();
-            if (this.previousKeyboard.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left))
+            if (this.previousKeyboard.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left) && 
+                this.paintersAlgorithmRenderer.Cartooner.isAnySkeletonShowing())
             {
-                current_player--;
-                if (current_player < 0) current_player = MAX_PLAYERS - 1;
+                do
+                {
+                    current_player--;
+                    if (current_player < 0) current_player = MAX_PLAYERS - 1;
+                } while (!this.paintersAlgorithmRenderer.Cartooner.isSkeletonShowing(current_player));
+
             }
-            if (this.previousKeyboard.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right))
+            if (this.previousKeyboard.IsKeyUp(Keys.Right) && newState.IsKeyDown(Keys.Right) &&
+                this.paintersAlgorithmRenderer.Cartooner.isAnySkeletonShowing())
             {
-                current_player++;
-                if (current_player >= MAX_PLAYERS) current_player = 0;
+                do
+                {
+                    current_player++;
+                    if (current_player >= MAX_PLAYERS) current_player = 0;
+                } while (!this.paintersAlgorithmRenderer.Cartooner.isSkeletonShowing(current_player));
             }
             if (this.previousKeyboard.IsKeyUp(Keys.Up) && newState.IsKeyDown(Keys.Up))
             {
