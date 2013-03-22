@@ -7,38 +7,24 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Samples.Kinect.XnaBasics
 {
-    class TDVGUI : Object2D
+    class TDVGUISubRenderer : SubRenderer
     {
-        Texture2D presents;
+        static Texture2D presents;
 
-        public TDVGUI(TDVBasicGame game) : 
-            base(game)
+        public TDVGUISubRenderer(int playerID)
         {
-            Position = new Vector2(100, 600);
-            Size = new Vector2(96);
+            this.Player = playerID;
         }
 
-        protected override void LoadContent()
+        internal override void Draw(SpriteBatch SharedSpriteBatch)
         {
-            base.LoadContent();
-
-            presents = Game.Content.Load<Texture2D>("presents");
-        }
-
-        public override void Draw(Xna.Framework.GameTime gameTime)
-        {
-            base.Draw(gameTime);
-
             Rectangle dest = new Rectangle(
-                100,600,
+                100,600,   // where present appears on screen
                 96,96);
             Rectangle source = new Rectangle(
                 currentPlayer * 96, 0,
                 96, 96);
-            SharedSpriteBatch.Begin();
             SharedSpriteBatch.Draw(presents, dest, source, Color.White);
-            SharedSpriteBatch.End();
-
         }
 
         private int currentPlayer = 0;
@@ -50,9 +36,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         }
 
 
-        internal void causeLoadContent()
+        internal static void causeLoadContent(Game game)
         {
-            LoadContent();
+            presents = game.Content.Load<Texture2D>("presents");
         }
     }
 }

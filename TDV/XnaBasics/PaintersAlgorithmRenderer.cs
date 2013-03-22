@@ -17,6 +17,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
         private readonly PlayerImageRenderer playerImageRenderer;
 
+
+        private static Random rand = new Random();
+
         /// <summary>
         /// The back buffer where color frame is scaled as requested by the Size.
         /// The cartoon materials are also rendered into this
@@ -29,13 +32,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private List<SubRenderer> subRenderers = new List<SubRenderer>();
 
-        private TDVGUI gui;
-
-        public TDVGUI GUI 
-        {
-            get { return gui; }
-        }
-
 
         /// <summary>
         /// Initializes a new instance of the PaintersAlgorithmRenderer class.
@@ -46,7 +42,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             this.playerImageRenderer = new PlayerImageRenderer(game);
             this.cartoonElements = new CartoonElements(game, this.playerImageRenderer.SkeletonToColorMapViewPortCorrection, this.playerImageRenderer);
-            this.gui = new TDVGUI((TDVBasicGame)game);
         }
 
         /// <summary>
@@ -123,12 +118,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.SharedSpriteBatch.Begin();
             this.SharedSpriteBatch.Draw(
                 this.backBuffer,
-                new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y),
+                new Rectangle((int)Position.X, (int)Position.Y + rand.Next(6) - 6, (int)Size.X, (int)Size.Y),
                 null,
                 Color.White);
 
             this.SharedSpriteBatch.End();
-            gui.Draw(gameTime);
           
             base.Draw(gameTime);
 
@@ -139,7 +133,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         protected override void LoadContent()
         {
-            gui.causeLoadContent();
+            TDVGUISubRenderer.causeLoadContent(Game);
             base.LoadContent();
         }
 
