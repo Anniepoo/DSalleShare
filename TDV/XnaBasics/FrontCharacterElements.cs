@@ -56,9 +56,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             cartooner.DrawSkirtBone(skeleton.Joints, textures); // Skirt
             cartooner.DrawCharacterPart(skeleton.Joints, JointType.ShoulderCenter, JointType.Spine, textures.torsoTexture); // Torso
             // cartooner.DrawCharacterPart(skeleton.Joints, JointType.WristRight, JointType.HandRight, cartooner.rightHandTexture); // Right hand 
-            cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, JointType.ShoulderRight, textures.lowerArmRightTexture, 0.83f); // Lower Arm Right
+            cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowRight, JointType.WristRight, JointType.ShoulderRight, textures.lowerArmRightTexture, 0.93f); // Lower Arm Right
            // cartooner.DrawCharacterPart(skeleton.Joints, JointType.WristLeft, JointType.HandLeft, cartooner.partTexture); // Left hand
-            cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, JointType.ShoulderLeft, textures.lowerArmLeftTexture, 0.83f); // Lower Arm Left
+            cartooner.DrawShortBone(skeleton.Joints, JointType.ElbowLeft, JointType.WristLeft, JointType.ShoulderLeft, textures.lowerArmLeftTexture, 0.93f); // Lower Arm Left
             cartooner.DrawLongBone(skeleton.Joints, JointType.ShoulderCenter, JointType.Head, textures.headTexture,1.5f);
         }
     }
