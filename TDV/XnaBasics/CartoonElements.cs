@@ -330,7 +330,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             par.addSubRenderer(new BillboardSubrenderer(midField, MIDFIELD_Z));
             par.addSubRenderer(new BillboardSubrenderer(frontMidField, FRONT_MIDFIELD_Z));
             par.addSubRenderer(new BillboardSubrenderer(frontField, FRONT_FIELD_Z));
-            par.addSubRenderer(new BillboardSubrenderer(backField, BACK_FIELD_Z));
             par.addSubRenderer(new TDVGUISubRenderer(((TDVBasicGame)Game).PlayerID));
 
             int playerID = 1;
