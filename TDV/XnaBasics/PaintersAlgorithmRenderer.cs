@@ -15,6 +15,14 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// </summary>
         private readonly CartoonElements cartoonElements;  // DS refactored from skeletonRenderer
 
+        public CartoonElements Cartooner
+        {
+            get
+            {
+                return cartoonElements;
+            }
+        }
+
         private readonly PlayerImageRenderer playerImageRenderer;
 
 
