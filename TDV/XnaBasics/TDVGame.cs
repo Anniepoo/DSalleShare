@@ -37,8 +37,8 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         /// 
         /// 
         /// </summary>
-        private const int Width = 1280;
-        private const int Height = 960;
+        public const int Width = 1280;
+        public const int Height = 960;
 
         /// <summary>
         /// This controls the transition time for the resize animation.
@@ -182,8 +182,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
             this.previousKeyboard = newState;
 
-            this.paintersAlgorithmRenderer.GUI.Player = current_player;
-
             // Animate the stream positions and sizes
             this.paintersAlgorithmRenderer.Position = new Vector2(0, 0);
             this.paintersAlgorithmRenderer.Size = new Vector2(this.viewPortRectangle.Width, this.viewPortRectangle.Height);
@@ -223,6 +221,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             // This is necessary because we are rendering to back buffer/render targets and we need to preserve the data
             e.GraphicsDeviceInformation.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+        }
+
+        public int PlayerID { 
+            get { return current_player; }
+            set { current_player = value;  } 
         }
     }
 }

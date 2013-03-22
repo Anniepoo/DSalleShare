@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="BackCharacterElements.cs" />
     <Compile Include="BillboardSubrenderer.cs" />
+    <Compile Include="DirtAndScratchesSubrenderer.cs" />
     <Compile Include="LiveElements.cs" />
     <Compile Include="PlayerImageRenderer.cs" />
     <Compile Include="KinectChooser.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="FrontCharacterElements.cs" />
     <Compile Include="SubRenderer.cs" />
     <Compile Include="TDVGame.cs" />
-    <Compile Include="TDVGUI.cs" />
+    <Compile Include="TDVGUISubRenderer.cs" />
     <Compile Include="TDVPlayer.cs" />
     <Compile Include="TextureSet.cs" />
     <Compile Include="ZOrderIComparer.cs" />
