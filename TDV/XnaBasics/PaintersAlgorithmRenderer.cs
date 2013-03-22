@@ -118,7 +118,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.SharedSpriteBatch.Begin();
             this.SharedSpriteBatch.Draw(
                 this.backBuffer,
-                new Rectangle((int)Position.X, (int)Position.Y + rand.Next(6) - 6, (int)Size.X, (int)Size.Y),
+                new Rectangle((int)Position.X, (int)Position.Y + DirtAndScratchesSubrenderer.Shake, (int)Size.X, (int)Size.Y),
                 null,
                 Color.White);
 

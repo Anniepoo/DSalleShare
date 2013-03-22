@@ -183,6 +183,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             this.frontMidField = Game.Content.Load<Texture2D>("FrontMidField");
             this.midField = Game.Content.Load<Texture2D>("MidField");
             this.backField = Game.Content.Load<Texture2D>("BackField");
+            DirtAndScratchesSubrenderer.causeLoadContent(Game);
         }
 
         /// <summary>
@@ -327,10 +328,12 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 return;
             }
 
+            par.addSubRenderer(new BillboardSubrenderer(backField, BACK_FIELD_Z));
             par.addSubRenderer(new BillboardSubrenderer(midField, MIDFIELD_Z));
             par.addSubRenderer(new BillboardSubrenderer(frontMidField, FRONT_MIDFIELD_Z));
             par.addSubRenderer(new BillboardSubrenderer(frontField, FRONT_FIELD_Z));
             par.addSubRenderer(new TDVGUISubRenderer(((TDVBasicGame)Game).PlayerID));
+            par.addSubRenderer(new DirtAndScratchesSubrenderer());
 
             int playerID = 1;
             foreach (var skeleton in skeletonData)
