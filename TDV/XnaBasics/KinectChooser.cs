@@ -198,9 +198,9 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                     TransformSmoothParameters sp = new TransformSmoothParameters();
 
                     sp.Correction = 0.9f;
-                    sp.MaxDeviationRadius = .05f;
+                    sp.MaxDeviationRadius = .1f;
                     sp.Prediction = .5f;
-                    sp.Smoothing = .01f;
+                    sp.Smoothing = .11f;
                     sp.JitterRadius = .1f;
 
                     this.Sensor.SkeletonStream.Enable(sp);
