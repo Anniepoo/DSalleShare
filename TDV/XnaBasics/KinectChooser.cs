@@ -202,6 +202,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                     sp.Prediction = .5f;
                     sp.Smoothing = .11f;
                     sp.JitterRadius = .1f;
+                    
 
                     this.Sensor.SkeletonStream.Enable(sp);
               

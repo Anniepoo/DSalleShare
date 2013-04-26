@@ -149,5 +149,13 @@ namespace Microsoft.Samples.Kinect.XnaBasics
         {
             this.subRenderers.Add(sr);
         }
+
+        internal void saveScreenShot()
+        {
+            if (this.backBuffer == null) return;
+
+            System.IO.FileStream fs = new System.IO.FileStream("c:\\tmp\\tdvscreen.png", System.IO.FileMode.Create);
+            backBuffer.SaveAsPng(fs, backBuffer.Width, backBuffer.Height);
+        }
     }
 }
