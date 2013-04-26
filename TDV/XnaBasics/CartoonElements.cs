@@ -218,21 +218,16 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             float angle = (float)Math.Atan2(diff.Y, diff.X) - MathHelper.PiOver2;
 
-            Vector2 center = new Vector2((int)(start.X), (int)(start.Y));
-            /* DS commented because not being used
-            // Scale the dest, not the source!
-            Rectangle sourceRect = new Rectangle(0, 0, partTexture.Width, partTexture.Height);
-            Rectangle destRect = new Rectangle(0, 0, 0, 0);
+            Vector2 position = new Vector2((int)(start.X), (int)(start.Y));
+          
 
-            destRect.Offset((int)(start.X), (int)(start.Y));
-            */
-            // just for development
+
             Color color = Color.White;
       
        
             // Vector2 destctr = new Vector2(destRect.X, destRect.Y); 
             
-            this.SharedSpriteBatch.Draw(boneTexture, center, null, color, angle,
+            this.SharedSpriteBatch.Draw(boneTexture, position, null, color, angle,
                 new Vector2(boneTexture.Width/2 , boneTexture.Height * PIN_FROM_END),
                scale, SpriteEffects.None, 1.0f);
         }
