@@ -194,6 +194,20 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             {
                 players[current_player].Appearance--;
             }
+            /////////////////////////////////////////DS
+
+
+            if (newState.IsKeyDown(Keys.Space))
+            {
+
+                Texture2D screenGrab = new Texture2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+
+                int[] backBuffer = new int[graphics.PreferredBackBufferWidth * graphics.PreferredBackBufferHeight];
+                graphics.GraphicsDevice.GetBackBufferData(backBuffer);
+
+                screenGrab.SetData(backBuffer);
+            }
+            /////////////////////////////////////////////DS
             this.previousKeyboard = newState;
 
             // Animate the stream positions and sizes
