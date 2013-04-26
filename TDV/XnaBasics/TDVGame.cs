@@ -162,6 +162,11 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             // If the spacebar has been pressed, toggle the focus
             KeyboardState newState = Keyboard.GetState();
+            if (this.previousKeyboard.IsKeyUp(Keys.Space) && newState.IsKeyDown(Keys.Space))
+            {
+                this.paintersAlgorithmRenderer.saveScreenShot();
+
+            }
             if (this.previousKeyboard.IsKeyUp(Keys.Left) && newState.IsKeyDown(Keys.Left) && 
                 this.paintersAlgorithmRenderer.Cartooner.isAnySkeletonShowing())
             {
@@ -191,17 +196,6 @@ namespace Microsoft.Samples.Kinect.XnaBasics
             }
             /////////////////////////////////////////DS
 
-
-            if (newState.IsKeyDown(Keys.Space))
-            {
-
-                Texture2D screenGrab = new Texture2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-
-                int[] backBuffer = new int[graphics.PreferredBackBufferWidth * graphics.PreferredBackBufferHeight];
-                graphics.GraphicsDevice.GetBackBufferData(backBuffer);
-
-                screenGrab.SetData(backBuffer);
-            }
             /////////////////////////////////////////////DS
             this.previousKeyboard = newState;
 

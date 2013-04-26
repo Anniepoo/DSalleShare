@@ -287,6 +287,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
                 }
                 */
 
+                if (orderInFrame >= greenScreenColorTexture.Length) return;
                 greenScreenColorTexture[orderInFrame].SetData<byte>(this.greenScreenMaskedColorData);
                 ssb.Draw(greenScreenColorTexture[orderInFrame], this.Game.GraphicsDevice.Viewport.Bounds, Color.White);
             }
