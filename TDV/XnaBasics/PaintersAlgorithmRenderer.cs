@@ -156,6 +156,7 @@ namespace Microsoft.Samples.Kinect.XnaBasics
 
             System.IO.FileStream fs = new System.IO.FileStream("c:\\tmp\\tdvscreen.png", System.IO.FileMode.Create);
             backBuffer.SaveAsPng(fs, backBuffer.Width, backBuffer.Height);
+            fs.Close();
         }
     }
 }
